@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Notes from "./components/Notes";
 import React, { useState } from "react";
+import AddNoteTextBox from "./components/AddNoteTextBox";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -21,9 +22,16 @@ function App() {
     },
   ]);
 
+  const addNote = (note) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newNote = {id, ...note };
+    setNotes([...notes, newNote]);
+  }
+
   return (
     <div className="App">
       <Header />
+      <AddNoteTextBox onAdd={addNote}/>
       <Notes notes={notes} />
     </div>
   );

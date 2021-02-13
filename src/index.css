@@ -33,3 +33,26 @@ header {
   width: 300px;
   overflow-wrap: break-word;
 }
+
+.add-note-form {
+  margin: 10px auto;
+  width: 50%;
+}
+
+input {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.add-note-text-input {
+  width: 100%;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
