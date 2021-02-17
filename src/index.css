@@ -1,3 +1,10 @@
+:root {
+  --main-background: rgb(250,250,250);
+  --plain-white: white;
+  --light-grey: #eee;
+  font-size: 16px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,6 +17,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--main-background);
 }
 
 header {
@@ -17,6 +25,7 @@ header {
   border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  background-color: var(--plain-white);
 }
 
 .notes {
@@ -32,11 +41,20 @@ header {
   padding: 15px;
   width: 300px;
   overflow-wrap: break-word;
+  background-color: var(--plain-white);
+}
+
+.note h3 {
+  margin-bottom: 6px;
 }
 
 .add-note-form {
-  margin: 10px auto;
-  width: 50%;
+  margin: 30px auto;
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  overflow: auto;
+  background-color: var(--plain-white);
 }
 
 input {
@@ -45,6 +63,8 @@ input {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: none;
+  outline: none;
 }
 
 .add-note-text-input {
@@ -53,6 +73,48 @@ input {
   padding: 8px 16px;
   border: none;
   outline: none;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-weight: 500;
+}
+
+textarea {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  resize: none;
+  max-height: 50vh;
+}
+
+.text {
+  font-size: 15px;
+}
+
+.add-note-btn {
+  border: none;
+  float: right;
+  font-size: 15px;
+  background: none;
+  margin: 5px;
+  padding: 8px 20px;
+  font-weight:500;
+  cursor: pointer;
+}
+
+.add-note-btn:hover{
+  background-color: var(--light-grey);
+}
+
+.fake-form-btn {
+  border: none;
+  width: 100%;
+  font-size: 15px;
+  background: none;
+  padding: 8px 16px;
+  text-align: left;
+  color: grey;
+  cursor: text;
 }

@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Notes from "./components/Notes";
 import React, { useState } from "react";
-import AddNoteTextBox from "./components/AddNoteTextBox";
+import AddNote from "./components/AddNote";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AddNoteTextBox onAdd={addNote}/>
+      <AddNote onAdd={addNote}/>
       <Notes notes={notes} />
     </div>
   );
