@@ -1,12 +1,12 @@
 import React from "react";
 import Note from "./Note";
 
-const Notes = ({ notes, onDelete }) => {
+const Notes = ({ notes, onDelete, onEdit }) => {
   return (
     <div className="notes">
       {notes.length > 0 ? (
         notes.map((note) => (
-          <Note key={note.id} note={note} onDelete={onDelete} />
+          <Note key={note.id} note={note} onDelete={onDelete} onEdit={onEdit}/>
         ))
       ) : (
         <p style={{ margin: "auto", marginTop: "50px" }}>
