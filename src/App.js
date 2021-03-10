@@ -44,8 +44,12 @@ function App() {
     setActiveNote(id);
   };
 
-  const closeModal = () => {
+  const closeModal = (note) => {
     setIsModalShown(false);
+    const noteIndex = notes.findIndex((n) => n.id === note.id);
+    let newNotes = notes;
+    newNotes[noteIndex].text = note.text;
+    setNotes(newNotes);
   };
 
   return (

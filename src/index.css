@@ -137,8 +137,9 @@ textarea {
   background: none;
   margin: 5px;
   padding: 8px 20px;
-  font-weight:500;
+  font-weight:600;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .add-note-btn:hover{
@@ -161,6 +162,14 @@ textarea {
 
 .modal-content{
   background-color: white;
-  padding: 20px;
   width: 500px;
+  border-radius: 10px;
+}
+
+.edit-note-text-input {
+  width: 100%;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
 }
