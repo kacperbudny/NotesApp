@@ -5,7 +5,7 @@ import React from 'react'
 const ButtonsBar = ({note, onDelete}) => {
     return (
         <div className="buttons-bar">
-            <div className="icon-container"><FontAwesomeIcon icon={faTrashAlt} className="icon" onClick={() => onDelete(note.id)}/></div>
+            <div className="icon-container" onClick={() => onDelete(note.id)}><FontAwesomeIcon icon={faTrashAlt} className="icon"/></div>
         </div>
     )
 }

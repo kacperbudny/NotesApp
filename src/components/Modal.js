@@ -16,7 +16,7 @@ const Modal = ({ note, onClose }) => {
           placeholder="Title"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="edit-note-text-input title"
+          className="add-note-text-input title"
         />
         <textarea
           placeholder="New note..."
@@ -25,7 +25,7 @@ const Modal = ({ note, onClose }) => {
             setText(e.target.value);
             autoGrow(e.target);
           }}
-          className="edit-note-text-input text"
+          className="add-note-text-input text"
         />
         <button
           className="add-note-btn"
