@@ -3,6 +3,7 @@ import Notes from "./components/Notes";
 import React, { useState } from "react";
 import AddNote from "./components/AddNote";
 import Modal from "./components/Modal";
+import OutsideAlerter from "./components/OutsideAlerter";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -55,7 +56,11 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AddNote onAdd={addNote} />
+      <div className="centering-container">
+        <OutsideAlerter>
+          <AddNote onAdd={addNote} />
+        </OutsideAlerter>
+      </div>
       <Notes notes={notes} onDelete={deleteNote} onEdit={showModal} />
       {isModalShown && (
         <Modal

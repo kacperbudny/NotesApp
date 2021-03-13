@@ -85,8 +85,13 @@ header {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.centering-container {
+  display: flex;
+  justify-content: center;
+}
+
 .add-note-form {
-  margin: 30px auto;
+  margin: 30px;
   width: 500px;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
