@@ -4,12 +4,18 @@ const Modal = ({ note, onClose }) => {
   const [text, setText] = useState(note.text);
   const [name, setName] = useState(note.name);
 
+  const handleClick = (e) => {
+    if (e.target && e.target.className === "modal") {
+      return onClose({ id: note.id, name: name, text: text });
+    }
+  };
+
   const autoGrow = (e) => {
     e.style.height = e.scrollHeight + "px";
   };
 
   return (
-    <div className="modal">
+    <div className="modal" onClick={(e) => handleClick(e)}>
       <div className="modal-content">
         <input
           type="text"
