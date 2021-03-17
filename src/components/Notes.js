@@ -5,12 +5,19 @@ const Notes = ({ notes, onDelete, onEdit }) => {
   return (
     <div className="notes">
       {notes.length > 0 ? (
-        notes.map((note) => (
-          <Note key={note.id} note={note} onDelete={onDelete} onEdit={onEdit}/>
-        ))
+        notes
+          .sort((a, b) => b.displayOrder - a.displayOrder)
+          .map((note) => (
+            <Note
+              key={note.id}
+              note={note}
+              onDelete={onDelete}
+              onEdit={onEdit}
+            />
+          ))
       ) : (
         <p style={{ margin: "auto", marginTop: "50px" }}>
-          You don't have any notes.
+          There are no notes. Maybe it's time to add some?
         </p>
       )}
     </div>
