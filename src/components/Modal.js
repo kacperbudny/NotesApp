@@ -3,11 +3,26 @@ import React, { useState } from "react";
 const Modal = ({ note, onClose }) => {
   const [text, setText] = useState(note.text);
   const [name, setName] = useState(note.name);
+  let isMouseDownOnModalBackground = false;
 
-  const handleClick = (e) => {
+  const handleMouseDown = (e) => {
     if (e.target && e.target.className === "modal") {
-      return onClose({ id: note.id, name: name, text: text });
+      isMouseDownOnModalBackground = true;
     }
+  };
+
+  const handleMouseUp = (e) => {
+    if (
+      e.target &&
+      e.target.className === "modal" &&
+      isMouseDownOnModalBackground
+    ) {
+      handleClose();
+    }
+  };
+
+  const handleClose = () => {
+    return onClose({ ...note, name: name, text: text });
   };
 
   const autoGrow = (e) => {
@@ -15,7 +30,11 @@ const Modal = ({ note, onClose }) => {
   };
 
   return (
-    <div className="modal" onClick={(e) => handleClick(e)}>
+    <div
+      className="modal"
+      onMouseDown={(e) => handleMouseDown(e)}
+      onMouseUp={(e) => handleMouseUp(e)}
+    >
       <div className="modal-content">
         <input
           type="text"
@@ -36,7 +55,7 @@ const Modal = ({ note, onClose }) => {
         <button
           className="add-note-btn"
           onClick={() => {
-            onClose({ id: note.id, name: name, text: text });
+            handleClose();
           }}
         >
           Close

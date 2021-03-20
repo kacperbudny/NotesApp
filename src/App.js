@@ -34,7 +34,6 @@ function App() {
     const displayOrder = notes.length > 0 ?
       notes.reduce((a, b) => (a.displayOrder > b.displayOrder ? a : b), 1)
         .displayOrder + 1 : 1;
-    console.log(displayOrder);
     const newNote = { id, ...note, displayOrder };
     setNotes([...notes, newNote]);
   };
@@ -54,8 +53,8 @@ function App() {
   const closeModal = (note) => {
     setIsModalShown(false);
     const noteIndex = notes.findIndex((n) => n.id === note.id);
-    let newNotes = notes;
-    newNotes[noteIndex].text = note.text;
+    const newNotes = notes;
+    newNotes[noteIndex] = note;
     setNotes(newNotes);
   };
 
