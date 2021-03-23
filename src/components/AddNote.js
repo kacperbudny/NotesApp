@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import OutsideAlerter from "./OutsideAlerter";
 
 const AddNote = ({ onAdd }) => {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [textareaStyle, setTextareaStyle] = useState({ height: "auto" });
-  const [prevTextLength, setPrevTextLength] = useState(0);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,17 +30,7 @@ const AddNote = ({ onAdd }) => {
   const resetForm = () => {
     setName("");
     setText("");
-    setTextareaStyle({ height: "36px" });
     setIsEditing(false);
-  };
-
-  const autoGrow = (e) => {
-    if (text.length > prevTextLength) {
-      setTextareaStyle({ height: `${e.scrollHeight}px` });
-      setPrevTextLength(text.length);
-    } else {
-      setTextareaStyle({ height: "auto" });
-    }
   };
 
   return (
@@ -57,14 +46,12 @@ const AddNote = ({ onAdd }) => {
               className="add-note-text-input title"
             />
           )}
-          <textarea
+          <TextareaAutosize
             placeholder="New note..."
             value={text}
             onChange={(e) => {
               setText(e.target.value);
-              autoGrow(e.target);
             }}
-            style={textareaStyle}
             className="add-note-text-input text"
             rows="1"
           />

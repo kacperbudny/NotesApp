@@ -58,6 +58,7 @@ header {
 
 .note-content {
   padding: 15px 15px 10px 15px;
+  white-space: pre-line;
 }
 
 .buttons-bar {

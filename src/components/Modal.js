@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 const Modal = ({ note, onClose }) => {
   const [text, setText] = useState(note.text);
@@ -25,10 +26,6 @@ const Modal = ({ note, onClose }) => {
     return onClose({ ...note, name: name, text: text });
   };
 
-  const autoGrow = (e) => {
-    e.style.height = e.scrollHeight + "px";
-  };
-
   return (
     <div
       className="modal"
@@ -43,12 +40,11 @@ const Modal = ({ note, onClose }) => {
           onChange={(e) => setName(e.target.value)}
           className="add-note-text-input title"
         />
-        <textarea
+        <TextareaAutosize
           placeholder="New note..."
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            autoGrow(e.target);
           }}
           className="add-note-text-input text"
         />
