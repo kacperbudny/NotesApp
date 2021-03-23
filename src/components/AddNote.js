@@ -7,12 +7,12 @@ const AddNote = ({ onAdd }) => {
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     handleAddNote();
   };
 
-  const onClickOutside = () => {
+  const handleClickOutside = () => {
     if (isEditing) {
       handleAddNote();
     }
@@ -35,8 +35,8 @@ const AddNote = ({ onAdd }) => {
 
   return (
     <div onFocus={() => setIsEditing(true)} className="centering-container">
-      <OutsideAlerter onClickOutside={onClickOutside}>
-        <form className="add-note-form" onSubmit={onSubmit}>
+      <OutsideAlerter onClickOutside={handleClickOutside}>
+        <form className="add-note-form" onSubmit={handleSubmit}>
           {isEditing && (
             <input
               type="text"
