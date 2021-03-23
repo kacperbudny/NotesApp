@@ -61,6 +61,14 @@ header {
   white-space: pre-line;
 }
 
+.note-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+   -webkit-line-clamp: 14;
+   -webkit-box-orient: vertical;
+}
+
 .buttons-bar {
   margin: 0 10px 10px 10px;
   opacity: 0;
