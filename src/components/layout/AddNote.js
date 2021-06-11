@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import OutsideAlerter from "./OutsideAlerter";
+import OutsideAlerter from "../wrappers/OutsideAlerter";
 
 const AddNote = ({ onAdd }) => {
   const [text, setText] = useState("");

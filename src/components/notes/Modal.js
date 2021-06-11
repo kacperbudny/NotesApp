@@ -32,7 +32,7 @@ const Modal = ({ note, onClose }) => {
       onMouseDown={(e) => handleMouseDown(e)}
       onMouseUp={(e) => handleMouseUp(e)}
     >
-      <div className="modal-content">
+      <div className="modal-content" style={{ background: note.color }}>
         <input
           type="text"
           placeholder="Title"
@@ -47,6 +47,7 @@ const Modal = ({ note, onClose }) => {
             setText(e.target.value);
           }}
           className="add-note-text-input text"
+          style={{background: "none"}}
         />
         <button
           className="add-note-btn"

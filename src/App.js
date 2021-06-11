@@ -1,8 +1,9 @@
-import Header from "./components/Header";
-import Notes from "./components/Notes";
+import Header from "./components/layout/Header";
+import Notes from "./components/notes/Notes";
 import React, { useState } from "react";
-import AddNote from "./components/AddNote";
-import Modal from "./components/Modal";
+import AddNote from "./components/layout/AddNote";
+import Modal from "./components/notes/Modal";
+import colors from "./utils/colors"
 
 function App() {
   const [notes, setNotes] = useState([
@@ -24,6 +25,13 @@ function App() {
       name: "Shopping list",
       text: "Milk, bread, happiness",
       displayOrder: 3,
+    },
+    {
+      id: 4,
+      name: "Colorful boy",
+      text: "Look mom, I'm green!",
+      displayOrder: 4,
+      color: colors.green,
     },
   ]);
   const [isModalShown, setIsModalShown] = useState(false);

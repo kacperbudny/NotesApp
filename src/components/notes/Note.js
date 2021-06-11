@@ -3,7 +3,7 @@ import ButtonsBar from "./ButtonsBar";
 
 const Note = ({ note, onDelete, onEdit }) => {
   return (
-    <div className="note">
+    <div className="note" style={{background: note.color}}>
       <div className="note-content" onClick={() => onEdit(note.id)}>
         {note.name || note.text ? (
           <div>

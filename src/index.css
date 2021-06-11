@@ -93,7 +93,7 @@ textarea {
 }
 
 .add-note-btn:hover {
-  background-color: var(--light-grey);
+  background-color: rgba(0,0,0,0.1);
 }
 
 /* NOTES SECTION */
