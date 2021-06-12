@@ -93,7 +93,7 @@ textarea {
 }
 
 .add-note-btn:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* NOTES SECTION */
@@ -133,8 +133,8 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-   -webkit-line-clamp: 14;
-   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 14;
+  -webkit-box-orient: vertical;
 }
 
 .buttons-bar {
@@ -156,10 +156,40 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .buttons-bar .icon-container:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.color-palette {
+  position: absolute;
+  background: white;
+  display: none;
+  padding: 4px;
+  bottom: 100%;
+  left: 0;
+  cursor: default;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.color-button {
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.color-button:hover {
+  border: 2px solid black;
+}
+
+#palette-container:hover .color-palette {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
 }
 
 /* EDITING NOTE SECTION */

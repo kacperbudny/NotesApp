@@ -47,7 +47,7 @@ const Modal = ({ note, onClose }) => {
             setText(e.target.value);
           }}
           className="add-note-text-input text"
-          style={{background: "none"}}
+          style={{ background: "none" }}
         />
         <button
           className="add-note-btn"
