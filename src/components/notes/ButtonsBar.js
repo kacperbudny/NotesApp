@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ColorPalette from "./ColorPalette";
 
-const ButtonsBar = ({ note, onDelete }) => {
+const ButtonsBar = ({ note, onDelete, changeNoteColor }) => {
   return (
     <div className="buttons-bar">
       <div className="icon-container" onClick={() => onDelete(note.id)}>
@@ -12,7 +12,7 @@ const ButtonsBar = ({ note, onDelete }) => {
       </div>
       <div className="icon-container" id="palette-container">
         <FontAwesomeIcon icon={faPalette} className="icon" />
-        <ColorPalette/>
+        <ColorPalette note={note} changeNoteColor={changeNoteColor}/>
       </div>
     </div>
   );

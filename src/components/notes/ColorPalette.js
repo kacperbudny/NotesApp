@@ -1,20 +1,48 @@
-import React from 'react'
-import ChangeColorButton from './ChangeColorButton'
-import colors from '../../utils/colors'
+import React from "react";
+import ChangeColorButton from "./ChangeColorButton";
+import colors from "../../utils/colors";
 
-const ColorPalette = () => {
-    return (
-        <div className="color-palette">
-          <ChangeColorButton/>
-          <ChangeColorButton color={colors.red}/>
-          <ChangeColorButton color={colors.orange}/>
-          <ChangeColorButton color={colors.yellow}/>
-          <ChangeColorButton color={colors.green}/>
-          <ChangeColorButton color={colors.blue}/>
-          <ChangeColorButton color={colors.purple}/>
-          <ChangeColorButton color={colors.pink}/>
-        </div>
-    )
-}
+const ColorPalette = ({ note, changeNoteColor }) => {
+  return (
+    <div className="color-palette">
+      <ChangeColorButton note={note} changeNoteColor={changeNoteColor} />
+      <ChangeColorButton
+        color={colors.red}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.orange}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.yellow}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.green}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.blue}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.purple}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+      <ChangeColorButton
+        color={colors.pink}
+        note={note}
+        changeNoteColor={changeNoteColor}
+      />
+    </div>
+  );
+};
 
-export default ColorPalette
+export default ColorPalette;

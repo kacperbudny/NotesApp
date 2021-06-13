@@ -110,6 +110,7 @@ textarea {
   width: 300px;
   overflow-wrap: break-word;
   background-color: var(--plain-white);
+  transition: background 0.2s linear;
 }
 
 .note:hover {

@@ -1,6 +1,12 @@
 import React from "react";
 
-const ChangeColorButton = ({ color }) => {
+const ChangeColorButton = ({ color, note, changeNoteColor }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (!color) color = "white";
+    changeNoteColor(color, note);
+  };
+
   return (
     <button
       className="color-button"
@@ -9,6 +15,7 @@ const ChangeColorButton = ({ color }) => {
           ? { background: `${color}` }
           : { background: "white", border: "2px solid #ccc" }
       }
+      onClick={(e) => handleClick(e)}
     ></button>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import Note from "./Note";
 
-const Notes = ({ notes, onDelete, onEdit }) => {
+const Notes = ({ notes, onDelete, onEdit, changeNoteColor }) => {
   return (
     <div className="notes">
       {notes.length > 0 ? (
@@ -13,6 +13,7 @@ const Notes = ({ notes, onDelete, onEdit }) => {
               note={note}
               onDelete={onDelete}
               onEdit={onEdit}
+              changeNoteColor={changeNoteColor}
             />
           ))
       ) : (
