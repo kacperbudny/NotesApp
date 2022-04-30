@@ -1,0 +1,17 @@
+{
+  "name": "notes-app-server",
+  "version": "1.0.0",
+  "description": "A backend for Notes App",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Kacper Budny",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
