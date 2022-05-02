@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const seed = require("./utils/seed");
+const noteRoutes = require("./routes/note");
 
 require("dotenv").config();
 const MONGODB_CONNECTION_STRING = require("./utils/constants/db").MONGODB_CONNECTION_STRING;
@@ -9,9 +10,7 @@ const MONGODB_CONNECTION_STRING = require("./utils/constants/db").MONGODB_CONNEC
 const app = express();
 const port = 8080;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(noteRoutes);
 
 mongoose
   .connect(MONGODB_CONNECTION_STRING)
