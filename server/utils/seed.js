@@ -31,7 +31,7 @@ async function seed() {
           name: "Colorful boy",
           text: "Look mom, I'm green!",
           displayOrder: 4,
-          color: "green",
+          color: "#CCFF99",
         },
       ],
       (err) => {

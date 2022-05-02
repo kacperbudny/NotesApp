@@ -1,14 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const seed = require("./utils/seed");
 const noteRoutes = require("./routes/note");
 
 require("dotenv").config();
-const MONGODB_CONNECTION_STRING = require("./utils/constants/db").MONGODB_CONNECTION_STRING;
+const MONGODB_CONNECTION_STRING =
+  require("./utils/constants/db").MONGODB_CONNECTION_STRING;
 
 const app = express();
 const port = 8080;
+
+app.use(cors());
 
 app.use(noteRoutes);
 
@@ -23,4 +27,3 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-
