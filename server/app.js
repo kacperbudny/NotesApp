@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const seed = require("./utils/seed");
+
 require("dotenv").config();
 const MONGODB_CONNECTION_STRING = require("./utils/constants/db").MONGODB_CONNECTION_STRING;
 
@@ -14,6 +16,7 @@ app.get("/", (req, res) => {
 mongoose
   .connect(MONGODB_CONNECTION_STRING)
   .then(() => {
+    seed();
     app.listen(port, () => {
       console.log("Listening on port " + port);
     });
@@ -21,3 +24,4 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
+
