@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 const Modal = ({ note, onClose }) => {
-  const [text, setText] = useState(note.text);
+  const [content, setContent] = useState(note.content);
   const [name, setName] = useState(note.name);
   let isMouseDownOnModalBackground = false;
 
@@ -23,7 +23,7 @@ const Modal = ({ note, onClose }) => {
   };
 
   const handleClose = () => {
-    return onClose({ ...note, name: name, text: text });
+    return onClose({ ...note, name: name, content: content });
   };
 
   return (
@@ -42,9 +42,9 @@ const Modal = ({ note, onClose }) => {
         />
         <TextareaAutosize
           placeholder="New note..."
-          value={text}
+          value={content}
           onChange={(e) => {
-            setText(e.target.value);
+            setContent(e.target.value);
           }}
           className="add-note-text-input text"
           style={{ background: "none" }}

@@ -3,7 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import OutsideAlerter from "../wrappers/OutsideAlerter";
 
 const AddNote = ({ onAdd }) => {
-  const [text, setText] = useState("");
+  const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -19,17 +19,17 @@ const AddNote = ({ onAdd }) => {
   };
 
   const handleAddNote = () => {
-    if (!text && !name) {
+    if (!content && !name) {
       resetForm();
       return;
     }
-    onAdd({ text, name });
+    onAdd({ content, name });
     resetForm();
   };
 
   const resetForm = () => {
     setName("");
-    setText("");
+    setContent("");
     setIsEditing(false);
   };
 
@@ -48,9 +48,9 @@ const AddNote = ({ onAdd }) => {
           )}
           <TextareaAutosize
             placeholder="New note..."
-            value={text}
+            value={content}
             onChange={(e) => {
-              setText(e.target.value);
+              setContent(e.target.value);
             }}
             className="add-note-text-input text"
             rows="1"

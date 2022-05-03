@@ -1,0 +1,28 @@
+{
+  "name": "notes-app-server",
+  "version": "1.0.0",
+  "description": "A backend for Notes App",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "author": "Kacper Budny",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "mongodb": "^4.5.0",
+    "mongoose": "^6.3.1"
+  }
+}
