@@ -16,3 +16,27 @@ exports.getAllNotes = async (req, res) => {
     console.error(err);
   }
 };
+
+exports.postNote = async (req, res) => {
+  const note = new Note({
+    _id: req.body._id,
+    name: req.body.name,
+    content: req.body.content,
+    displayOrder: req.body.displayOrder,
+    color: req.body.color,
+  });
+  try {
+    const newNote = await note.save();
+    res.status(201).json(newNote);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.updateNote = async (req, res) => {
+  res.send("Update a note");
+};
+
+exports.deleteNote = async (req, res) => {
+  res.send("Delete a note");
+};
