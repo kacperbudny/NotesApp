@@ -5,6 +5,7 @@ import AddNote from "./components/layout/AddNote";
 import Modal from "./components/notes/Modal";
 import useGetNotes from "./hooks/useGetNotes";
 import { ObjectId } from "bson";
+import Loading from "./components/common/Loading";
 
 function App() {
   const [notes, setNotes, isLoading] = useGetNotes();
@@ -70,7 +71,7 @@ function App() {
           )}
         </>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </div>
   );

@@ -45,5 +45,11 @@ exports.updateNote = async (req, res) => {
 };
 
 exports.deleteNote = async (req, res) => {
-  res.send("Delete a note");
+  try {
+    const id = req.params.id;
+    await Note.findByIdAndDelete(id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
