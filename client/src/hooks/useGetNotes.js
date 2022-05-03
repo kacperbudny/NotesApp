@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import backendRoutes from "../utils/constants/backend-routes";
 
 export default function useGetNotes() {
   const [notes, setNotes] = useState([]);
@@ -8,7 +9,9 @@ export default function useGetNotes() {
     const fetchNotes = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/notes");
+        const response = await fetch(
+          new URL(backendRoutes.notesRoute, backendRoutes.devUrl).href
+        );
         const data = await response.json();
         setNotes(data);
         setIsLoading(false);

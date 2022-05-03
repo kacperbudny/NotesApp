@@ -6,13 +6,14 @@ import Modal from "./components/notes/Modal";
 import useGetNotes from "./hooks/useGetNotes";
 import { ObjectId } from "bson";
 import Loading from "./components/common/Loading";
+import backendRoutes from "./utils/constants/backend-routes";
 
 function App() {
   const [notes, setNotes, isLoading] = useGetNotes();
   const [isModalShown, setIsModalShown] = useState(false);
   const [activeNote, setActiveNote] = useState();
 
-  const addNote = (note) => {
+  const addNote = async (note) => {
     const _id = ObjectId().toString();
     const displayOrder =
       notes.length > 0
@@ -20,7 +21,23 @@ function App() {
             .displayOrder + 1
         : 1;
     const newNote = { _id, ...note, displayOrder };
-    setNotes([...notes, newNote]);
+    try {
+      const response = await fetch(
+        new URL(backendRoutes.notesRoute, backendRoutes.devUrl),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newNote),
+        }
+      );
+      if (response.ok) {
+        setNotes([...notes, newNote]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteNote = (id) => {
