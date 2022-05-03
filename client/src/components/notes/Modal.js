@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import NotesContext from "../../contexts/NotesContext";
 
-const Modal = ({ note, onClose }) => {
+const Modal = ({ onClose }) => {
+  const { currentlyEditedNote: note } = useContext(NotesContext);
   const [content, setContent] = useState(note.content);
   const [name, setName] = useState(note.name);
   let isMouseDownOnModalBackground = false;

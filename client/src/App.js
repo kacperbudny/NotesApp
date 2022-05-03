@@ -7,13 +7,13 @@ import Loading from "./components/common/Loading";
 import NotesContext from "./contexts/NotesContext";
 
 function App() {
-  const { notes, isLoading, updateNote } = useContext(NotesContext);
+  const { notes, isLoading, updateNote, setCurrentlyEditedNote } =
+    useContext(NotesContext);
   const [isModalShown, setIsModalShown] = useState(false);
-  const [activeNote, setActiveNote] = useState();
 
   const showModal = (_id) => {
     setIsModalShown(true);
-    setActiveNote(_id);
+    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
   };
 
   const closeModal = (note) => {
@@ -28,12 +28,7 @@ function App() {
         <>
           <AddNote />
           <Notes onEdit={showModal} />
-          {isModalShown && (
-            <Modal
-              note={notes.find(({ _id }) => _id === activeNote)}
-              onClose={closeModal}
-            />
-          )}
+          {isModalShown && <Modal onClose={closeModal} />}
         </>
       ) : (
         <Loading />

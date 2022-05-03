@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import useGetNotes from "../hooks/useGetNotes";
 import { ObjectId } from "bson";
 import backendRoutes from "../utils/constants/backend-routes";
@@ -7,6 +7,7 @@ const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
   const [notes, setNotes, isLoading] = useGetNotes();
+  const [currentlyEditedNote, setCurrentlyEditedNote] = useState(null);
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -97,6 +98,8 @@ export function NotesProvider({ children }) {
         deleteNote,
         changeNoteColor,
         updateNote,
+        currentlyEditedNote,
+        setCurrentlyEditedNote,
       }}
     >
       {children}
