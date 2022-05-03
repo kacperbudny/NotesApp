@@ -34,7 +34,14 @@ exports.postNote = async (req, res) => {
 };
 
 exports.updateNote = async (req, res) => {
-  res.send("Update a note");
+  try {
+    const id = req.params.id;
+    const updatedNote = req.body;
+    const result = await Note.findByIdAndUpdate(id, updatedNote, { new: true });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 exports.deleteNote = async (req, res) => {
