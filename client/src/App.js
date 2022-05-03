@@ -40,32 +40,66 @@ function App() {
     }
   };
 
-  const deleteNote = (id) => {
+  const deleteNote = async (id) => {
     const filteredNotes = notes.filter((value) => {
       return value._id !== id;
     });
-    setNotes(filteredNotes);
+
+    try {
+      const response = await fetch(
+        new URL(`${backendRoutes.notesRoute}/${id}`, backendRoutes.devUrl),
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        setNotes(filteredNotes);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const changeNoteColor = (color, note) => {
-    const filteredNotes = notes.filter((value) => {
-      return value._id !== note._id;
-    });
     note.color = color;
-    setNotes([...filteredNotes, note]);
+    updateNote(note);
   };
 
-  const showModal = (id) => {
+  const updateNote = async (updatedNote) => {
+    const noteIndex = notes.findIndex((n) => n._id === updatedNote._id);
+    const newNotes = [...notes];
+    newNotes[noteIndex] = updatedNote;
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${backendRoutes.notesRoute}/${updatedNote._id}`,
+          backendRoutes.devUrl
+        ),
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedNote),
+        }
+      );
+      if (response.ok) {
+        setNotes(newNotes);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const showModal = (_id) => {
     setIsModalShown(true);
-    setActiveNote(id);
+    setActiveNote(_id);
   };
 
   const closeModal = (note) => {
     setIsModalShown(false);
-    const noteIndex = notes.findIndex((n) => n.id === note.id);
-    const newNotes = notes;
-    newNotes[noteIndex] = note;
-    setNotes(newNotes);
+    updateNote(note);
   };
 
   return (
@@ -82,7 +116,7 @@ function App() {
           />
           {isModalShown && (
             <Modal
-              note={notes.find(({ id }) => id === activeNote)}
+              note={notes.find(({ _id }) => _id === activeNote)}
               onClose={closeModal}
             />
           )}
