@@ -1,6 +1,6 @@
 const Note = require("../models/note");
 
-exports.getAllNotes = async (req, res, next) => {
+exports.getAllNotes = async (req, res) => {
   try {
     const allNotes = await Note.find();
 

@@ -4,12 +4,19 @@
   "description": "A backend for Notes App",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "author": "Kacper Budny",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2"
   },
   "dependencies": {
     "cors": "^2.8.5",

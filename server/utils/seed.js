@@ -13,7 +13,8 @@ async function seed() {
         },
         {
           name: "Another note",
-          content: "Hey, look, I've just made another one. And I'm going to make it somewhat long to see what happens.",
+          content:
+            "Hey, look, I've just made another one. And I'm going to make it somewhat long to see what happens.",
           displayOrder: 2,
           color: "white",
         },
