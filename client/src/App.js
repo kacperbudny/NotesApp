@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AddNote from "./components/layout/AddNote";
 import Modal from "./components/notes/Modal";
 import useGetNotes from "./hooks/useGetNotes";
+import { ObjectId } from "bson";
 
 function App() {
   const [notes, setNotes, isLoading] = useGetNotes();
@@ -11,26 +12,26 @@ function App() {
   const [activeNote, setActiveNote] = useState();
 
   const addNote = (note) => {
-    const id = Math.floor(Math.random() * 10000) + 1;
+    const _id = ObjectId().toString();
     const displayOrder =
       notes.length > 0
         ? notes.reduce((a, b) => (a.displayOrder > b.displayOrder ? a : b), 1)
             .displayOrder + 1
         : 1;
-    const newNote = { id, ...note, displayOrder };
+    const newNote = { _id, ...note, displayOrder };
     setNotes([...notes, newNote]);
   };
 
   const deleteNote = (id) => {
     const filteredNotes = notes.filter((value) => {
-      return value.id !== id;
+      return value._id !== id;
     });
     setNotes(filteredNotes);
   };
 
   const changeNoteColor = (color, note) => {
     const filteredNotes = notes.filter((value) => {
-      return value.id !== note.id;
+      return value._id !== note._id;
     });
     note.color = color;
     setNotes([...filteredNotes, note]);

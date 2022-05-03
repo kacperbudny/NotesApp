@@ -7,7 +7,7 @@ import ColorPalette from "./ColorPalette";
 const ButtonsBar = ({ note, onDelete, changeNoteColor }) => {
   return (
     <div className="buttons-bar">
-      <div className="icon-container" onClick={() => onDelete(note.id)}>
+      <div className="icon-container" onClick={() => onDelete(note._id)}>
         <FontAwesomeIcon icon={faTrashAlt} className="icon" />
       </div>
       <div className="icon-container" id="palette-container">

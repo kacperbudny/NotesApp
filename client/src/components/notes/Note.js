@@ -5,10 +5,10 @@ const Note = ({ note, onDelete, onEdit, changeNoteColor }) => {
   return (
     <div className="note" style={{ background: `${note.color}` }}>
       <div className="note-content" onClick={() => onEdit(note.id)}>
-        {note.name || note.text ? (
+        {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>
-            <p>{note.text}</p>
+            <p>{note.content}</p>
           </div>
         ) : (
           <p style={{ color: "gray" }}>Empty note</p>

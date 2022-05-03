@@ -9,7 +9,7 @@ const Notes = ({ notes, onDelete, onEdit, changeNoteColor }) => {
           .sort((a, b) => b.displayOrder - a.displayOrder)
           .map((note) => (
             <Note
-              key={note.id}
+              key={note._id}
               note={note}
               onDelete={onDelete}
               onEdit={onEdit}

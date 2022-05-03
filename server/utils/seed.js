@@ -6,30 +6,26 @@ async function seed() {
     Note.insertMany(
       [
         {
-          id: 1,
           name: "My first note",
-          text: "This is my very first note!",
+          content: "This is my very first note!",
           displayOrder: 1,
           color: "white",
         },
         {
-          id: 2,
           name: "Another note",
-          text: "Hey, look, I've just made another one. And I'm going to make it somewhat long to see what happens.",
+          content: "Hey, look, I've just made another one. And I'm going to make it somewhat long to see what happens.",
           displayOrder: 2,
           color: "white",
         },
         {
-          id: 3,
           name: "Shopping list",
-          text: "Milk, bread, happiness",
+          content: "Milk, bread, happiness",
           displayOrder: 3,
           color: "white",
         },
         {
-          id: 4,
           name: "Colorful boy",
-          text: "Look mom, I'm green!",
+          content: "Look mom, I'm green!",
           displayOrder: 4,
           color: "#CCFF99",
         },
