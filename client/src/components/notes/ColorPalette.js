@@ -2,17 +2,12 @@ import React from "react";
 import ChangeColorButton from "./ChangeColorButton";
 import colors from "../../utils/constants/colors";
 
-const ColorPalette = ({ note, changeNoteColor }) => {
+const ColorPalette = ({ note }) => {
   return (
     <div className="color-palette">
-      <ChangeColorButton note={note} changeNoteColor={changeNoteColor} />
+      <ChangeColorButton note={note} />
       {Object.values(colors).map((color) => (
-        <ChangeColorButton
-          key={`${color}-button`}
-          color={color}
-          note={note}
-          changeNoteColor={changeNoteColor}
-        />
+        <ChangeColorButton key={`${color}-button`} color={color} note={note} />
       ))}
     </div>
   );

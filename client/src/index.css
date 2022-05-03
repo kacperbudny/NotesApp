@@ -198,7 +198,7 @@ textarea {
   border: 2px solid black;
 }
 
-#palette-container:hover .color-palette {
+.palette-container:hover .color-palette {
   display: grid;
   grid-template-columns: repeat(4, auto);
 }

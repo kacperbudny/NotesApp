@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import OutsideAlerter from "../wrappers/OutsideAlerter";
+import NotesContext from "../../contexts/NotesContext";
 
-const AddNote = ({ onAdd }) => {
+const AddNote = () => {
+  const { addNote } = useContext(NotesContext);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +25,7 @@ const AddNote = ({ onAdd }) => {
       resetForm();
       return;
     }
-    onAdd({ content, name });
+    addNote({ content, name });
     resetForm();
   };
 

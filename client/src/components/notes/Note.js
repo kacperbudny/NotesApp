@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonsBar from "./ButtonsBar";
 
-const Note = ({ note, onDelete, onEdit, changeNoteColor }) => {
+const Note = ({ note, onEdit }) => {
   return (
     <div className="note" style={{ background: `${note.color}` }}>
       <div className="note-content" onClick={() => onEdit(note._id)}>
@@ -14,11 +14,7 @@ const Note = ({ note, onDelete, onEdit, changeNoteColor }) => {
           <p style={{ color: "gray" }}>Empty note</p>
         )}
       </div>
-      <ButtonsBar
-        note={note}
-        onDelete={onDelete}
-        changeNoteColor={changeNoteColor}
-      />
+      <ButtonsBar note={note} />
     </div>
   );
 };
