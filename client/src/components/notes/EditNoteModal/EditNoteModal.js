@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
 import { useEffect } from "../../../../node_modules/react/cjs/react.development";
 
-const EditNoteModal = ({ onClose }) => {
+const EditNoteModal = () => {
   const {
     currentlyEditedNote: note,
     isEditing,
@@ -14,6 +14,7 @@ const EditNoteModal = ({ onClose }) => {
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("white");
+  const contentRef = useRef(null);
 
   useEffect(() => {
     if (!note) return;
@@ -26,11 +27,20 @@ const EditNoteModal = ({ onClose }) => {
     return closeEditingModal({ ...note, name, content, color });
   };
 
+  const handleAfterOpen = () => {
+    const textarea = contentRef.current;
+    const end = textarea.value.length;
+    textarea.setSelectionRange(end, end);
+    textarea.focus();
+  };
+
   return (
     <Modal
       isOpen={isEditing}
+      onAfterOpen={handleAfterOpen}
       contentLabel={`Editing ${name}`}
-      onRequestClose={() => handleClose()}
+      onRequestClose={handleClose}
+      shouldFocusAfterRender={false}
       className={styles.modalContent}
       overlayClassName={styles.modal}
       style={{ content: { background: color } }}
@@ -51,13 +61,9 @@ const EditNoteModal = ({ onClose }) => {
               setContent(e.target.value);
             }}
             className={styles.text}
+            ref={contentRef}
           />
-          <button
-            className={styles.btn}
-            onClick={() => {
-              handleClose();
-            }}
-          >
+          <button className={styles.btn} onClick={handleClose}>
             Close
           </button>
         </form>

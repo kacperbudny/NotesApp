@@ -5,12 +5,14 @@ import AddNote from "@components/notes/AddNote/AddNote";
 import EditNoteModal from "@components/notes/EditNoteModal";
 import Loading from "@components/common/Loading/Loading";
 import NotesContext from "@contexts/NotesContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { isLoading } = useContext(NotesContext);
 
   return (
-    <div className="App">
+    <div>
       <Header />
       {!isLoading ? (
         <>
@@ -21,6 +23,17 @@ function App() {
       ) : (
         <Loading />
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

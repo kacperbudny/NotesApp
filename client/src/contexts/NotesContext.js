@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
 import backendRoutes from "@constants/backend-routes";
+import { toast } from "react-toastify";
 
 const NotesContext = createContext();
 
@@ -38,6 +39,7 @@ export function NotesProvider({ children }) {
       });
       if (response.ok) {
         setNotes([...notes, newNote]);
+        toast("🦄 Wow so easy!");
       }
     } catch (error) {
       console.error(error);
