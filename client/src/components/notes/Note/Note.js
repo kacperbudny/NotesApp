@@ -19,7 +19,7 @@ const Note = ({ note, onEdit }) => {
             <p>{note.content}</p>
           </div>
         ) : (
-          <p style={styles.emptyNote}>Empty note</p>
+          <p className={styles.emptyNote}>Empty note</p>
         )}
       </div>
       <ButtonsBar note={note} isHovered={isHovered} />
