@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
-import useGetNotes from "../hooks/useGetNotes";
+import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
-import backendRoutes from "../utils/constants/backend-routes";
+import backendRoutes from "@constants/backend-routes";
 
 const NotesContext = createContext();
 
@@ -18,16 +18,13 @@ export function NotesProvider({ children }) {
         : 1;
     const newNote = { _id, ...note, displayOrder };
     try {
-      const response = await fetch(
-        new URL(backendRoutes.notesRoute, backendRoutes.devUrl),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newNote),
-        }
-      );
+      const response = await fetch(backendRoutes.notesRoute, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newNote),
+      });
       if (response.ok) {
         setNotes([...notes, newNote]);
       }
@@ -42,12 +39,9 @@ export function NotesProvider({ children }) {
     });
 
     try {
-      const response = await fetch(
-        new URL(`${backendRoutes.notesRoute}/${id}`, backendRoutes.devUrl),
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${backendRoutes.notesRoute}/${id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         setNotes(filteredNotes);
       }
@@ -68,10 +62,8 @@ export function NotesProvider({ children }) {
 
     try {
       const response = await fetch(
-        new URL(
-          `${backendRoutes.notesRoute}/${updatedNote._id}`,
-          backendRoutes.devUrl
-        ),
+        `${backendRoutes.notesRoute}/${updatedNote._id}`,
+
         {
           method: "PATCH",
           headers: {

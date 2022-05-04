@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import OutsideAlerter from "../wrappers/OutsideAlerter";
-import NotesContext from "../../contexts/NotesContext";
+import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
+import NotesContext from "@contexts/NotesContext";
 
 const AddNote = () => {
   const { addNote } = useContext(NotesContext);

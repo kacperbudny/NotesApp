@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import NotesContext from "../../contexts/NotesContext";
+import NotesContext from "@contexts/NotesContext";
 
-const Modal = ({ onClose }) => {
+const EditNoteModal = ({ onClose }) => {
   const { currentlyEditedNote: note } = useContext(NotesContext);
   const [content, setContent] = useState(note.content);
   const [name, setName] = useState(note.name);
@@ -64,4 +64,4 @@ const Modal = ({ onClose }) => {
   );
 };
 
-export default Modal;
+export default EditNoteModal;

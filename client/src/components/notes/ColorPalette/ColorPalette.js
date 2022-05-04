@@ -1,6 +1,6 @@
 import React from "react";
-import ChangeColorButton from "./ChangeColorButton";
-import colors from "../../utils/constants/colors";
+import ChangeColorButton from "../ChangeColorButton";
+import colors from "@constants/colors";
 
 const ColorPalette = ({ note }) => {
   return (

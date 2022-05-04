@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import NotesContext from "../../contexts/NotesContext";
-import Note from "./Note";
+import NotesContext from "@contexts/NotesContext";
+import Note from "../Note";
 
 const Notes = ({ onEdit }) => {
   const { notes } = useContext(NotesContext);

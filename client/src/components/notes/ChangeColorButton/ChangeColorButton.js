@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import NotesContext from "../../contexts/NotesContext";
+import NotesContext from "@contexts/NotesContext";
 
 const ChangeColorButton = ({ color, note }) => {
   const { changeNoteColor } = useContext(NotesContext);

@@ -9,9 +9,7 @@ export default function useGetNotes() {
     const fetchNotes = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          new URL(backendRoutes.notesRoute, backendRoutes.devUrl).href
-        );
+        const response = await fetch(backendRoutes.notesRoute);
         const data = await response.json();
         setNotes(data);
         setIsLoading(false);

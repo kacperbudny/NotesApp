@@ -1,10 +1,10 @@
-import Header from "./components/layout/Header";
-import Notes from "./components/notes/Notes";
+import Header from "@components/layout/Header/Header";
+import Notes from "@components/notes/Notes";
 import React, { useContext, useState } from "react";
-import AddNote from "./components/layout/AddNote";
-import Modal from "./components/notes/Modal";
-import Loading from "./components/common/Loading";
-import NotesContext from "./contexts/NotesContext";
+import AddNote from "@components/notes/AddNote/AddNote";
+import EditNoteModal from "@components/notes/EditNoteModal";
+import Loading from "@components/common/Loading/Loading";
+import NotesContext from "@contexts/NotesContext";
 
 function App() {
   const { notes, isLoading, updateNote, setCurrentlyEditedNote } =
@@ -28,7 +28,7 @@ function App() {
         <>
           <AddNote />
           <Notes onEdit={showModal} />
-          {isModalShown && <Modal onClose={closeModal} />}
+          {isModalShown && <EditNoteModal onClose={closeModal} />}
         </>
       ) : (
         <Loading />

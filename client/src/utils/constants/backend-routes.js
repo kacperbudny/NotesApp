@@ -1,5 +1,5 @@
 const routes = {
-  devUrl: "http://localhost:8080/",
+  devUrl: "http://localhost:8080",
   notesRoute: "/notes",
 };
 

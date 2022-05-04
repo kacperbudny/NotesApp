@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonsBar from "./ButtonsBar";
+import ButtonsBar from "../ButtonsBar";
 
 const Note = ({ note, onEdit }) => {
   return (

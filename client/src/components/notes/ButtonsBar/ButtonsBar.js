@@ -2,8 +2,8 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
-import NotesContext from "../../contexts/NotesContext";
-import ColorPalette from "./ColorPalette";
+import NotesContext from "@contexts/NotesContext";
+import ColorPalette from "../ColorPalette";
 
 const ButtonsBar = ({ note }) => {
   const { deleteNote } = useContext(NotesContext);
