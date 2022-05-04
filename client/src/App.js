@@ -1,25 +1,13 @@
 import Header from "@components/layout/Header/Header";
 import Notes from "@components/notes/Notes";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import AddNote from "@components/notes/AddNote/AddNote";
 import EditNoteModal from "@components/notes/EditNoteModal";
 import Loading from "@components/common/Loading/Loading";
 import NotesContext from "@contexts/NotesContext";
 
 function App() {
-  const { notes, isLoading, updateNote, setCurrentlyEditedNote } =
-    useContext(NotesContext);
-  const [isModalShown, setIsModalShown] = useState(false);
-
-  const showModal = (_id) => {
-    setIsModalShown(true);
-    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
-  };
-
-  const closeModal = (note) => {
-    setIsModalShown(false);
-    updateNote(note);
-  };
+  const { isLoading } = useContext(NotesContext);
 
   return (
     <div className="App">
@@ -27,8 +15,8 @@ function App() {
       {!isLoading ? (
         <>
           <AddNote />
-          <Notes onEdit={showModal} />
-          {isModalShown && <EditNoteModal onClose={closeModal} />}
+          <Notes />
+          <EditNoteModal />
         </>
       ) : (
         <Loading />

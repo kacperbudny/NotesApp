@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import useHover from "@hooks/useHover";
 import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
+import NotesContext from "@contexts/NotesContext";
 
-const Note = ({ note, onEdit }) => {
+const Note = ({ note }) => {
   const [hoverRef, isHovered] = useHover();
+  const { openEditingModal } = useContext(NotesContext);
 
   return (
     <div
@@ -12,7 +14,10 @@ const Note = ({ note, onEdit }) => {
       className={styles.note}
       style={{ background: `${note.color}` }}
     >
-      <div className={styles.noteContent} onClick={() => onEdit(note._id)}>
+      <div
+        className={styles.noteContent}
+        onClick={() => openEditingModal(note._id)}
+      >
         {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>

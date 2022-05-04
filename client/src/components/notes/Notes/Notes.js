@@ -3,7 +3,7 @@ import NotesContext from "@contexts/NotesContext";
 import Note from "../Note";
 import styles from "./Notes.module.scss";
 
-const Notes = ({ onEdit }) => {
+const Notes = () => {
   const { notes } = useContext(NotesContext);
 
   return (
@@ -11,7 +11,7 @@ const Notes = ({ onEdit }) => {
       {notes.length > 0 ? (
         notes
           .sort((a, b) => b.displayOrder - a.displayOrder)
-          .map((note) => <Note key={note._id} note={note} onEdit={onEdit} />)
+          .map((note) => <Note key={note._id} note={note} />)
       ) : (
         <p className={styles.noNotes}>
           There are no notes. Maybe it's time to add some?

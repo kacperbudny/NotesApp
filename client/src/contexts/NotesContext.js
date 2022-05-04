@@ -8,6 +8,17 @@ const NotesContext = createContext();
 export function NotesProvider({ children }) {
   const [notes, setNotes, isLoading] = useGetNotes();
   const [currentlyEditedNote, setCurrentlyEditedNote] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const openEditingModal = (_id) => {
+    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
+    setIsEditing(true);
+  };
+
+  const closeEditingModal = (note) => {
+    updateNote(note);
+    setIsEditing(false);
+  };
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -92,6 +103,10 @@ export function NotesProvider({ children }) {
         updateNote,
         currentlyEditedNote,
         setCurrentlyEditedNote,
+        isEditing,
+        setIsEditing,
+        openEditingModal,
+        closeEditingModal,
       }}
     >
       {children}

@@ -2,65 +2,67 @@ import React, { useContext, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./EditNoteModal.module.scss";
+import Modal from "react-modal";
+import { useEffect } from "../../../../node_modules/react/cjs/react.development";
 
 const EditNoteModal = ({ onClose }) => {
-  const { currentlyEditedNote: note } = useContext(NotesContext);
-  const [content, setContent] = useState(note.content);
-  const [name, setName] = useState(note.name);
-  let isMouseDownOnModalBackground = false;
+  const {
+    currentlyEditedNote: note,
+    isEditing,
+    closeEditingModal,
+  } = useContext(NotesContext);
+  const [content, setContent] = useState("");
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("white");
 
-  const handleMouseDown = (e) => {
-    if (e.target && e.target.className === "modal") {
-      isMouseDownOnModalBackground = true;
-    }
-  };
-
-  const handleMouseUp = (e) => {
-    if (
-      e.target &&
-      e.target.className === "modal" &&
-      isMouseDownOnModalBackground
-    ) {
-      handleClose();
-    }
-  };
+  useEffect(() => {
+    if (!note) return;
+    setContent(note.content);
+    setName(note.name);
+    setColor(note.color);
+  }, [note]);
 
   const handleClose = () => {
-    return onClose({ ...note, name: name, content: content });
+    return closeEditingModal({ ...note, name, content, color });
   };
 
   return (
-    <div
-      className={styles.modal}
-      onMouseDown={(e) => handleMouseDown(e)}
-      onMouseUp={(e) => handleMouseUp(e)}
+    <Modal
+      isOpen={isEditing}
+      contentLabel={`Editing ${name}`}
+      onRequestClose={() => handleClose()}
+      className={styles.modalContent}
+      overlayClassName={styles.modal}
+      style={{ content: { background: color } }}
     >
-      <div className={styles.modalContent} style={{ background: note.color }}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={styles.title}
-        />
-        <TextareaAutosize
-          placeholder="New note..."
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-          className={styles.text}
-        />
-        <button
-          className={styles.btn}
-          onClick={() => {
-            handleClose();
-          }}
-        >
-          Close
-        </button>
-      </div>
-    </div>
+      {note && (
+        <form>
+          <input
+            type="text"
+            placeholder="Title"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={styles.title}
+          />
+          <TextareaAutosize
+            placeholder="New note..."
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+            className={styles.text}
+          />
+          <button
+            className={styles.btn}
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            Close
+          </button>
+        </form>
+      )}
+    </Modal>
   );
 };
 
