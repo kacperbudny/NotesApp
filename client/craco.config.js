@@ -7,6 +7,7 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "src/hooks/"),
       "@services": path.resolve(__dirname, "src/services/"),
       "@constants": path.resolve(__dirname, "src/utils/constants/"),
+      "@styles": path.resolve(__dirname, "src/styles/"),
     },
   },
 };

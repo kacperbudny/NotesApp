@@ -1,0 +1,12 @@
+.colorButton {
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.colorButton:hover {
+  border: 2px solid black;
+}

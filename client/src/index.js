@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./styles/general.scss";
 import App from "./App";
 import { NotesProvider } from "./contexts/NotesContext";
 

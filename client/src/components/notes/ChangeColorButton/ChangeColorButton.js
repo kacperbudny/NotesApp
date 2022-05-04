@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import NotesContext from "@contexts/NotesContext";
+import styles from "./ChangeColorButton.module.scss";
 
 const ChangeColorButton = ({ color, note }) => {
   const { changeNoteColor } = useContext(NotesContext);
@@ -12,7 +13,7 @@ const ChangeColorButton = ({ color, note }) => {
 
   return (
     <button
-      className="color-button"
+      className={styles.colorButton}
       style={
         color
           ? { background: `${color}` }

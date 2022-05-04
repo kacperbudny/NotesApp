@@ -4,18 +4,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import NotesContext from "@contexts/NotesContext";
 import ColorPalette from "../ColorPalette";
+import styles from "./ButtonsBar.module.scss";
+import useHover from "@hooks/useHover";
 
-const ButtonsBar = ({ note }) => {
+const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
   const { deleteNote } = useContext(NotesContext);
+  const [hoverRef, isHovered] = useHover();
 
   return (
-    <div className="buttons-bar">
-      <div className="icon-container" onClick={() => deleteNote(note._id)}>
-        <FontAwesomeIcon icon={faTrashAlt} className="icon" />
+    <div
+      className={styles.buttonsBar}
+      style={{ opacity: `${isParentHovered ? "100%" : "0"}` }}
+    >
+      <div
+        className={styles.iconContainer}
+        onClick={() => deleteNote(note._id)}
+      >
+        <FontAwesomeIcon icon={faTrashAlt} />
       </div>
-      <div className="icon-container palette-container">
-        <FontAwesomeIcon icon={faPalette} className="icon" />
-        <ColorPalette note={note} />
+      <div ref={hoverRef} className={styles.paletteContainer}>
+        <FontAwesomeIcon icon={faPalette} />
+        <ColorPalette note={note} isHovered={isHovered} />
       </div>
     </div>
   );
