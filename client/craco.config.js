@@ -8,6 +8,7 @@ module.exports = {
       "@services": path.resolve(__dirname, "src/services/"),
       "@constants": path.resolve(__dirname, "src/utils/constants/"),
       "@styles": path.resolve(__dirname, "src/styles/"),
+      "@utils": path.resolve(__dirname, "src/utils/"),
     },
   },
 };

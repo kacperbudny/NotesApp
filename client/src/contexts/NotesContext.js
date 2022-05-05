@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
-import backendRoutes from "@constants/backend-routes";
-import { toast } from "react-toastify";
+import { destroyNote, patchNote, saveNote } from "@services/notesApi";
+import toastifyRequest from "@utils/toastifyRequest";
 
 const NotesContext = createContext();
 
@@ -10,16 +10,6 @@ export function NotesProvider({ children }) {
   const [notes, setNotes, isLoading] = useGetNotes();
   const [currentlyEditedNote, setCurrentlyEditedNote] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-
-  const openEditingModal = (_id) => {
-    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
-    setIsEditing(true);
-  };
-
-  const closeEditingModal = (note) => {
-    updateNote(note);
-    setIsEditing(false);
-  };
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -29,18 +19,23 @@ export function NotesProvider({ children }) {
             .displayOrder + 1
         : 1;
     const newNote = { _id, ...note, displayOrder };
+    setNotes([...notes, newNote]);
+
     try {
-      const response = await fetch(backendRoutes.notesRoute, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newNote),
-      });
-      if (response.ok) {
-        setNotes([...notes, newNote]);
-        toast("🦄 Wow so easy!");
-      }
+      await toastifyRequest(saveNote(newNote));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateNote = async (updatedNote) => {
+    const noteIndex = notes.findIndex((n) => n._id === updatedNote._id);
+    const newNotes = [...notes];
+    newNotes[noteIndex] = updatedNote;
+    setNotes(newNotes);
+
+    try {
+      await toastifyRequest(patchNote(updatedNote));
     } catch (error) {
       console.error(error);
     }
@@ -50,14 +45,10 @@ export function NotesProvider({ children }) {
     const filteredNotes = notes.filter((value) => {
       return value._id !== id;
     });
+    setNotes(filteredNotes);
 
     try {
-      const response = await fetch(`${backendRoutes.notesRoute}/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setNotes(filteredNotes);
-      }
+      await toastifyRequest(destroyNote(id));
     } catch (error) {
       console.error(error);
     }
@@ -68,29 +59,14 @@ export function NotesProvider({ children }) {
     updateNote(note);
   };
 
-  const updateNote = async (updatedNote) => {
-    const noteIndex = notes.findIndex((n) => n._id === updatedNote._id);
-    const newNotes = [...notes];
-    newNotes[noteIndex] = updatedNote;
+  const openEditingModal = (_id) => {
+    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
+    setIsEditing(true);
+  };
 
-    try {
-      const response = await fetch(
-        `${backendRoutes.notesRoute}/${updatedNote._id}`,
-
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedNote),
-        }
-      );
-      if (response.ok) {
-        setNotes(newNotes);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const closeEditingModal = (note) => {
+    updateNote(note);
+    setIsEditing(false);
   };
 
   return (

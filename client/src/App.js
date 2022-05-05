@@ -7,6 +7,7 @@ import Loading from "@components/common/Loading/Loading";
 import NotesContext from "@contexts/NotesContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import toastConfig from "utils/toastConfig";
 
 function App() {
   const { isLoading } = useContext(NotesContext);
@@ -23,17 +24,7 @@ function App() {
       ) : (
         <Loading />
       )}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer {...toastConfig} />
     </div>
   );
 }
