@@ -1,32 +1,41 @@
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NotesContext from "@contexts/NotesContext";
 import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
-import useHover from "@hooks/useHover";
 import PropTypes from "prop-types";
 
 const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
   const { openDeletingModal } = useContext(NotesContext);
-  const [hoverRef, isHovered] = useHover();
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
 
   return (
     <div
       className={styles.buttonsBar}
-      style={{ opacity: `${isParentHovered ? "100%" : "0"}` }}
+      style={{
+        opacity: `${isParentHovered || isColorPaletteOpen ? "100%" : "0"}`,
+      }}
     >
-      <div
+      <button
         className={styles.iconContainer}
         onClick={() => openDeletingModal(note)}
       >
         <FontAwesomeIcon icon={faTrashAlt} />
-      </div>
-      <div ref={hoverRef} className={styles.paletteContainer}>
+      </button>
+      <button
+        className={styles.paletteContainer}
+        onClick={() => setIsColorPaletteOpen(true)}
+      >
         <FontAwesomeIcon icon={faPalette} />
-        <ColorPalette note={note} isHovered={isHovered} />
-      </div>
+        {isColorPaletteOpen && (
+          <ColorPalette
+            note={note}
+            setIsColorPaletteOpen={setIsColorPaletteOpen}
+          />
+        )}
+      </button>
     </div>
   );
 };
