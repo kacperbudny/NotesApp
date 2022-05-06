@@ -8,6 +8,7 @@ import NotesContext from "@contexts/NotesContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import toastConfig from "utils/toastConfig";
+import DeleteNoteModal from "@components/notes/DeleteNoteModal/DeleteNoteModal";
 
 function App() {
   const { isLoading } = useContext(NotesContext);
@@ -20,6 +21,7 @@ function App() {
           <AddNote />
           <Notes />
           <EditNoteModal />
+          <DeleteNoteModal />
         </>
       ) : (
         <Loading />

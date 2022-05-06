@@ -8,8 +8,9 @@ const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
   const [notes, setNotes, isLoading] = useGetNotes();
-  const [currentlyEditedNote, setCurrentlyEditedNote] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [activeNote, setActiveNote] = useState(null);
+  const [isEditingModalOpen, setIsEditingModalOpen] = useState(false);
+  const [isDeletingModalOpen, setIsDeletingModalOpen] = useState(false);
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -60,13 +61,18 @@ export function NotesProvider({ children }) {
   };
 
   const openEditingModal = (_id) => {
-    setCurrentlyEditedNote(notes.find((note) => note._id === _id));
-    setIsEditing(true);
+    setActiveNote(notes.find((note) => note._id === _id));
+    setIsEditingModalOpen(true);
   };
 
   const closeEditingModal = (note) => {
     updateNote(note);
-    setIsEditing(false);
+    setIsEditingModalOpen(false);
+  };
+
+  const openDeletingModal = (note) => {
+    setActiveNote(note);
+    setIsDeletingModalOpen(true);
   };
 
   return (
@@ -79,12 +85,15 @@ export function NotesProvider({ children }) {
         deleteNote,
         changeNoteColor,
         updateNote,
-        currentlyEditedNote,
-        setCurrentlyEditedNote,
-        isEditing,
-        setIsEditing,
+        activeNote,
+        setActiveNote,
+        isEditingModalOpen,
+        setIsEditingModalOpen,
         openEditingModal,
         closeEditingModal,
+        isDeletingModalOpen,
+        setIsDeletingModalOpen,
+        openDeletingModal,
       }}
     >
       {children}

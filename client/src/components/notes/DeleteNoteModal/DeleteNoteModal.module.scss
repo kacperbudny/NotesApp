@@ -1,0 +1,22 @@
+@use "../../../styles/modals.scss";
+@use "../../../styles/buttons";
+@use "../../../styles/variables";
+
+.modalWindow {
+  composes: modalWindow;
+  padding: 16px;
+  text-align: center;
+  width: fit-content;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  margin-top: 8px;
+  margin-bottom: -8px;
+}
+
+.deleteButton {
+  composes: btn;
+  color: variables.$red;
+}
