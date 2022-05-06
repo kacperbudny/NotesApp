@@ -25,7 +25,7 @@
 }
 
 .paletteContainer {
-  composes: iconContainer;
+  @extend .iconContainer;
 }
 
 .paletteContainer:hover .colorPalette {
