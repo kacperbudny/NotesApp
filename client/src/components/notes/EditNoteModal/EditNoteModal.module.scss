@@ -1,28 +1,13 @@
-@import "../AddNote/AddNote.module.scss";
-
-.modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modalContent {
-  background-color: white;
-  width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
+@use "../../../styles/buttons";
+@use "../../../styles/modals.scss";
+@use "../AddNote/AddNote.module.scss";
 
 .text {
   composes: text;
   background: none;
+}
+
+.btn {
+  composes: btn;
+  float: right;
 }

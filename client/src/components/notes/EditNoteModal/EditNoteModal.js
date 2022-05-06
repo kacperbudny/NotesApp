@@ -7,8 +7,8 @@ import { useEffect } from "../../../../node_modules/react/cjs/react.development"
 
 const EditNoteModal = () => {
   const {
-    currentlyEditedNote: note,
-    isEditing,
+    activeNote: note,
+    isEditingModalOpen,
     closeEditingModal,
   } = useContext(NotesContext);
   const [content, setContent] = useState("");
@@ -36,13 +36,13 @@ const EditNoteModal = () => {
 
   return (
     <Modal
-      isOpen={isEditing}
+      isOpen={isEditingModalOpen}
       onAfterOpen={handleAfterOpen}
       contentLabel={`Editing ${name}`}
       onRequestClose={handleClose}
       shouldFocusAfterRender={false}
-      className={styles.modalContent}
-      overlayClassName={styles.modal}
+      className={styles.modalWindow}
+      overlayClassName={styles.modalOverlay}
       style={{ content: { background: color } }}
     >
       {note && (

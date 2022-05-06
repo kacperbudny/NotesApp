@@ -9,7 +9,7 @@ import useHover from "@hooks/useHover";
 import PropTypes from "prop-types";
 
 const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
-  const { deleteNote } = useContext(NotesContext);
+  const { openDeletingModal } = useContext(NotesContext);
   const [hoverRef, isHovered] = useHover();
 
   return (
@@ -19,7 +19,7 @@ const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
     >
       <div
         className={styles.iconContainer}
-        onClick={() => deleteNote(note._id)}
+        onClick={() => openDeletingModal(note)}
       >
         <FontAwesomeIcon icon={faTrashAlt} />
       </div>

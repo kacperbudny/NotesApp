@@ -1,4 +1,5 @@
 @use "../../../styles/variables";
+@use "../../../styles/buttons";
 
 .centeringContainer {
   display: flex;
@@ -33,17 +34,6 @@
 }
 
 .btn {
-  border: none;
+  composes: btn;
   float: right;
-  font-size: 15px;
-  background: none;
-  margin: 5px;
-  padding: 8px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 2px;
-}
-
-.btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
 }
