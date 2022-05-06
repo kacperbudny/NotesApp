@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import OutsideAlerter from "../wrappers/OutsideAlerter";
+import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
+import NotesContext from "@contexts/NotesContext";
+import styles from "./AddNote.module.scss";
 
-const AddNote = ({ onAdd }) => {
+const AddNote = () => {
+  const { addNote } = useContext(NotesContext);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +26,7 @@ const AddNote = ({ onAdd }) => {
       resetForm();
       return;
     }
-    onAdd({ content, name });
+    addNote({ content, name });
     resetForm();
   };
 
@@ -34,16 +37,19 @@ const AddNote = ({ onAdd }) => {
   };
 
   return (
-    <div onFocus={() => setIsEditing(true)} className="centering-container">
+    <div
+      onFocus={() => setIsEditing(true)}
+      className={styles.centeringContainer}
+    >
       <OutsideAlerter onClickOutside={handleClickOutside}>
-        <form className="add-note-form" onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {isEditing && (
             <input
               type="text"
               placeholder="Title"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="add-note-text-input title"
+              className={styles.title}
             />
           )}
           <TextareaAutosize
@@ -52,11 +58,11 @@ const AddNote = ({ onAdd }) => {
             onChange={(e) => {
               setContent(e.target.value);
             }}
-            className="add-note-text-input text"
+            className={styles.text}
             rows="1"
           />
           {isEditing && (
-            <input type="submit" value="Close" className="add-note-btn" />
+            <input type="submit" value="Close" className={styles.btn} />
           )}
         </form>
       </OutsideAlerter>

@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 
 const seed = require("./utils/seed");
 const noteRoutes = require("./routes/note");
@@ -12,7 +11,6 @@ const MONGODB_CONNECTION_STRING =
 const app = express();
 const port = 8080;
 
-app.use(cors());
 app.use(express.json());
 
 app.use(noteRoutes);

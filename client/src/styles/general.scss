@@ -1,0 +1,29 @@
+@use "./variables";
+@use "./mixins.scss";
+
+:root {
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @include mixins.fonts;
+  background-color: variables.$main-background;
+}
+
+input {
+  @include mixins.fonts;
+  background: none;
+  outline: none;
+}
+
+textarea {
+  @include mixins.fonts;
+  resize: none;
+  max-height: 50vh;
+}

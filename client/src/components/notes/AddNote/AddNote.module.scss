@@ -1,0 +1,49 @@
+@use "../../../styles/variables";
+
+.centeringContainer {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+.form {
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  overflow: auto;
+  background-color: variables.$plain-white;
+}
+
+.textInput {
+  width: 100%;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
+}
+
+.title {
+  composes: textInput;
+  font-weight: 500;
+}
+
+.text {
+  composes: textInput;
+  font-size: 15px;
+}
+
+.btn {
+  border: none;
+  float: right;
+  font-size: 15px;
+  background: none;
+  margin: 5px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
