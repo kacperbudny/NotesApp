@@ -63,7 +63,7 @@ const EditNoteModal = () => {
             className={styles.text}
             ref={contentRef}
           />
-          <button className={styles.btn} onClick={handleClose}>
+          <button type="button" className={styles.btn} onClick={handleClose}>
             Close
           </button>
         </form>

@@ -6,9 +6,10 @@ const toastifyRequest = async (fn) => {
     success: "Notes synchronized successfully!",
     error: {
       render() {
-        return "There was an error when synchronizing notes. Please try again.";
+        return "Couldn't synchronize notes. Try again.";
       },
       autoClose: false,
+      closeOnClick: false,
     },
   });
 };

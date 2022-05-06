@@ -3,6 +3,7 @@ import useHover from "@hooks/useHover";
 import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import NotesContext from "@contexts/NotesContext";
+import PropTypes from "prop-types";
 
 const Note = ({ note }) => {
   const [hoverRef, isHovered] = useHover();
@@ -30,6 +31,15 @@ const Note = ({ note }) => {
       <ButtonsBar note={note} isHovered={isHovered} />
     </div>
   );
+};
+
+Note.propTypes = {
+  note: PropTypes.shape({
+    color: PropTypes.string,
+    name: PropTypes.string,
+    content: PropTypes.string,
+    _id: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Note;

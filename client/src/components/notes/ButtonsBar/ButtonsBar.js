@@ -6,6 +6,7 @@ import NotesContext from "@contexts/NotesContext";
 import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import useHover from "@hooks/useHover";
+import PropTypes from "prop-types";
 
 const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
   const { deleteNote } = useContext(NotesContext);
@@ -28,6 +29,11 @@ const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
       </div>
     </div>
   );
+};
+
+ButtonsBar.propTypes = {
+  note: PropTypes.object.isRequired,
+  isHovered: PropTypes.bool.isRequired,
 };
 
 export default ButtonsBar;
