@@ -24,16 +24,16 @@
 }
 
 .title {
-  composes: textInput;
+  @extend .textInput;
   font-weight: 500;
 }
 
 .text {
-  composes: textInput;
+  @extend .textInput;
   font-size: 15px;
 }
 
 .btn {
-  composes: btn;
+  @extend .btn;
   float: right;
 }

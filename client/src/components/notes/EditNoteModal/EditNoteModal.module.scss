@@ -3,11 +3,11 @@
 @use "../AddNote/AddNote.module.scss";
 
 .text {
-  composes: text;
+  @extend .text;
   background: none;
 }
 
 .btn {
-  composes: btn;
+  @extend .btn;
   float: right;
 }
