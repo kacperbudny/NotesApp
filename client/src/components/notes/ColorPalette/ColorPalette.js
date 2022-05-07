@@ -24,7 +24,7 @@ const ColorPalette = ({ note, setIsColorPaletteOpen }) => {
 
 ColorPalette.propTypes = {
   note: PropTypes.object.isRequired,
-  isHovered: PropTypes.bool.isRequired,
+  setIsColorPaletteOpen: PropTypes.func.isRequired,
 };
 
 export default ColorPalette;

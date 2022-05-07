@@ -24,18 +24,20 @@ const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
       >
         <FontAwesomeIcon icon={faTrashAlt} />
       </button>
-      <button
-        className={styles.paletteContainer}
-        onClick={() => setIsColorPaletteOpen(true)}
-      >
-        <FontAwesomeIcon icon={faPalette} />
+      <div className={styles.paletteContainer}>
+        <button
+          className={styles.iconContainer}
+          onClick={() => setIsColorPaletteOpen(true)}
+        >
+          <FontAwesomeIcon icon={faPalette} />
+        </button>
         {isColorPaletteOpen && (
           <ColorPalette
             note={note}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
           />
         )}
-      </button>
+      </div>
     </div>
   );
 };

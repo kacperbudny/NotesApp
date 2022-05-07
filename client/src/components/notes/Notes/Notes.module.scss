@@ -1,4 +1,4 @@
-.notes {
+.notesGrid {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -7,4 +7,14 @@
 .noNotes {
   margin: auto;
   margin-top: 50px;
+}
+
+.notesContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.centeringContainer {
+  width: auto;
 }
