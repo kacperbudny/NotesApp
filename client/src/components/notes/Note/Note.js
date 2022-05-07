@@ -4,6 +4,7 @@ import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import NotesContext from "@contexts/NotesContext";
 import PropTypes from "prop-types";
+import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 
 const Note = ({ note }) => {
   const [hoverRef, isHovered] = useHover();
@@ -13,7 +14,11 @@ const Note = ({ note }) => {
     <div
       ref={hoverRef}
       className={styles.note}
-      style={{ background: `${note.color}` }}
+      style={{
+        background: `${note.color}`,
+        margin: NOTE_MARGIN,
+        width: NOTE_WIDTH,
+      }}
     >
       <div
         className={styles.noteContent}

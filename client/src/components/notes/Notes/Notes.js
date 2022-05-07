@@ -4,6 +4,7 @@ import Note from "../Note";
 import styles from "./Notes.module.scss";
 import Masonry from "react-masonry-css";
 import useWindowSize from "@hooks/useWindowSize";
+import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 
 const Notes = () => {
   const { notes } = useContext(NotesContext);
@@ -11,23 +12,35 @@ const Notes = () => {
   const [columnCount, setColumnCount] = useState();
 
   useEffect(() => {
-    const NOTE_WIDTH = 300;
-    const NOTE_MARGIN = 10;
-    setColumnCount(windowSize.width / (NOTE_WIDTH + NOTE_MARGIN));
+    setColumnCount(
+      Math.floor(windowSize.width / (NOTE_WIDTH + NOTE_MARGIN * 2))
+    );
   }, [windowSize]);
 
   return (
-    <Masonry className={styles.notes} breakpointCols={columnCount}>
-      {notes.length > 0 ? (
-        notes
-          .sort((a, b) => b.displayOrder - a.displayOrder)
-          .map((note) => <Note key={note._id} note={note} />)
-      ) : (
-        <p className={styles.noNotes}>
-          There are no notes. Maybe it's time to add some?
-        </p>
-      )}
-    </Masonry>
+    <div className={styles.notesContainer}>
+      <div className={styles.centeringContainer}>
+        {notes.length > 0 ? (
+          <Masonry
+            className={styles.notesGrid}
+            breakpointCols={columnCount}
+            style={{
+              width: `${(NOTE_WIDTH + NOTE_MARGIN * 2) * columnCount}px`,
+            }}
+          >
+            {notes
+              .sort((a, b) => b.displayOrder - a.displayOrder)
+              .map((note) => (
+                <Note key={note._id} note={note} />
+              ))}
+          </Masonry>
+        ) : (
+          <p className={styles.noNotes}>
+            There are no notes. Maybe it's time to add some?
+          </p>
+        )}
+      </div>
+    </div>
   );
 };
 

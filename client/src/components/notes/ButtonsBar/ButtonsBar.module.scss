@@ -4,6 +4,7 @@
   transition: all 0.2s linear;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .buttonsBar .iconContainer {
@@ -25,14 +26,5 @@
 }
 
 .paletteContainer {
-  @extend .iconContainer;
-}
-
-.paletteContainer:hover .colorPalette {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-}
-
-.note:hover .buttonsBar {
-  opacity: 100%;
+  position: relative;
 }
