@@ -23,7 +23,6 @@ const AnimateNotes = ({ children }) => {
   useLayoutEffect(() => {
     const newBoundingBox = calculateBoundingBoxes(children);
     setBoundingBox(newBoundingBox);
-    console.log(newBoundingBox);
   }, [children, windowSize]);
 
   useLayoutEffect(() => {
@@ -56,7 +55,7 @@ const AnimateNotes = ({ children }) => {
         });
       }
     });
-  }, [boundingBox, prevBoundingBox, children, windowSize]);
+  }, [boundingBox, prevBoundingBox, children]);
 
   return (
     <Masonry
