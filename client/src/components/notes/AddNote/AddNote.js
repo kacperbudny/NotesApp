@@ -26,8 +26,8 @@ const AddNote = () => {
       resetForm();
       return;
     }
-    addNote({ content, name });
     resetForm();
+    addNote({ content, name });
   };
 
   const resetForm = () => {
