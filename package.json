@@ -1,0 +1,15 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start:client": "cd ./client && npm run start",
+    "start:server": "cd ./server && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kacperbudny/NotesApp-WIP.git"
+  },
+  "author": "Kacper Budny",
+  "license": "ISC"
+}
