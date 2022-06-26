@@ -6,27 +6,24 @@ At the moment, the app is mostly doing basic CRUD operations on front-end as wel
 
 ## Features
 
- - [x] Basic CRUD operations on front-end
- - [x] Basic CRUD operations on back-end
- - [x] Changing colors of the notes
- - [x] Toast notifications
- - [ ] Authentication
- - [ ] Archiving notes
- - [ ] Pinning notes
- - [ ] Adding tags to the notes & filtering by them
- - [ ] Search functionality
- - [ ] Changing order via drag & drop
- - [ ] Checklists inside notes
+- [x] Basic CRUD operations on front-end
+- [x] Basic CRUD operations on back-end
+- [x] Changing colors of the notes
+- [x] Toast notifications
+- [ ] Authentication
+- [ ] Archiving notes
+- [ ] Pinning notes
+- [ ] Adding tags to the notes & filtering by them
+- [ ] Search functionality
+- [ ] Changing order via drag & drop
+- [ ] Checklists inside notes
 
 ## Setup
 
-First you need to install packages by going inside both folders and running install command:
+First you need to install packages:
 
 ```
-cd ./client
-npm install
-cd ../server
-npm install
+npm run install-modules
 ```
 
 You also have to create .env file in the server directory with your own MongoDB credentials, like this:
@@ -58,7 +55,7 @@ npm run start:client
 
 ### Back-end
 
- - Node.js
- - Express
- - MongoDB
- - Mongoose
+- Node.js
+- Express
+- MongoDB
+- Mongoose
