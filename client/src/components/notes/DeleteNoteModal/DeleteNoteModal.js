@@ -32,7 +32,12 @@ const DeleteNoteModal = () => {
       <>
         <p>
           Are you sure you want to delete{" "}
-          {note.name ? <strong>{note.name}</strong> : "this note"}?
+          {note.name ? (
+            <strong className={styles.noteName}>{note.name}</strong>
+          ) : (
+            "this note"
+          )}
+          ?
         </p>
         <form className={styles.buttons}>
           <button

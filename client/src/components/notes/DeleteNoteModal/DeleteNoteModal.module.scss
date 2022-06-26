@@ -4,7 +4,7 @@
 
 .modalWindow {
   @extend .modalWindow;
-  padding: 16px;
+  padding: 20px 16px 16px 16px;
   text-align: center;
   width: fit-content;
 }
@@ -19,4 +19,9 @@
 .deleteButton {
   @extend .btn;
   color: variables.$red;
+  font-weight: 600;
+}
+
+.noteName {
+  font-weight: 500;
 }

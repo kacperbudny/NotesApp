@@ -1,5 +1,6 @@
 @use "../../../styles/variables";
 @use "../../../styles/buttons";
+@use "../../../styles/mixins";
 
 .centeringContainer {
   display: flex;
@@ -24,13 +25,17 @@
 }
 
 .title {
+  @include mixins.headerFont;
   @extend .textInput;
-  font-weight: 500;
+  font-weight: 600;
+  padding-top: 16px;
+  font-size: 1.2rem;
 }
 
 .text {
   @extend .textInput;
   font-size: 15px;
+  padding-block: 8px;
 }
 
 .btn {
