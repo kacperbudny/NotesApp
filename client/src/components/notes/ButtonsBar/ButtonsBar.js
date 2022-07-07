@@ -7,23 +7,27 @@ import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 
-const ButtonsBar = ({ note, isHovered: isParentHovered }) => {
+const ButtonsBar = ({ note, isHovered: isParentHovered, isAdding }) => {
   const { openDeletingModal } = useContext(NotesContext);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
 
   return (
     <div
       className={styles.buttonsBar}
-      style={{
-        opacity: `${isParentHovered || isColorPaletteOpen ? "100%" : "0"}`,
-      }}
+      style={
+        !isAdding && {
+          opacity: `${isParentHovered || isColorPaletteOpen ? "100%" : "0"}`,
+        }
+      }
     >
-      <button
-        className={styles.iconContainer}
-        onClick={() => openDeletingModal(note)}
-      >
-        <FontAwesomeIcon icon={faTrashAlt} />
-      </button>
+      {!isAdding && (
+        <button
+          className={styles.iconContainer}
+          onClick={() => openDeletingModal(note)}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </button>
+      )}
       <div className={styles.paletteContainer}>
         <button
           className={styles.iconContainer}

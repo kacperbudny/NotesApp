@@ -3,6 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
+import ButtonsBar from "../ButtonsBar/ButtonsBar";
 
 const AddNote = () => {
   const { addNote } = useContext(NotesContext);
@@ -62,7 +63,10 @@ const AddNote = () => {
             rows="1"
           />
           {isEditing && (
-            <input type="submit" value="Close" className={styles.btn} />
+            <>
+              <ButtonsBar />
+              <input type="submit" value="Close" className={styles.btn} />
+            </>
           )}
         </form>
       </OutsideAlerter>
