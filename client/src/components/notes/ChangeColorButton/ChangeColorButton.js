@@ -1,15 +1,12 @@
-import React, { useContext } from "react";
-import NotesContext from "@contexts/NotesContext";
+import React from "react";
 import styles from "./ChangeColorButton.module.scss";
 import PropTypes from "prop-types";
 
-const ChangeColorButton = ({ color, note }) => {
-  const { changeNoteColor } = useContext(NotesContext);
-
+const ChangeColorButton = ({ color, setColor }) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (!color) color = "white";
-    changeNoteColor(color, note);
+    setColor(color);
   };
 
   return (

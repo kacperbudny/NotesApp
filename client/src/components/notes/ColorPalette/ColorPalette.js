@@ -5,16 +5,16 @@ import styles from "./ColorPalette.module.scss";
 import PropTypes from "prop-types";
 import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
 
-const ColorPalette = ({ note, setIsColorPaletteOpen }) => {
+const ColorPalette = ({ note, setIsColorPaletteOpen, setColor }) => {
   return (
     <OutsideAlerter onClickOutside={() => setIsColorPaletteOpen(false)}>
       <div className={styles.colorPalette}>
-        <ChangeColorButton note={note} />
+        <ChangeColorButton setColor={setColor} />
         {Object.values(colors).map((color) => (
           <ChangeColorButton
             key={`${color}-button`}
             color={color}
-            note={note}
+            setColor={setColor}
           />
         ))}
       </div>

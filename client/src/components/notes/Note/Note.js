@@ -8,7 +8,11 @@ import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 
 const Note = forwardRef(({ note }, ref) => {
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal } = useContext(NotesContext);
+  const { openEditingModal, changeNoteColor } = useContext(NotesContext);
+
+  const setColor = (color) => {
+    return changeNoteColor(color, note);
+  };
 
   return (
     <div ref={ref}>
@@ -34,7 +38,7 @@ const Note = forwardRef(({ note }, ref) => {
             <p className={styles.emptyNote}>Empty note</p>
           )}
         </div>
-        <ButtonsBar note={note} isHovered={isHovered} />
+        <ButtonsBar note={note} isHovered={isHovered} setColor={setColor} />
       </div>
     </div>
   );

@@ -3,12 +3,13 @@ import TextareaAutosize from "react-textarea-autosize";
 import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
-import ButtonsBar from "../ButtonsBar/ButtonsBar";
+import AddNoteButtonsBar from "../AddNoteButtonsBar/AddNoteButtonsBar";
 
 const AddNote = () => {
   const { addNote } = useContext(NotesContext);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
+  const [color, setColor] = useState("white");
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSubmit = (e) => {
@@ -28,7 +29,7 @@ const AddNote = () => {
       return;
     }
     resetForm();
-    addNote({ content, name });
+    addNote({ content, name, color });
   };
 
   const resetForm = () => {
@@ -64,7 +65,7 @@ const AddNote = () => {
           />
           {isEditing && (
             <>
-              <ButtonsBar />
+              <AddNoteButtonsBar setColor={setColor} />
               <input type="submit" value="Close" className={styles.btn} />
             </>
           )}
