@@ -12,7 +12,6 @@
   width: 500px;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-  overflow: auto;
   background-color: variables.$plain-white;
 }
 
@@ -36,9 +35,17 @@
   @extend .textInput;
   font-size: 15px;
   padding-block: 8px;
+  border-radius: 10px;
+  background: none;
 }
 
 .btn {
   @extend .btn;
   float: right;
+}
+
+.buttonsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

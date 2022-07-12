@@ -38,7 +38,7 @@ const Note = forwardRef(({ note }, ref) => {
             <p className={styles.emptyNote}>Empty note</p>
           )}
         </div>
-        <ButtonsBar note={note} isHovered={isHovered} setColor={setColor} />
+        <ButtonsBar note={note} isHovered={isHovered} changeColor={setColor} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 
-const ButtonsBar = ({ note, isHovered: isParentHovered, setColor }) => {
+const ButtonsBar = ({ note, isHovered: isParentHovered, changeColor }) => {
   const { openDeletingModal } = useContext(NotesContext);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
 
@@ -33,7 +33,7 @@ const ButtonsBar = ({ note, isHovered: isParentHovered, setColor }) => {
         </button>
         {isColorPaletteOpen && (
           <ColorPalette
-            setColor={setColor}
+            changeColor={changeColor}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
           />
         )}
@@ -45,6 +45,7 @@ const ButtonsBar = ({ note, isHovered: isParentHovered, setColor }) => {
 ButtonsBar.propTypes = {
   note: PropTypes.object.isRequired,
   isHovered: PropTypes.bool.isRequired,
+  changeColor: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;

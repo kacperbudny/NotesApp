@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./ChangeColorButton.module.scss";
 import PropTypes from "prop-types";
 
-const ChangeColorButton = ({ color, setColor }) => {
+const ChangeColorButton = ({ color, changeColor }) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (!color) color = "white";
-    setColor(color);
+    changeColor(color);
   };
 
   return (
@@ -24,7 +24,7 @@ const ChangeColorButton = ({ color, setColor }) => {
 
 ChangeColorButton.propTypes = {
   color: PropTypes.string,
-  note: PropTypes.shape({ color: PropTypes.string }).isRequired,
+  changeColor: PropTypes.func.isRequired,
 };
 
 export default ChangeColorButton;

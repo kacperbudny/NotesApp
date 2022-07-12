@@ -5,21 +5,26 @@ import ColorPalette from "../ColorPalette";
 import styles from "./AddNoteButtonsBar.module.scss";
 import PropTypes from "prop-types";
 
-const AddNoteButtonsBar = ({ setColor }) => {
+const AddNoteButtonsBar = ({ changeColor }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+
+  const handleColorPaletteClick = (e) => {
+    e.preventDefault();
+    setIsColorPaletteOpen(true);
+  };
 
   return (
     <div className={styles.buttonsBar}>
       <div className={styles.paletteContainer}>
         <button
           className={styles.iconContainer}
-          onClick={() => setIsColorPaletteOpen(true)}
+          onClick={handleColorPaletteClick}
         >
           <FontAwesomeIcon icon={faPalette} />
         </button>
         {isColorPaletteOpen && (
           <ColorPalette
-            setColor={setColor}
+            changeColor={changeColor}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
           />
         )}
@@ -29,7 +34,7 @@ const AddNoteButtonsBar = ({ setColor }) => {
 };
 
 AddNoteButtonsBar.propTypes = {
-  note: PropTypes.object.isRequired,
+  changeColor: PropTypes.func.isRequired,
 };
 
 export default AddNoteButtonsBar;

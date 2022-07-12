@@ -4,6 +4,7 @@ import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
 import AddNoteButtonsBar from "../AddNoteButtonsBar/AddNoteButtonsBar";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const AddNote = () => {
   const { addNote } = useContext(NotesContext);
@@ -44,7 +45,11 @@ const AddNote = () => {
       className={styles.centeringContainer}
     >
       <OutsideAlerter onClickOutside={handleClickOutside}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit}
+          style={{ background: color }}
+        >
           {isEditing && (
             <input
               type="text"
@@ -64,10 +69,10 @@ const AddNote = () => {
             rows="1"
           />
           {isEditing && (
-            <>
-              <AddNoteButtonsBar setColor={setColor} />
+            <div className={styles.buttonsRow}>
+              <AddNoteButtonsBar changeColor={setColor} />
               <input type="submit" value="Close" className={styles.btn} />
-            </>
+            </div>
           )}
         </form>
       </OutsideAlerter>

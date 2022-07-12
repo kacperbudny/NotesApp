@@ -1,9 +1,9 @@
 .buttonsBar {
-  margin: 0 10px 10px 10px;
-  opacity: 0;
+  margin: 0 10px 0 10px;
   transition: all 0.2s linear;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
 }
 
