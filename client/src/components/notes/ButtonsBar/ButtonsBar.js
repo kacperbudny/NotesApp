@@ -27,7 +27,7 @@ const ButtonsBar = ({ note, isHovered: isParentHovered, changeColor }) => {
       <div className={styles.paletteContainer}>
         <button
           className={styles.iconContainer}
-          onClick={() => setIsColorPaletteOpen(true)}
+          onClick={() => setIsColorPaletteOpen(!isColorPaletteOpen)}
         >
           <FontAwesomeIcon icon={faPalette} />
         </button>

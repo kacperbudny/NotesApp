@@ -10,7 +10,7 @@ const AddNoteButtonsBar = ({ changeColor }) => {
 
   const handleColorPaletteClick = (e) => {
     e.preventDefault();
-    setIsColorPaletteOpen(true);
+    setIsColorPaletteOpen(!isColorPaletteOpen);
   };
 
   return (

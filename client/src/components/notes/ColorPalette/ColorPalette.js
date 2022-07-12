@@ -3,11 +3,11 @@ import ChangeColorButton from "../ChangeColorButton";
 import colors from "@constants/colors";
 import styles from "./ColorPalette.module.scss";
 import PropTypes from "prop-types";
-import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
   return (
-    <OutsideAlerter onClickOutside={() => setIsColorPaletteOpen(false)}>
+    <OutsideClickHandler onOutsideClick={() => setIsColorPaletteOpen(false)}>
       <div className={styles.colorPalette}>
         <ChangeColorButton changeColor={changeColor} />
         {Object.values(colors).map((color) => (
@@ -18,7 +18,7 @@ const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
           />
         ))}
       </div>
-    </OutsideAlerter>
+    </OutsideClickHandler>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import OutsideAlerter from "@components/wrappers/OutsideAlerter/OutsideAlerter";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
 import AddNoteButtonsBar from "../AddNoteButtonsBar/AddNoteButtonsBar";
@@ -36,6 +35,7 @@ const AddNote = () => {
   const resetForm = () => {
     setName("");
     setContent("");
+    setColor("white");
     setIsEditing(false);
   };
 
@@ -44,7 +44,7 @@ const AddNote = () => {
       onFocus={() => setIsEditing(true)}
       className={styles.centeringContainer}
     >
-      <OutsideAlerter onClickOutside={handleClickOutside}>
+      <OutsideClickHandler onOutsideClick={handleClickOutside}>
         <form
           className={styles.form}
           onSubmit={handleSubmit}
@@ -75,7 +75,7 @@ const AddNote = () => {
             </div>
           )}
         </form>
-      </OutsideAlerter>
+      </OutsideClickHandler>
     </div>
   );
 };
