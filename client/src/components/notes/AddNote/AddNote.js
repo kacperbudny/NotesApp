@@ -2,15 +2,16 @@ import React, { useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
-import AddNoteButtonsBar from "../AddNoteButtonsBar/AddNoteButtonsBar";
 import OutsideClickHandler from "react-outside-click-handler";
+import ButtonsBar from "../ButtonsBar/ButtonsBar";
 
 const AddNote = () => {
   const { addNote } = useContext(NotesContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("white");
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +71,12 @@ const AddNote = () => {
           />
           {isEditing && (
             <div className={styles.buttonsRow}>
-              <AddNoteButtonsBar changeColor={setColor} />
+              <ButtonsBar
+                changeColor={setColor}
+                isAdding={true}
+                isColorPaletteOpen={isColorPaletteOpen}
+                setIsColorPaletteOpen={setIsColorPaletteOpen}
+              />
               <input type="submit" value="Close" className={styles.btn} />
             </div>
           )}

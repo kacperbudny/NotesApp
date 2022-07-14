@@ -1,4 +1,4 @@
-import React, { useContext, forwardRef } from "react";
+import React, { useContext, forwardRef, useState } from "react";
 import useHover from "@hooks/useHover";
 import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 
 const Note = forwardRef(({ note }, ref) => {
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
   const { openEditingModal, changeNoteColor } = useContext(NotesContext);
 
@@ -38,7 +39,13 @@ const Note = forwardRef(({ note }, ref) => {
             <p className={styles.emptyNote}>Empty note</p>
           )}
         </div>
-        <ButtonsBar note={note} isHovered={isHovered} changeColor={setColor} />
+        <ButtonsBar
+          note={note}
+          isHovered={isHovered}
+          changeColor={setColor}
+          isColorPaletteOpen={isColorPaletteOpen}
+          setIsColorPaletteOpen={setIsColorPaletteOpen}
+        />
       </div>
     </div>
   );

@@ -7,7 +7,11 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
   return (
-    <OutsideClickHandler onOutsideClick={() => setIsColorPaletteOpen(false)}>
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        setIsColorPaletteOpen(false);
+      }}
+    >
       <div className={styles.colorPalette}>
         <ChangeColorButton changeColor={changeColor} />
         {Object.values(colors).map((color) => (
