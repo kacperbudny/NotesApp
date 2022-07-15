@@ -4,6 +4,7 @@ import NotesContext from "@contexts/NotesContext";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
 import { useEffect } from "../../../../node_modules/react/cjs/react.development";
+import ButtonsBar from "../ButtonsBar/ButtonsBar";
 
 const EditNoteModal = () => {
   const {
@@ -11,6 +12,7 @@ const EditNoteModal = () => {
     isEditingModalOpen,
     closeEditingModal,
   } = useContext(NotesContext);
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("white");
@@ -46,7 +48,7 @@ const EditNoteModal = () => {
       style={{ content: { background: color } }}
     >
       {note && (
-        <form>
+        <form className={styles.modalContent}>
           <input
             type="text"
             placeholder="Title"
@@ -63,9 +65,17 @@ const EditNoteModal = () => {
             className={styles.text}
             ref={contentRef}
           />
-          <button type="button" className={styles.btn} onClick={handleClose}>
-            Close
-          </button>
+          <div className={styles.buttonsRow}>
+            <ButtonsBar
+              changeColor={setColor}
+              note={note}
+              isColorPaletteOpen={isColorPaletteOpen}
+              setIsColorPaletteOpen={setIsColorPaletteOpen}
+            />
+            <button type="button" className={styles.btn} onClick={handleClose}>
+              Close
+            </button>
+          </div>
         </form>
       )}
     </Modal>

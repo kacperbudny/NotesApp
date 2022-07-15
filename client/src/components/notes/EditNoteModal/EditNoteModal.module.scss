@@ -11,3 +11,8 @@
   @extend .btn;
   float: right;
 }
+
+.modalWindow {
+  transition: background 0.2s linear;
+  overflow: visible;
+}
