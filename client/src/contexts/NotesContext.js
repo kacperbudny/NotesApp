@@ -11,6 +11,7 @@ export function NotesProvider({ children }) {
   const [activeNote, setActiveNote] = useState(null);
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false);
   const [isDeletingModalOpen, setIsDeletingModalOpen] = useState(false);
+  const [shouldReturnToEditing, setShouldReturnToEditing] = useState(false);
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -71,8 +72,17 @@ export function NotesProvider({ children }) {
   };
 
   const openDeletingModal = (note) => {
+    if (isEditingModalOpen) {
+      setIsEditingModalOpen(false);
+      setShouldReturnToEditing(true);
+    }
     setActiveNote(note);
     setIsDeletingModalOpen(true);
+  };
+
+  const closeDeletingModal = () => {
+    setIsDeletingModalOpen(false);
+    setShouldReturnToEditing(false);
   };
 
   return (
@@ -94,6 +104,9 @@ export function NotesProvider({ children }) {
         isDeletingModalOpen,
         setIsDeletingModalOpen,
         openDeletingModal,
+        closeDeletingModal,
+        shouldReturnToEditing,
+        setShouldReturnToEditing,
       }}
     >
       {children}

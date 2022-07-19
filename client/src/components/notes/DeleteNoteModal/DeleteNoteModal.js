@@ -7,17 +7,22 @@ const DeleteNoteModal = () => {
   const {
     activeNote: note,
     isDeletingModalOpen,
-    setIsDeletingModalOpen,
     deleteNote,
+    closeDeletingModal,
+    shouldReturnToEditing,
+    setIsEditingModalOpen,
   } = useContext(NotesContext);
 
   const handleClose = () => {
-    return setIsDeletingModalOpen(false);
+    if (shouldReturnToEditing) {
+      setIsEditingModalOpen(true);
+    }
+    return closeDeletingModal();
   };
 
   const handleDelete = () => {
     deleteNote(note._id);
-    return handleClose();
+    return closeDeletingModal();
   };
 
   return note ? (

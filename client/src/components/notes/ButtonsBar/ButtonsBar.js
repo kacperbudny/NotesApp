@@ -38,7 +38,9 @@ const ButtonsBar = ({
       {!isAdding && (
         <button
           className={styles.iconContainer}
-          onClick={() => openDeletingModal(note)}
+          onClick={() => {
+            openDeletingModal(note);
+          }}
         >
           <FontAwesomeIcon icon={faTrashAlt} />
         </button>
