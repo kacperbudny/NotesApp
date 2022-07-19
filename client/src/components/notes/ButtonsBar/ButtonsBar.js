@@ -37,6 +37,7 @@ const ButtonsBar = ({
     >
       {!isAdding && (
         <button
+          type="button"
           className={styles.iconContainer}
           onClick={() => {
             openDeletingModal(note);
@@ -47,6 +48,7 @@ const ButtonsBar = ({
       )}
       <div className={styles.paletteContainer}>
         <button
+          type="button"
           className={styles.iconContainer}
           onClick={handleColorPaletteClick}
         >

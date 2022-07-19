@@ -9,7 +9,12 @@ import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 const Note = forwardRef(({ note }, ref) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, changeNoteColor } = useContext(NotesContext);
+  const { openEditingModal, changeNoteColor, activeNote } =
+    useContext(NotesContext);
+
+  const handleClick = () => {
+    openEditingModal(note._id);
+  };
 
   const setColor = (color) => {
     return changeNoteColor(color, note);
@@ -24,12 +29,10 @@ const Note = forwardRef(({ note }, ref) => {
           background: `${note.color}`,
           margin: NOTE_MARGIN,
           width: NOTE_WIDTH,
+          opacity: activeNote && activeNote._id === note._id ? "0" : "1",
         }}
       >
-        <div
-          className={styles.noteContent}
-          onClick={() => openEditingModal(note._id)}
-        >
+        <div className={styles.noteContent} onClick={handleClick}>
           {note.name || note.content ? (
             <div>
               <h3>{note.name}</h3>

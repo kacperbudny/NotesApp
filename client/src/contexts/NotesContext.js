@@ -68,6 +68,7 @@ export function NotesProvider({ children }) {
 
   const closeEditingModal = (note) => {
     updateNote(note);
+    setActiveNote(null);
     setIsEditingModalOpen(false);
   };
 
@@ -81,6 +82,9 @@ export function NotesProvider({ children }) {
   };
 
   const closeDeletingModal = () => {
+    if (!shouldReturnToEditing) {
+      setActiveNote(null);
+    }
     setIsDeletingModalOpen(false);
     setShouldReturnToEditing(false);
   };
