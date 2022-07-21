@@ -45,10 +45,15 @@ const EditNoteModal = () => {
       shouldFocusAfterRender={false}
       className={styles.modalWindow}
       overlayClassName={styles.modalOverlay}
-      style={{ content: { background: color } }}
+      closeTimeoutMS={200}
+      style={{
+        content: {
+          background: color,
+        },
+      }}
     >
       {note && (
-        <form className={styles.modalContent}>
+        <form>
           <input
             type="text"
             placeholder="Title"

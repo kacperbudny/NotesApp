@@ -32,6 +32,7 @@ const DeleteNoteModal = () => {
       shouldFocusAfterRender={true}
       className={styles.modalWindow}
       overlayClassName={styles.modalOverlay}
+      closeTimeoutMS={200}
       onRequestClose={handleClose}
     >
       <>

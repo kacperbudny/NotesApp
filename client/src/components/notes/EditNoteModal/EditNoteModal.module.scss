@@ -13,6 +13,6 @@
 }
 
 .modalWindow {
-  transition: background 0.2s linear;
+  transition: background 0.2s linear, transform 0.2s ease-out;
   overflow: visible;
 }
