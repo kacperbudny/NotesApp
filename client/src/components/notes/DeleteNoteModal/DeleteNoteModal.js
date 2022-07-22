@@ -1,5 +1,5 @@
 import NotesContext from "@contexts/NotesContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Modal from "react-modal";
 import styles from "./DeleteNoteModal.module.scss";
 
