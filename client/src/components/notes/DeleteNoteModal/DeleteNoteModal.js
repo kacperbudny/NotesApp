@@ -1,5 +1,5 @@
 import NotesContext from "@contexts/NotesContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "./DeleteNoteModal.module.scss";
 
@@ -21,14 +21,15 @@ const DeleteNoteModal = () => {
   };
 
   const handleDelete = () => {
+    if (!note) return;
     deleteNote(note._id);
     return closeDeletingModal();
   };
 
-  return note ? (
+  return (
     <Modal
       isOpen={isDeletingModalOpen}
-      contentLabel={`Deleting ${note.name}`}
+      contentLabel={`Deleting ${note ? note.name : "note"}`}
       shouldFocusAfterRender={true}
       className={styles.modalWindow}
       overlayClassName={styles.modalOverlay}
@@ -38,7 +39,7 @@ const DeleteNoteModal = () => {
       <>
         <p>
           Are you sure you want to delete{" "}
-          {note.name ? (
+          {note ? (
             <strong className={styles.noteName}>{note.name}</strong>
           ) : (
             "this note"
@@ -59,7 +60,7 @@ const DeleteNoteModal = () => {
         </form>
       </>
     </Modal>
-  ) : null;
+  );
 };
 
 export default DeleteNoteModal;
