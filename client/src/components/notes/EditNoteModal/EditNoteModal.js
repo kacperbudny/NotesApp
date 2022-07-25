@@ -52,37 +52,35 @@ const EditNoteModal = () => {
         },
       }}
     >
-      {note && (
-        <form>
-          <input
-            type="text"
-            placeholder="Title"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={styles.title}
+      <form>
+        <input
+          type="text"
+          placeholder="Title"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={styles.title}
+        />
+        <TextareaAutosize
+          placeholder="New note..."
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+          className={styles.text}
+          ref={contentRef}
+        />
+        <div className={styles.buttonsRow}>
+          <ButtonsBar
+            changeColor={setColor}
+            note={note}
+            isColorPaletteOpen={isColorPaletteOpen}
+            setIsColorPaletteOpen={setIsColorPaletteOpen}
           />
-          <TextareaAutosize
-            placeholder="New note..."
-            value={content}
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
-            className={styles.text}
-            ref={contentRef}
-          />
-          <div className={styles.buttonsRow}>
-            <ButtonsBar
-              changeColor={setColor}
-              note={note}
-              isColorPaletteOpen={isColorPaletteOpen}
-              setIsColorPaletteOpen={setIsColorPaletteOpen}
-            />
-            <button type="button" className={styles.btn} onClick={handleClose}>
-              Close
-            </button>
-          </div>
-        </form>
-      )}
+          <button type="button" className={styles.btn} onClick={handleClose}>
+            Close
+          </button>
+        </div>
+      </form>
     </Modal>
   );
 };

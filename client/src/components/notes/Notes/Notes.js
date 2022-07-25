@@ -1,4 +1,4 @@
-import React, { useContext, createRef } from "react";
+import React, { useContext } from "react";
 import NotesContext from "@contexts/NotesContext";
 import Note from "../Note";
 import styles from "./Notes.module.scss";
@@ -15,7 +15,7 @@ const Notes = () => {
             .sort((a, b) => b.displayOrder - a.displayOrder)
             .map((note) => (
               <XBlock key={note._id} width={1}>
-                <Note note={note} ref={createRef()} />
+                <Note note={note} />
               </XBlock>
             ))}
         </XMasonry>
