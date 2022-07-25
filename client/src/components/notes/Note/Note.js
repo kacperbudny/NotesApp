@@ -4,7 +4,6 @@ import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import NotesContext from "@contexts/NotesContext";
 import PropTypes from "prop-types";
-import { NOTE_WIDTH, NOTE_MARGIN } from "@constants/noteDimensions";
 
 const Note = forwardRef(({ note }, ref) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -27,8 +26,6 @@ const Note = forwardRef(({ note }, ref) => {
         className={styles.note}
         style={{
           background: `${note.color}`,
-          margin: NOTE_MARGIN,
-          width: NOTE_WIDTH,
           opacity: activeNote && activeNote._id === note._id ? "0" : "1",
         }}
       >

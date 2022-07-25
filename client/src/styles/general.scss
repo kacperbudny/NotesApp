@@ -68,3 +68,7 @@ h6 {
 .ReactModal__Content--before-close {
   transform: scale(0.1);
 }
+
+.xmasonry .xblock {
+  transition: left 0.3s ease, top 0.3s ease;
+}
