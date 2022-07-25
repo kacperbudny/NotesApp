@@ -1,9 +1,11 @@
 .buttonsBar {
-  margin: 0 10px 10px 10px;
+  margin: 0 10px 0 10px;
   opacity: 0;
   transition: all 0.2s linear;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
 .buttonsBar .iconContainer {
@@ -25,14 +27,5 @@
 }
 
 .paletteContainer {
-  composes: iconContainer;
-}
-
-.paletteContainer:hover .colorPalette {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-}
-
-.note:hover .buttonsBar {
-  opacity: 100%;
+  position: relative;
 }

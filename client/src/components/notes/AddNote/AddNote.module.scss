@@ -1,4 +1,6 @@
 @use "../../../styles/variables";
+@use "../../../styles/buttons";
+@use "../../../styles/mixins";
 
 .centeringContainer {
   display: flex;
@@ -10,8 +12,8 @@
   width: 500px;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-  overflow: auto;
   background-color: variables.$plain-white;
+  transition: background 0.2s linear;
 }
 
 .textInput {
@@ -23,27 +25,28 @@
 }
 
 .title {
-  composes: textInput;
-  font-weight: 500;
+  @include mixins.headerFont;
+  @extend .textInput;
+  font-weight: 600;
+  padding-top: 16px;
+  font-size: 1.2rem;
 }
 
 .text {
-  composes: textInput;
+  @extend .textInput;
   font-size: 15px;
+  padding-block: 8px;
+  border-radius: 10px;
+  background: none;
 }
 
 .btn {
-  border: none;
+  @extend .btn;
   float: right;
-  font-size: 15px;
-  background: none;
-  margin: 5px;
-  padding: 8px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 2px;
 }
 
-.btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.buttonsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

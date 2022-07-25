@@ -3,21 +3,32 @@ import ChangeColorButton from "../ChangeColorButton";
 import colors from "@constants/colors";
 import styles from "./ColorPalette.module.scss";
 import PropTypes from "prop-types";
+import OutsideClickHandler from "react-outside-click-handler";
 
-const ColorPalette = ({ note, isHovered }) => {
+const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
   return (
-    <div className={`${styles.colorPalette} ${isHovered && styles.visible}`}>
-      <ChangeColorButton note={note} />
-      {Object.values(colors).map((color) => (
-        <ChangeColorButton key={`${color}-button`} color={color} note={note} />
-      ))}
-    </div>
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        setIsColorPaletteOpen(false);
+      }}
+    >
+      <div className={styles.colorPalette}>
+        <ChangeColorButton changeColor={changeColor} />
+        {Object.values(colors).map((color) => (
+          <ChangeColorButton
+            key={`${color}-button`}
+            color={color}
+            changeColor={changeColor}
+          />
+        ))}
+      </div>
+    </OutsideClickHandler>
   );
 };
 
 ColorPalette.propTypes = {
-  note: PropTypes.object.isRequired,
-  isHovered: PropTypes.bool.isRequired,
+  changeColor: PropTypes.func.isRequired,
+  setIsColorPaletteOpen: PropTypes.func.isRequired,
 };
 
 export default ColorPalette;

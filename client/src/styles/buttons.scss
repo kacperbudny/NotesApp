@@ -1,0 +1,17 @@
+@use "./mixins.scss";
+
+.btn {
+  @include mixins.headerFont;
+  border: none;
+  font-size: 15px;
+  background: none;
+  margin: 5px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

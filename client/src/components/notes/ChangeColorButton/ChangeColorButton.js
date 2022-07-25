@@ -1,15 +1,12 @@
-import React, { useContext } from "react";
-import NotesContext from "@contexts/NotesContext";
+import React from "react";
 import styles from "./ChangeColorButton.module.scss";
 import PropTypes from "prop-types";
 
-const ChangeColorButton = ({ color, note }) => {
-  const { changeNoteColor } = useContext(NotesContext);
-
+const ChangeColorButton = ({ color, changeColor }) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (!color) color = "white";
-    changeNoteColor(color, note);
+    changeColor(color);
   };
 
   return (
@@ -27,7 +24,7 @@ const ChangeColorButton = ({ color, note }) => {
 
 ChangeColorButton.propTypes = {
   color: PropTypes.string,
-  note: PropTypes.shape({ color: PropTypes.string }).isRequired,
+  changeColor: PropTypes.func.isRequired,
 };
 
 export default ChangeColorButton;

@@ -2,16 +2,23 @@ import React, { useContext } from "react";
 import NotesContext from "@contexts/NotesContext";
 import Note from "../Note";
 import styles from "./Notes.module.scss";
+import { XMasonry, XBlock } from "react-xmasonry";
 
 const Notes = () => {
   const { notes } = useContext(NotesContext);
 
   return (
-    <div className={styles.notes}>
+    <div className={styles.notesContainer}>
       {notes.length > 0 ? (
-        notes
-          .sort((a, b) => b.displayOrder - a.displayOrder)
-          .map((note) => <Note key={note._id} note={note} />)
+        <XMasonry targetBlockWidth={300}>
+          {notes
+            .sort((a, b) => b.displayOrder - a.displayOrder)
+            .map((note) => (
+              <XBlock key={note._id} width={1}>
+                <Note note={note} />
+              </XBlock>
+            ))}
+        </XMasonry>
       ) : (
         <p className={styles.noNotes}>
           There are no notes. Maybe it's time to add some?
