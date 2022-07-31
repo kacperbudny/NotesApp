@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const seed = require("./utils/seed");
 const noteRoutes = require("./routes/note");
+const authRoutes = require("./routes/auth");
 
 require("dotenv").config();
 const MONGODB_CONNECTION_STRING =
@@ -14,6 +14,15 @@ const port = 8080;
 app.use(express.json());
 
 app.use(noteRoutes);
+app.use(authRoutes);
+
+app.use((error, req, res) => {
+  console.error(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
+});
 
 mongoose
   .connect(MONGODB_CONNECTION_STRING)

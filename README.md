@@ -26,11 +26,12 @@ First you need to install packages:
 npm run install-modules
 ```
 
-You also have to create .env file in the server directory with your own MongoDB credentials, like this:
+You also have to create .env file in the server directory with your own MongoDB credentials and a secret key, like this:
 
 ```
 MONGO_USER="your_username"
 MONGO_PASSWORD="your_password"
+SECRET_KEY="secret_of_your_choice"
 ```
 
 Then to start the app you have to run two consoles, one for front-end and one for back-end. There are commands for the root directory:
