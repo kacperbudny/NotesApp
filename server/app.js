@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 const express = require("express");
 const mongoose = require("mongoose");
-const seed = require("./utils/seed");
+const seed = require("./utils/seed/seed");
 const noteRoutes = require("./routes/note");
 const authRoutes = require("./routes/auth");
 
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(noteRoutes);
 app.use(authRoutes);
 
-app.use((error, req, res) => {
+app.use((error, req, res, _) => {
   console.error(error);
   const status = error.statusCode || 500;
   const message = error.message;
