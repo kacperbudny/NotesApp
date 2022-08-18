@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import NotesContext from "@contexts/NotesContext";
+import React from "react";
 import Note from "../Note";
 import styles from "./Notes.module.scss";
 import { XMasonry, XBlock } from "react-xmasonry";
+import useNotes from "@hooks/useNotes";
 
 const Notes = () => {
-  const { notes } = useContext(NotesContext);
+  const { notes } = useNotes();
 
   return (
     <div className={styles.notesContainer}>

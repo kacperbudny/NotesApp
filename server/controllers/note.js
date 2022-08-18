@@ -96,7 +96,7 @@ exports.deleteNote = async (req, res, next) => {
     user.notes.pull(id);
     await user.save();
 
-    res.status(204).end();
+    res.status(200).json({ message: "Note deleted successfully." });
   } catch (error) {
     next(error);
   }
