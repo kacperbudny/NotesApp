@@ -52,9 +52,7 @@ exports.register = async (req, res, next) => {
       }
     );
 
-    user.token = token;
-
-    res.status(201).json({ success: true, user });
+    res.status(201).json({ success: true, user, token });
   } catch (error) {
     next(error);
   }
@@ -88,7 +86,7 @@ exports.login = async (req, res, next) => {
       }
     );
 
-    return res.status(200).json(token);
+    return res.status(200).json({ token, user });
   } catch (error) {
     next(error);
   }

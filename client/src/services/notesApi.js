@@ -1,16 +1,5 @@
 import backendRoutes from "@constants/backendRoutes";
-
-const handleNotesRequest = async (requestFunction) => {
-  try {
-    const response = await requestFunction();
-    if (response.ok) {
-      return response;
-    }
-    throw new Error();
-  } catch (error) {
-    throw error;
-  }
-};
+import handleRequest from "@utils/handleRequest";
 
 const requestGetNotes = async () => {
   return fetch(backendRoutes.notesRoute);
@@ -47,17 +36,17 @@ const requestDestroyNote = async (id) => {
 };
 
 export const getNotes = async () => {
-  return handleNotesRequest(requestGetNotes);
+  return handleRequest(requestGetNotes);
 };
 
 export const saveNote = async (newNote) => {
-  return handleNotesRequest(() => requestSaveNote(newNote));
+  return handleRequest(() => requestSaveNote(newNote));
 };
 
 export const patchNote = async (updatedNote) => {
-  return handleNotesRequest(() => requestPatchNote(updatedNote));
+  return handleRequest(() => requestPatchNote(updatedNote));
 };
 
 export const destroyNote = async (id) => {
-  return handleNotesRequest(() => requestDestroyNote(id));
+  return handleRequest(() => requestDestroyNote(id));
 };
