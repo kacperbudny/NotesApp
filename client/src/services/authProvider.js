@@ -23,13 +23,13 @@ const requestSignIn = async (credentials) => {
 
 const authProvider = {
   signUp: async (newUser) => {
-    const response = await handleRequest(() => requestSignIn(newUser));
+    const response = await handleRequest(() => requestSignUp(newUser));
     const { token, user } = await response.json();
     localStorage.setItem("token", token);
     return user;
   },
   signIn: async (credentials) => {
-    const response = await handleRequest(() => requestSignUp(credentials));
+    const response = await handleRequest(() => requestSignIn(credentials));
     const { token, user } = await response.json();
     localStorage.setItem("token", token);
     return user;

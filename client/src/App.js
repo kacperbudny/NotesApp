@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "routes/Home";
 import Login from "routes/Login";
-import RequireAuth from "components/RequireAuth";
+import RequireAuth from "components/auth/RequireAuth";
+import { NotesProvider } from "./contexts/NotesContext";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
         path="/"
         element={
           <RequireAuth>
-            <Home />
+            <NotesProvider>
+              <Home />
+            </NotesProvider>
           </RequireAuth>
         }
       />
