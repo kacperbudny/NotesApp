@@ -1,5 +1,6 @@
 import useAuth from "@hooks/useAuth";
-import React, { useState } from "react";
+import getToken from "@utils/getToken";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {

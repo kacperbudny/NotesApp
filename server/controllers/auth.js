@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
-exports.register = async (req, res, next) => {
+exports.postRegister = async (req, res, next) => {
   try {
     const errors = validationResult(req);
 
@@ -58,7 +58,7 @@ exports.register = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -87,6 +87,24 @@ exports.login = async (req, res, next) => {
     );
 
     return res.status(200).json({ token, user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getMe = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (user) {
+      const error = new Error("User not found.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      user: user,
+    });
   } catch (error) {
     next(error);
   }

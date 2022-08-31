@@ -1,8 +1,12 @@
 import backendRoutes from "@constants/backendRoutes";
+import getToken from "@utils/getToken";
 import handleRequest from "@utils/handleRequest";
 
 const requestGetNotes = async () => {
-  return fetch(backendRoutes.notesRoute);
+  return fetch(backendRoutes.notesRoute, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${getToken()}` },
+  });
 };
 
 const requestSaveNote = async (newNote) => {
@@ -10,6 +14,7 @@ const requestSaveNote = async (newNote) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(newNote),
   });
@@ -23,6 +28,7 @@ const requestPatchNote = async (updatedNote) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify(updatedNote),
     }
@@ -32,6 +38,9 @@ const requestPatchNote = async (updatedNote) => {
 const requestDestroyNote = async (id) => {
   return fetch(`${backendRoutes.notesRoute}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
 };
 

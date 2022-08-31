@@ -21,8 +21,9 @@ router.post(
       .normalizeEmail(),
     body("password").trim().isLength({ min: 5 }),
   ],
-  authController.register
+  authController.postRegister
 );
-router.post("/login", authController.login);
+router.post("/login", authController.postLogin);
+router.get("/me", authController.getMe);
 
 module.exports = router;

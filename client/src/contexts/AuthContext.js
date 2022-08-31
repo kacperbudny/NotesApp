@@ -1,10 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import authProvider from "@services/authProvider";
+import getToken from "@utils/getToken";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = getToken();
+    //if (token) navigate("/");
+    if (token) {
+      //get my data
+    }
+  }, []);
 
   const signUp = async (newUser) => {
     try {
