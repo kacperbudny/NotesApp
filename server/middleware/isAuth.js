@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
     err.statusCode = 500;
 
     if (err instanceof jwt.TokenExpiredError) {
-      err.status = 401;
+      err.statusCode = 401;
       err.message = "Access Token was expired.";
     }
 

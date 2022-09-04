@@ -1,3 +1,5 @@
+import authProvider from "./authProvider";
+
 const handleRequest = async (requestFunction) => {
   try {
     const response = await requestFunction();
@@ -11,14 +13,17 @@ const handleRequest = async (requestFunction) => {
 };
 
 const api = {
-  fetch: async (route, config) => {
-    return fetch(route, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    });
+  makeRequest: async (route, method, body) => {
+    return handleRequest(() =>
+      fetch(route, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authProvider.getAuthorizationHeader(),
+        },
+        body: JSON.stringify(body),
+      })
+    );
   },
 };
 

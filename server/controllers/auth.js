@@ -48,7 +48,7 @@ exports.postRegister = async (req, res, next) => {
 
     const token = jwt.sign(
       { userId: user._id.toString(), email },
-      config.secret,
+      process.env.SECRET_KEY,
       {
         expiresIn: config.jwtExpiration,
       }
@@ -84,7 +84,7 @@ exports.postLogin = async (req, res, next) => {
 
     const token = jwt.sign(
       { userId: user._id.toString(), email },
-      config.secret,
+      process.env.SECRET_KEY,
       {
         expiresIn: config.jwtExpiration,
       }
@@ -144,7 +144,7 @@ exports.postRefreshToken = async (req, res, next) => {
 
     let newAccessToken = jwt.sign(
       { id: refreshToken.user._id },
-      config.secret,
+      process.env.SECRET_KEY,
       {
         expiresIn: config.jwtExpiration,
       }
