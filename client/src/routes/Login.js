@@ -1,7 +1,7 @@
 import useAuth from "@hooks/useAuth";
-import getToken from "@utils/getToken";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import tokenProvider from "@services/tokenProvider";
+import React, { useState } from "react";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,13 @@ const Login = () => {
   const location = useLocation();
   const { signIn } = useAuth();
 
-  const from = location.state.from.pathname || "/";
+  const token = tokenProvider.getToken();
+
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

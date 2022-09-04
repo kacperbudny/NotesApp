@@ -1,15 +1,12 @@
-import useAuth from "@hooks/useAuth";
+import tokenProvider from "@services/tokenProvider";
 import React from "react";
-import {
-  Navigate,
-  useLocation,
-} from "../../../../node_modules/react-router-dom/index";
+import { Navigate, useLocation } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
-  const { user } = useAuth();
+  const token = tokenProvider.getToken();
   const location = useLocation();
 
-  if (!user) {
+  if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

@@ -96,7 +96,7 @@ exports.getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
 
-    if (user) {
+    if (!user) {
       const error = new Error("User not found.");
       error.statusCode = 404;
       throw error;
