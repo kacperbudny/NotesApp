@@ -1,9 +1,11 @@
 const User = require("../models/user");
 const Note = require("../models/note");
+const RefreshToken = require("../models/refreshToken");
 const getDefaultNotes = require("../utils/seed/defaultNotes");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const config = require("../config/token.config");
 
 exports.postRegister = async (req, res, next) => {
   try {
@@ -45,14 +47,16 @@ exports.postRegister = async (req, res, next) => {
     await user.save();
 
     const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.SECRET_KEY,
+      { userId: user._id.toString(), email },
+      config.secret,
       {
-        expiresIn: "2h",
+        expiresIn: config.jwtExpiration,
       }
     );
 
-    res.status(201).json({ success: true, user, token });
+    const refreshToken = await RefreshToken.createToken(user);
+
+    res.status(201).json({ success: true, user, token, refreshToken });
   } catch (error) {
     next(error);
   }
@@ -80,13 +84,15 @@ exports.postLogin = async (req, res, next) => {
 
     const token = jwt.sign(
       { userId: user._id.toString(), email },
-      process.env.SECRET_KEY,
+      config.secret,
       {
-        expiresIn: "2h",
+        expiresIn: config.jwtExpiration,
       }
     );
 
-    return res.status(200).json({ token, user });
+    const refreshToken = await RefreshToken.createToken(user);
+
+    return res.status(200).json({ user, token, refreshToken });
   } catch (error) {
     next(error);
   }
@@ -107,5 +113,48 @@ exports.getMe = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.postRefreshToken = async (req, res, next) => {
+  const { refreshToken: requestToken } = req.body;
+
+  if (requestToken == null) {
+    return res.status(403).json({ message: "Refresh Token is required!" });
+  }
+
+  try {
+    const refreshToken = await RefreshToken.findOne({ token: requestToken });
+
+    if (!refreshToken) {
+      res.status(403).json({ message: "Refresh token is not in database!" });
+      return;
+    }
+
+    if (RefreshToken.verifyExpiration(refreshToken)) {
+      RefreshToken.findByIdAndRemove(refreshToken._id, {
+        useFindAndModify: false,
+      }).exec();
+
+      res.status(403).json({
+        message: "Refresh token was expired. Please make a new signin request",
+      });
+      return;
+    }
+
+    let newAccessToken = jwt.sign(
+      { id: refreshToken.user._id },
+      config.secret,
+      {
+        expiresIn: config.jwtExpiration,
+      }
+    );
+
+    return res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: refreshToken.token,
+    });
+  } catch (err) {
+    next(err);
   }
 };
