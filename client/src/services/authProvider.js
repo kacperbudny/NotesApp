@@ -23,7 +23,10 @@ const authProvider = {
     tokenProvider.setToken(token);
     return user;
   },
-  signOut: () => {
+  signOut: async () => {
+    await api.makeRequest(backendRoutes.logoutRoute, "DELETE", {
+      refreshToken: tokenProvider.getRefreshToken(),
+    });
     return tokenProvider.removeToken();
   },
   me: async () => {

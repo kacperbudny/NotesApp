@@ -32,6 +32,7 @@ You also have to create .env file in the server directory with your own MongoDB 
 MONGO_USER="your_username"
 MONGO_PASSWORD="your_password"
 SECRET_KEY="secret_of_your_choice"
+REFRESH_SECRET_KEY="secret_of_your_choice"
 ```
 
 Then to start the app you have to run two consoles, one for front-end and one for back-end. There are commands for the root directory:

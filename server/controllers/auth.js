@@ -1,11 +1,9 @@
 const User = require("../models/user");
 const Note = require("../models/note");
-const RefreshToken = require("../models/refreshToken");
+const UserToken = require("../models/refreshToken");
 const getDefaultNotes = require("../utils/seed/defaultNotes");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
-const config = require("../config/token.config");
 
 exports.postRegister = async (req, res, next) => {
   try {
@@ -46,17 +44,9 @@ exports.postRegister = async (req, res, next) => {
     user.notes.push(...insertedNotes);
     await user.save();
 
-    const token = jwt.sign(
-      { userId: user._id.toString(), email },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: config.jwtExpiration,
-      }
-    );
+    const { accessToken, refreshToken } = await UserToken.createToken(user);
 
-    const refreshToken = await RefreshToken.createToken(user);
-
-    res.status(201).json({ success: true, user, token, refreshToken });
+    res.status(201).json({ user, token: accessToken, refreshToken });
   } catch (error) {
     next(error);
   }
@@ -82,17 +72,9 @@ exports.postLogin = async (req, res, next) => {
       throw error;
     }
 
-    const token = jwt.sign(
-      { userId: user._id.toString(), email },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: config.jwtExpiration,
-      }
-    );
+    const { accessToken, refreshToken } = await UserToken.createToken(user);
 
-    const refreshToken = await RefreshToken.createToken(user);
-
-    return res.status(200).json({ user, token, refreshToken });
+    return res.status(200).json({ user, token: accessToken, refreshToken });
   } catch (error) {
     next(error);
   }
@@ -119,41 +101,48 @@ exports.getMe = async (req, res, next) => {
 exports.postRefreshToken = async (req, res, next) => {
   const { refreshToken: requestToken } = req.body;
 
-  if (requestToken == null) {
-    return res.status(403).json({ message: "Refresh Token is required!" });
-  }
-
   try {
-    const refreshToken = await RefreshToken.findOne({ token: requestToken });
-
-    if (!refreshToken) {
-      res.status(403).json({ message: "Refresh token is not in database!" });
-      return;
+    if (!requestToken) {
+      const error = new Error("Refresh Token is required");
+      error.statusCode = 403;
+      throw error;
     }
 
-    if (RefreshToken.verifyExpiration(refreshToken)) {
-      RefreshToken.findByIdAndRemove(refreshToken._id, {
-        useFindAndModify: false,
-      }).exec();
+    const tokenDetails = await UserToken.verifyRefreshToken(requestToken);
 
-      res.status(403).json({
-        message: "Refresh token was expired. Please make a new signin request",
-      });
-      return;
-    }
-
-    let newAccessToken = jwt.sign(
-      { id: refreshToken.user._id },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: config.jwtExpiration,
-      }
-    );
+    const { accessToken } = await UserToken.createToken({
+      _id: tokenDetails._id,
+      email: tokenDetails.email,
+    });
 
     return res.status(200).json({
-      accessToken: newAccessToken,
-      refreshToken: refreshToken.token,
+      accessToken: accessToken,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.logout = async (req, res, next) => {
+  const { refreshToken: requestToken } = req.body;
+
+  try {
+    if (!requestToken) {
+      const error = new Error("Refresh Token is required");
+      error.statusCode = 403;
+      throw error;
+    }
+
+    const userToken = await UserToken.findOne({ token: req.body.refreshToken });
+
+    if (!userToken)
+      return res
+        .status(200)
+        .json({ error: false, message: "Logged Out Sucessfully" });
+
+    await userToken.remove();
+
+    res.status(200).json({ error: false, message: "Logged Out Sucessfully" });
   } catch (err) {
     next(err);
   }

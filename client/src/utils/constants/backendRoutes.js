@@ -3,6 +3,7 @@ const routes = {
   notesRoute: "/notes",
   loginRoute: "/login",
   registerRoute: "/register",
+  logoutRoute: "/logout",
   meRoute: "/me",
 };
 

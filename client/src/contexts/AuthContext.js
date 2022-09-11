@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   };
 
   const signOut = async () => {
-    authProvider.signOut();
+    await authProvider.signOut();
     setUser(null);
   };
 
