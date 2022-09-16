@@ -1,9 +1,9 @@
-import tokenProvider from "@services/tokenProvider";
+import useAuth from "@hooks/useAuth";
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
-  const token = tokenProvider.getToken();
+  const { token } = useAuth();
   const location = useLocation();
 
   if (!token) {

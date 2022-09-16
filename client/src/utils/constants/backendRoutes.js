@@ -5,6 +5,7 @@ const routes = {
   registerRoute: "/register",
   logoutRoute: "/logout",
   meRoute: "/me",
+  refreshTokenRoute: "/refreshtoken",
 };
 
 export default routes;

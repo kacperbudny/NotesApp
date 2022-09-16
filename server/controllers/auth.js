@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const Note = require("../models/note");
-const UserToken = require("../models/refreshToken");
+const UserToken = require("../models/userToken");
 const getDefaultNotes = require("../utils/seed/defaultNotes");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");

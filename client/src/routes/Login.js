@@ -1,5 +1,4 @@
 import useAuth from "@hooks/useAuth";
-import tokenProvider from "@services/tokenProvider";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
@@ -9,9 +8,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn } = useAuth();
-
-  const token = tokenProvider.getToken();
+  const { signIn, token } = useAuth();
 
   if (token) {
     return <Navigate to="/" replace />;

@@ -9,9 +9,10 @@ const authProvider = {
       "POST",
       newUser
     );
-    const { token, user } = await response.json();
+    const { token, user, refreshToken } = await response.json();
     tokenProvider.setToken(token);
-    return user;
+    tokenProvider.setRefreshToken(refreshToken);
+    return { user, token };
   },
   signIn: async (credentials) => {
     const response = await api.makeRequest(
@@ -19,15 +20,17 @@ const authProvider = {
       "POST",
       credentials
     );
-    const { token, user } = await response.json();
+    const { token, user, refreshToken } = await response.json();
     tokenProvider.setToken(token);
-    return user;
+    tokenProvider.setRefreshToken(refreshToken);
+    return { user, token };
   },
   signOut: async () => {
     await api.makeRequest(backendRoutes.logoutRoute, "DELETE", {
       refreshToken: tokenProvider.getRefreshToken(),
     });
-    return tokenProvider.removeToken();
+    tokenProvider.removeToken();
+    tokenProvider.removeRefreshToken();
   },
   me: async () => {
     const response = await api.makeRequest(backendRoutes.meRoute, "GET");

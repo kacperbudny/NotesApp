@@ -1,15 +1,18 @@
 import { createContext, useState } from "react";
 import authProvider from "@services/authProvider";
+import tokenProvider from "@services/tokenProvider";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(tokenProvider.getToken());
 
   const signUp = async (newUser) => {
     try {
-      const user = await authProvider.signUp(newUser);
+      const { user, token } = await authProvider.signUp(newUser);
       setUser(user);
+      setToken(token);
     } catch (error) {
       console.error(error);
     }
@@ -17,16 +20,18 @@ export function AuthProvider({ children }) {
 
   const signIn = async (credentials) => {
     try {
-      const user = await authProvider.signIn(credentials);
+      const { user, token } = await authProvider.signIn(credentials);
       setUser(user);
+      setToken(token);
     } catch (error) {
       console.error(error);
     }
   };
 
   const signOut = async () => {
-    await authProvider.signOut();
     setUser(null);
+    setToken(null);
+    await authProvider.signOut();
   };
 
   const getUserData = async () => {
@@ -41,7 +46,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, signIn, signOut, signUp, getUserData }}
+      value={{ user, signIn, signOut, signUp, getUserData, token }}
     >
       {children}
     </AuthContext.Provider>
