@@ -14,7 +14,7 @@ export default function useGetNotes() {
         setNotes(data);
         setIsLoading(false);
       } catch (error) {
-        console.error(error);
+        throw error;
       }
     };
     fetchNotes();

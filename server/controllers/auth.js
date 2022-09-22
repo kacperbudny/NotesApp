@@ -108,10 +108,10 @@ exports.postRefreshToken = async (req, res, next) => {
       throw error;
     }
 
-    const tokenDetails = await UserToken.verifyRefreshToken(requestToken);
+    const { tokenDetails } = await UserToken.verifyRefreshToken(requestToken);
 
     const { accessToken } = await UserToken.createToken({
-      _id: tokenDetails._id,
+      _id: tokenDetails.userId,
       email: tokenDetails.email,
     });
 

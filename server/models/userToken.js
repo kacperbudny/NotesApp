@@ -46,7 +46,7 @@ userTokenSchema.statics.createToken = async function (user) {
   }
 };
 
-userTokenSchema.statics.verifyRefreshToken = (refreshToken) => {
+userTokenSchema.statics.verifyRefreshToken = function (refreshToken) {
   const privateKey = process.env.REFRESH_SECRET_KEY;
 
   return new Promise((resolve, reject) => {

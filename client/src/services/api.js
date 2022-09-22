@@ -19,9 +19,16 @@ const handleRequest = async (request) => {
       response.status === 401 &&
       errorMessage === "Access Token was expired."
     ) {
-      refreshToken();
+      const token = await refreshToken();
 
-      const retryResponse = await fetch(request);
+      const retryRequest = new Request(request, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const retryResponse = await fetch(retryRequest);
 
       if (retryResponse.ok) {
         return retryResponse;
@@ -50,8 +57,10 @@ const refreshToken = async () => {
     throw new RefreshTokenError("Failed to refresh token.");
   }
 
-  const { accessToken } = tokenResponse.json();
+  const { accessToken } = await tokenResponse.json();
   tokenProvider.setToken(accessToken);
+
+  return accessToken;
 };
 
 const api = {
