@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DeleteNoteModal from "@components/notes/DeleteNoteModal/DeleteNoteModal";
 import useNotes from "@hooks/useNotes";
 
-function Home() {
+function HomePage() {
   const { isLoading } = useNotes();
 
   return (
@@ -28,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

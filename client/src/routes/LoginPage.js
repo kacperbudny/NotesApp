@@ -3,7 +3,7 @@ import useHandleError from "@hooks/useHandleError";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -65,4 +65,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
