@@ -29,9 +29,13 @@ export function AuthProvider({ children }) {
   };
 
   const signOut = async () => {
-    setUser(null);
-    setToken(null);
-    await authProvider.signOut();
+    try {
+      setUser(null);
+      setToken(null);
+      await authProvider.signOut();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getUserData = async () => {

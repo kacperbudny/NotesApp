@@ -1,4 +1,5 @@
 import useAuth from "@hooks/useAuth";
+import useHandleError from "@hooks/useHandleError";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { signIn, token } = useAuth();
+  const handleError = useHandleError();
 
   if (token) {
     return <Navigate to="/" replace />;
@@ -30,7 +32,7 @@ const Login = () => {
       await signIn({ email, password });
       navigate(from, { replace: true });
     } catch (err) {
-      console.error(err);
+      handleError(err);
     }
   };
 

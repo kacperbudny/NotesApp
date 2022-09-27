@@ -12,12 +12,7 @@ Modal.setAppElement("#root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorBoundary
-      FallbackComponent={ErrorPage}
-      onError={(error) => {
-        console.log(error);
-      }}
-    >
+    <ErrorBoundary FallbackComponent={ErrorPage}>
       <BrowserRouter>
         <AuthProvider>
           <App />

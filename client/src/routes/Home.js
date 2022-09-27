@@ -4,9 +4,7 @@ import React from "react";
 import AddNote from "@components/notes/AddNote/AddNote";
 import EditNoteModal from "@components/notes/EditNoteModal";
 import Loading from "@components/common/Loading/Loading";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import toastConfig from "utils/toastConfig";
 import DeleteNoteModal from "@components/notes/DeleteNoteModal/DeleteNoteModal";
 import useNotes from "@hooks/useNotes";
 
@@ -26,7 +24,6 @@ function Home() {
       ) : (
         <Loading />
       )}
-      <ToastContainer {...toastConfig} />
     </div>
   );
 }
