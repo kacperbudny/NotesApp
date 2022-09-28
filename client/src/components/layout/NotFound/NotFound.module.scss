@@ -1,5 +1,19 @@
-.container {
+@use "../../../styles/variables";
+
+.centeringContainer {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  background: variables.$plain-white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.paragraph {
+  margin-block: 20px;
 }
