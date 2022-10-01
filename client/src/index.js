@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import "./styles/general.scss";
 import App from "./App";
 import Modal from "react-modal";
-import { ErrorBoundary } from "react-error-boundary";
-import { ErrorPage } from "routes/ErrorPage";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "@contexts/AuthContext";
 
@@ -12,13 +10,11 @@ Modal.setAppElement("#root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorBoundary FallbackComponent={ErrorPage}>
-      <BrowserRouter>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
+    <BrowserRouter>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

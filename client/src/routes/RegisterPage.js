@@ -1,4 +1,8 @@
+import Button from "@components/common/Button/Button";
 import CenteredContainer from "@components/common/CenteredContainer/CenteredContainer";
+import ErrorMessage from "@components/common/ErrorMessage/ErrorMessage";
+import Form from "@components/common/Form/Form";
+import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useEffect, useState } from "react";
@@ -8,18 +12,27 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const { signUp, token } = useAuth();
   const handleError = useHandleError();
 
   useEffect(() => {
-    if (password !== repeatPassword) {
-      return setDoPasswordsMatch(false);
+    if (
+      email.trim().length === 0 ||
+      password.trim().length === 0 ||
+      repeatPassword.trim().length === 0
+    ) {
+      return setError("You must fill all fields.");
     }
-    return setDoPasswordsMatch(true);
-  }, [password, repeatPassword]);
+
+    if (password !== repeatPassword) {
+      return setError("Your passwords must match.");
+    }
+
+    return setError("");
+  }, [email, password, repeatPassword]);
 
   if (token) {
     return <Navigate to="/" replace />;
@@ -40,7 +53,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!doPasswordsMatch) return;
+    if (error) return;
 
     try {
       await signUp({ email, password });
@@ -54,37 +67,31 @@ const RegisterPage = () => {
     <CenteredContainer>
       <h1>Sign up</h1>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          E-mail:{" "}
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </label>
-        <label>
-          Password:{" "}
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </label>
-        <label>
-          Repeat password:{" "}
-          <input
-            name="repeat-password"
-            type="password"
-            value={repeatPassword}
-            onChange={handleRepeatPasswordChange}
-          />
-        </label>
-        {!doPasswordsMatch && <p>Your passwords must match.</p>}
-        <button type="submit">Sign up</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          label="E-mail"
+          name="email"
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <Input
+          label="Repeat password"
+          name="repeat-password"
+          type="password"
+          value={repeatPassword}
+          onChange={handleRepeatPasswordChange}
+        />
+        <ErrorMessage isVisible={!!error}>{error}</ErrorMessage>
+        <Button>Sign up</Button>
+      </Form>
     </CenteredContainer>
   );
 };
