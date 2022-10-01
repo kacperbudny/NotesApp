@@ -6,12 +6,14 @@ import { NotesProvider } from "./contexts/NotesContext";
 import { ToastContainer } from "react-toastify";
 import toastConfig from "@utils/toastConfig";
 import NotFoundPage from "routes/NotFoundPage";
+import RegisterPage from "routes/RegisterPage";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
         <Route
           path="/"
           element={
