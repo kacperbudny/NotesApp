@@ -8,7 +8,7 @@ const Notes = () => {
   const { notes } = useNotes();
 
   return (
-    <div className={styles.notesContainer}>
+    <main className={styles.notesContainer}>
       {notes.length > 0 ? (
         <XMasonry targetBlockWidth={300}>
           {notes
@@ -24,7 +24,7 @@ const Notes = () => {
           There are no notes. Maybe it's time to add some?
         </p>
       )}
-    </div>
+    </main>
   );
 };
 

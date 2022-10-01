@@ -1,21 +1,20 @@
+import LogoutButton from "@components/auth/LogoutButton/LogoutButton";
 import useAuth from "@hooks/useAuth";
 import React from "react";
 import styles from "./Header.module.scss";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const { signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const logout = () => {
-    signOut();
-    navigate("/login");
-  };
+  const { user } = useAuth();
 
   return (
     <header className={styles.header}>
       <h1 className={styles.appName}>Notes App</h1>
-      <button onClick={logout}>Log out</button>
+      <div className={styles.userPanel}>
+        <p>
+          Hello, <strong>{user && user.email}</strong>!
+        </p>
+        <LogoutButton />
+      </div>
     </header>
   );
 };
