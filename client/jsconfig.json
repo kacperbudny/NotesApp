@@ -7,10 +7,11 @@
       "@components/*": ["./components/*"],
       "@contexts/*": ["./contexts/*"],
       "@hooks/*": ["./hooks/*"],
+      "@routes/*": ["./routes/*"],
       "@services/*": ["./services/*"],
-      "@constants/*": ["./utils/constants/*"],
       "@styles/*": ["./styles/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@constants/*": ["./utils/constants/*"]
     }
   },
   "exclude": ["node_modules", "**/node_modules/*", "build"]

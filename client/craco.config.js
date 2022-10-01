@@ -5,10 +5,11 @@ module.exports = {
       "@components": path.resolve(__dirname, "src/components/"),
       "@contexts": path.resolve(__dirname, "src/contexts/"),
       "@hooks": path.resolve(__dirname, "src/hooks/"),
+      "@routes": path.resolve(__dirname, "src/routes/"),
       "@services": path.resolve(__dirname, "src/services/"),
-      "@constants": path.resolve(__dirname, "src/utils/constants/"),
       "@styles": path.resolve(__dirname, "src/styles/"),
       "@utils": path.resolve(__dirname, "src/utils/"),
+      "@constants": path.resolve(__dirname, "src/utils/constants/"),
     },
   },
 };
