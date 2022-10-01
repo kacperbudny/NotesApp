@@ -1,3 +1,4 @@
+import CenteredContainer from "@components/common/CenteredContainer/CenteredContainer";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useEffect, useState } from "react";
@@ -38,6 +39,9 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!doPasswordsMatch) return;
+
     try {
       await signUp({ email, password });
       navigate("/", { replace: true });
@@ -47,7 +51,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
+    <CenteredContainer>
       <h1>Sign up</h1>
 
       <form onSubmit={handleSubmit}>
@@ -81,7 +85,7 @@ const RegisterPage = () => {
         {!doPasswordsMatch && <p>Your passwords must match.</p>}
         <button type="submit">Sign up</button>
       </form>
-    </div>
+    </CenteredContainer>
   );
 };
 

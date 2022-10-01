@@ -1,7 +1,10 @@
+import CenteredContainer from "@components/common/CenteredContainer/CenteredContainer";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styles from "./LoginPage.module.scss";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -37,31 +40,34 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <p>You must log in</p>
+    <CenteredContainer>
+      <h1>Login</h1>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          E-mail:{" "}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label className={styles.label}>
+          E-mail
           <input
             name="email"
             type="email"
             value={email}
             onChange={handleEmailChange}
+            className={styles.input}
           />
         </label>
-        <label>
-          Password:{" "}
+        <label className={styles.label}>
+          Password
           <input
             name="password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            className={styles.input}
           />
         </label>
         <button type="submit">Login</button>
       </form>
-    </div>
+      <Link to="/register">Don't have an account? Create one!</Link>
+    </CenteredContainer>
   );
 };
 
