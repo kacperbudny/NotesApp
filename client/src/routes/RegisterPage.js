@@ -6,7 +6,7 @@ import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { signUp, token } = useAuth();
+  const { signUp } = useAuth();
   const handleError = useHandleError();
 
   useEffect(() => {
@@ -33,10 +33,6 @@ const RegisterPage = () => {
 
     return setError("");
   }, [email, password, repeatPassword]);
-
-  if (token) {
-    return <Navigate to="/" replace />;
-  }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

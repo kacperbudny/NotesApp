@@ -5,7 +5,7 @@ import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useState } from "react";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
@@ -14,12 +14,8 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn, token } = useAuth();
+  const { signIn } = useAuth();
   const handleError = useHandleError();
-
-  if (token) {
-    return <Navigate to="/" replace />;
-  }
 
   const from = location.state?.from?.pathname || "/";
 
