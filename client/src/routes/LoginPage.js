@@ -4,6 +4,7 @@ import ErrorMessage from "@components/common/ErrorMessage/ErrorMessage";
 import Form from "@components/common/Form/Form";
 import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
+import { validateEmail, validatePassword } from "@utils/validation";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -21,6 +22,8 @@ const LoginPage = () => {
 
   const areInputsEmpty =
     email.trim().length === 0 || password.trim().length === 0;
+  const isValidEmail = validateEmail(email);
+  const isValidPassword = validatePassword(password);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -35,6 +38,14 @@ const LoginPage = () => {
 
     if (areInputsEmpty) {
       return setError("You must fill all fields.");
+    }
+
+    if (!isValidEmail) {
+      return setError("Please enter valid e-mail.");
+    }
+
+    if (!isValidPassword) {
+      return setError("The password must be at least 5 characters long.");
     }
 
     try {

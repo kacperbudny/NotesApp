@@ -4,8 +4,8 @@ import ErrorMessage from "@components/common/ErrorMessage/ErrorMessage";
 import Form from "@components/common/Form/Form";
 import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
-import useHandleError from "@hooks/useHandleError";
-import React, { useEffect, useState } from "react";
+import { validateEmail, validatePassword } from "@utils/validation";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
@@ -16,23 +16,14 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
   const { signUp } = useAuth();
-  const handleError = useHandleError();
 
-  useEffect(() => {
-    if (
-      email.trim().length === 0 ||
-      password.trim().length === 0 ||
-      repeatPassword.trim().length === 0
-    ) {
-      return setError("You must fill all fields.");
-    }
-
-    if (password !== repeatPassword) {
-      return setError("Your passwords must match.");
-    }
-
-    return setError("");
-  }, [email, password, repeatPassword]);
+  const areInputsEmpty =
+    email.trim().length === 0 ||
+    password.trim().length === 0 ||
+    repeatPassword.trim().length === 0;
+  const doPasswordsMatch = password === repeatPassword;
+  const isValidEmail = validateEmail(email);
+  const isValidPassword = validatePassword(password);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -49,13 +40,27 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (error) return;
+    if (areInputsEmpty) {
+      return setError("You must fill all fields.");
+    }
+
+    if (!isValidEmail) {
+      return setError("Please enter valid e-mail.");
+    }
+
+    if (!doPasswordsMatch) {
+      return setError("Your passwords must match.");
+    }
+
+    if (!isValidPassword) {
+      return setError("The password must be at least 5 characters long.");
+    }
 
     try {
       await signUp({ email, password });
       navigate("/", { replace: true });
     } catch (err) {
-      handleError(err);
+      setError(err.message);
     }
   };
 
