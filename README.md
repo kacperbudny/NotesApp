@@ -10,7 +10,7 @@ At the moment, the app is mostly doing basic CRUD operations on front-end as wel
 - [x] Basic CRUD operations on back-end
 - [x] Changing colors of the notes
 - [x] Toast notifications
-- [ ] Authentication
+- [x] Authentication
 - [ ] Archiving notes
 - [ ] Pinning notes
 - [ ] Adding tags to the notes & filtering by them
@@ -47,13 +47,29 @@ And on the second console:
 npm run start:client
 ```
 
+### Log-in credentials
+
+The server application seeds automatically if there are no users in the database. You can find the most current seed data in `server/utils/seed` folder, but one of these credentials should work:
+
+```
+Username: test@user.com
+Password: testing
+```
+
+```
+Username: test2@user.com
+Password: testing
+```
+
 ## Technologies
 
 ### Front-end
 
 - React
+  - React Router
+  - PropTypes
+  - CSS Modules
 - SCSS
-- PropTypes
 
 ### Back-end
 
