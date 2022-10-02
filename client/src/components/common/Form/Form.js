@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Form.module.scss";
+import PropTypes from "prop-types";
 
 const Form = ({ children, onSubmit }) => {
   return (
@@ -7,6 +8,10 @@ const Form = ({ children, onSubmit }) => {
       {children}
     </form>
   );
+};
+
+Form.propTypes = {
+  onSubmit: PropTypes.func,
 };
 
 export default Form;

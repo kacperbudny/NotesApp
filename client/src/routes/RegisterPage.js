@@ -6,7 +6,7 @@ import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
 import useHandleError from "@hooks/useHandleError";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -88,6 +88,7 @@ const RegisterPage = () => {
         <ErrorMessage isVisible={!!error}>{error}</ErrorMessage>
         <Button>Sign up</Button>
       </Form>
+      <Link to="/login">Already have an account? Sign in!</Link>
     </CenteredContainer>
   );
 };
