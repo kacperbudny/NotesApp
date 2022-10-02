@@ -43,7 +43,7 @@ userTokenSchema.statics.createToken = async function (user) {
 
     await new this({ userId: user._id, token: refreshToken }).save();
 
-    return Promise.resolve({ accessToken, refreshToken });
+    return { accessToken, refreshToken };
   } catch (err) {
     return Promise.reject(err);
   }
@@ -65,9 +65,7 @@ userTokenSchema.statics.verifyRefreshToken = async function (refreshToken) {
       throw new Error("Invalid refresh token");
     }
 
-    return Promise.resolve({
-      tokenDetails,
-    });
+    return { tokenDetails };
   } catch (err) {
     return Promise.reject(err);
   }
