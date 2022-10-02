@@ -56,7 +56,7 @@ exports.postLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    if (!(email && password)) {
+    if (!email || !password) {
       const error = new Error("All input is required");
       error.statusCode = 400;
       throw error;
@@ -64,9 +64,15 @@ exports.postLogin = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
+    if (!user) {
+      const error = new Error("Invalid credentials");
+      error.statusCode = 400;
+      throw error;
+    }
+
     const doPasswordMatch = await bcrypt.compare(password, user.password);
 
-    if (!user || !doPasswordMatch) {
+    if (!doPasswordMatch) {
       const error = new Error("Invalid credentials");
       error.statusCode = 400;
       throw error;

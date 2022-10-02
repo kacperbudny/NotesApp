@@ -1,9 +1,9 @@
 import Button from "@components/common/Button/Button";
 import CenteredContainer from "@components/common/CenteredContainer/CenteredContainer";
+import ErrorMessage from "@components/common/ErrorMessage/ErrorMessage";
 import Form from "@components/common/Form/Form";
 import Input from "@components/common/Input/Input";
 import useAuth from "@hooks/useAuth";
-import useHandleError from "@hooks/useHandleError";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,13 +11,16 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
   const { signIn } = useAuth();
-  const handleError = useHandleError();
 
   const from = location.state?.from?.pathname || "/";
+
+  const areInputsEmpty =
+    email.trim().length === 0 || password.trim().length === 0;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -29,11 +32,16 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (areInputsEmpty) {
+      return setError("You must fill all fields.");
+    }
+
     try {
       await signIn({ email, password });
       navigate(from, { replace: true });
     } catch (err) {
-      handleError(err);
+      setError(err.message);
     }
   };
 
@@ -56,6 +64,7 @@ const LoginPage = () => {
           value={password}
           onChange={handlePasswordChange}
         />
+        <ErrorMessage isVisible={!!error}>{error}</ErrorMessage>
         <Button>Login</Button>
       </Form>
       <Link to="/signup">Don't have an account? Create one!</Link>

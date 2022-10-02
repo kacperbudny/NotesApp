@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
       setUser(user);
       setToken(token);
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
       setUser(user);
       setToken(token);
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 
