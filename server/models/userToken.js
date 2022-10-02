@@ -18,6 +18,7 @@ const userTokenSchema = new mongoose.Schema({
 userTokenSchema.statics.createToken = async function (user) {
   try {
     let expiredAt = new Date();
+
     expiredAt.setSeconds(expiredAt.getSeconds() + config.jwtRefreshExpiration);
 
     const accessToken = jwt.sign(
@@ -37,34 +38,39 @@ userTokenSchema.statics.createToken = async function (user) {
     );
 
     const userToken = await this.findOne({ userId: user._id });
+
     if (userToken) await userToken.remove();
 
     await new this({ userId: user._id, token: refreshToken }).save();
+
     return Promise.resolve({ accessToken, refreshToken });
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-userTokenSchema.statics.verifyRefreshToken = function (refreshToken) {
+userTokenSchema.statics.verifyRefreshToken = async function (refreshToken) {
   const privateKey = process.env.REFRESH_SECRET_KEY;
 
-  return new Promise((resolve, reject) => {
-    this.findOne({ token: refreshToken }, (err, doc) => {
-      if (!doc)
-        return reject({ error: true, message: "Invalid refresh token" });
+  try {
+    const userToken = await this.findOne({ token: refreshToken });
 
-      jwt.verify(refreshToken, privateKey, (err, tokenDetails) => {
-        if (err)
-          return reject({ error: true, message: "Invalid refresh token" });
-        resolve({
-          tokenDetails,
-          error: false,
-          message: "Valid refresh token",
-        });
-      });
+    if (!userToken) {
+      throw new Error("Invalid refresh token");
+    }
+
+    const tokenDetails = await jwt.verify(refreshToken, privateKey);
+
+    if (!tokenDetails) {
+      throw new Error("Invalid refresh token");
+    }
+
+    return Promise.resolve({
+      tokenDetails,
     });
-  });
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
 
 module.exports = mongoose.model("UserToken", userTokenSchema);

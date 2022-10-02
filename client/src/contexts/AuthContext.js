@@ -8,11 +8,11 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(tokenProvider.getToken());
 
-  useEffect(() => {
-    if (token && !user) {
-      getUserData();
-    }
-  }, [token, user]);
+  // useEffect(() => {
+  //   if (token && !user) {
+  //     getUserData();
+  //   }
+  // }, [token, user]);
 
   const signUp = async (newUser) => {
     try {

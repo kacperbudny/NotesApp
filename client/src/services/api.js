@@ -14,11 +14,7 @@ const handleRequest = async (request) => {
     const errorResponse = await response.json();
     const errorMessage = errorResponse.message;
 
-    if (
-      request.url !== backendRoutes.loginRoute &&
-      response.status === 401 &&
-      errorMessage === "Access Token was expired."
-    ) {
+    if (errorResponse.data === "token-expired") {
       const token = await refreshToken();
 
       const retryRequest = new Request(request, {
