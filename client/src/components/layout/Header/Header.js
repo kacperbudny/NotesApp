@@ -9,12 +9,14 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <h1 className={styles.appName}>Notes App</h1>
-      <div className={styles.userPanel}>
-        <p>
-          Hello, <strong>{user && user.email}</strong>!
-        </p>
-        <LogoutButton />
-      </div>
+      {user && (
+        <div className={styles.userPanel}>
+          <p>
+            Hello, <strong>{user.email}</strong>!
+          </p>
+          <LogoutButton />
+        </div>
+      )}
     </header>
   );
 };

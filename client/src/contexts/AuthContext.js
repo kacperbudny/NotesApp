@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import authProvider from "@services/authProvider";
 import tokenProvider from "@services/tokenProvider";
 
@@ -7,6 +7,12 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(tokenProvider.getToken());
+
+  useEffect(() => {
+    if (token && !user) {
+      getUserData();
+    }
+  }, [token, user]);
 
   const signUp = async (newUser) => {
     try {

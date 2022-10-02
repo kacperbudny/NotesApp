@@ -8,9 +8,9 @@ const Notes = () => {
   const { notes } = useNotes();
 
   return (
-    <main className={styles.notesContainer}>
+    <div className={styles.notesContainer}>
       {notes.length > 0 ? (
-        <XMasonry targetBlockWidth={300}>
+        <XMasonry targetBlockWidth={300} center={false}>
           {notes
             .sort((a, b) => b.displayOrder - a.displayOrder)
             .map((note) => (
@@ -24,7 +24,7 @@ const Notes = () => {
           There are no notes. Maybe it's time to add some?
         </p>
       )}
-    </main>
+    </div>
   );
 };
 

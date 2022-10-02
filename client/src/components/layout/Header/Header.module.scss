@@ -2,7 +2,7 @@
 @use "../../../styles/mixins";
 
 .header {
-  padding: 10px;
+  padding: 16px;
   border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
@@ -20,7 +20,7 @@
 .userPanel {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-size: 0.9rem;
 }
 

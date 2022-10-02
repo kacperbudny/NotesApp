@@ -15,12 +15,12 @@ function HomePage() {
     <div>
       <Header />
       {!isLoading ? (
-        <>
+        <main>
           <AddNote />
           <Notes />
           <EditNoteModal />
           <DeleteNoteModal />
-        </>
+        </main>
       ) : (
         <Loading />
       )}
