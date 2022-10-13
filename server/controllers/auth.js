@@ -86,24 +86,6 @@ exports.postLogin = async (req, res, next) => {
   }
 };
 
-exports.getMe = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.userId);
-
-    if (!user) {
-      const error = new Error("User not found.");
-      error.statusCode = 404;
-      throw error;
-    }
-
-    res.status(200).json({
-      user: user,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.postRefreshToken = async (req, res, next) => {
   const { refreshToken: requestToken } = req.body;
 

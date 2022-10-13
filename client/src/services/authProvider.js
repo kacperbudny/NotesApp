@@ -32,11 +32,6 @@ const authProvider = {
     tokenProvider.removeToken();
     tokenProvider.removeRefreshToken();
   },
-  me: async () => {
-    const response = await api.makeRequest(backendRoutes.meRoute, "GET");
-    const { user } = await response.json();
-    return user;
-  },
   getAuthorizationHeader: () => {
     if (!tokenProvider.getToken()) return null;
     return `Bearer ${tokenProvider.getToken()}`;

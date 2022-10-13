@@ -8,11 +8,16 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(tokenProvider.getToken());
 
-  // useEffect(() => {
-  //   if (token && !user) {
-  //     getUserData();
-  //   }
-  // }, [token, user]);
+  useEffect(() => {
+    if (token && !user) {
+      try {
+        const decodedToken = JSON.parse(window.atob(token.split(".")[1]));
+        setUser({ email: decodedToken.email, userId: decodedToken.userId });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [token, user]);
 
   const signUp = async (newUser) => {
     try {
@@ -44,20 +49,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const getUserData = async () => {
-    try {
-      const user = await authProvider.me();
-      setUser(user);
-      return user;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <AuthContext.Provider
-      value={{ user, signIn, signOut, signUp, getUserData, token }}
-    >
+    <AuthContext.Provider value={{ user, signIn, signOut, signUp, token }}>
       {children}
     </AuthContext.Provider>
   );
