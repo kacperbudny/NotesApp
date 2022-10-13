@@ -12,7 +12,11 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState({
+    message: "",
+    email: false,
+    password: false,
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,15 +41,29 @@ const LoginPage = () => {
     e.preventDefault();
 
     if (areInputsEmpty) {
-      return setError("You must fill all fields.");
+      if (areInputsEmpty) {
+        return setError({
+          message: "You must fill all fields.",
+          email: email.trim().length === 0,
+          password: password.trim().length === 0,
+        });
+      }
     }
 
     if (!isValidEmail) {
-      return setError("Please enter valid e-mail.");
+      return setError({
+        message: "Please enter valid e-mail.",
+        email: true,
+        password: false,
+      });
     }
 
     if (!isValidPassword) {
-      return setError("The password must be at least 5 characters long.");
+      return setError({
+        message: "The password must be at least 5 characters long.",
+        email: false,
+        password: true,
+      });
     }
 
     try {
@@ -67,6 +85,7 @@ const LoginPage = () => {
           type="email"
           value={email}
           onChange={handleEmailChange}
+          error={error.email}
         />
         <Input
           label="Password"
@@ -74,8 +93,9 @@ const LoginPage = () => {
           type="password"
           value={password}
           onChange={handlePasswordChange}
+          error={error.password}
         />
-        <ErrorMessage isVisible={!!error}>{error}</ErrorMessage>
+        <ErrorMessage isVisible={!!error.message}>{error.message}</ErrorMessage>
         <Button>Login</Button>
       </Form>
       <Link to="/signup">Don't have an account? Create one!</Link>
