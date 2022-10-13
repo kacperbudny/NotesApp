@@ -3,6 +3,7 @@ import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
 import { destroyNote, patchNote, saveNote } from "@services/notesApi";
 import toastifyRequest from "@utils/toastifyRequest";
+import useHandleError from "@hooks/useHandleError";
 
 const NotesContext = createContext();
 
@@ -12,6 +13,8 @@ export function NotesProvider({ children }) {
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false);
   const [isDeletingModalOpen, setIsDeletingModalOpen] = useState(false);
   const [shouldReturnToEditing, setShouldReturnToEditing] = useState(false);
+
+  const handleError = useHandleError();
 
   const addNote = async (note) => {
     const _id = ObjectId().toString();
@@ -26,7 +29,7 @@ export function NotesProvider({ children }) {
     try {
       await toastifyRequest(saveNote(newNote));
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -39,7 +42,7 @@ export function NotesProvider({ children }) {
     try {
       await toastifyRequest(patchNote(updatedNote));
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -52,7 +55,7 @@ export function NotesProvider({ children }) {
     try {
       await toastifyRequest(destroyNote(id));
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 

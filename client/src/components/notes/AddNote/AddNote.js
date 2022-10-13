@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import NotesContext from "@contexts/NotesContext";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
+import useNotes from "@hooks/useNotes";
 
 const AddNote = () => {
-  const { addNote } = useContext(NotesContext);
+  const { addNote } = useNotes();
   const [isEditing, setIsEditing] = useState(false);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");

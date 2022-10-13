@@ -1,33 +1,48 @@
-import Header from "@components/layout/Header/Header";
-import Notes from "@components/notes/Notes";
-import React, { useContext } from "react";
-import AddNote from "@components/notes/AddNote/AddNote";
-import EditNoteModal from "@components/notes/EditNoteModal";
-import Loading from "@components/common/Loading/Loading";
-import NotesContext from "@contexts/NotesContext";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "@routes/HomePage";
+import LoginPage from "@routes/LoginPage";
+import RequireAuth from "components/auth/RequireAuth";
+import { NotesProvider } from "./contexts/NotesContext";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import toastConfig from "utils/toastConfig";
-import DeleteNoteModal from "@components/notes/DeleteNoteModal/DeleteNoteModal";
+import toastConfig from "@utils/toastConfig";
+import NotFoundPage from "@routes/NotFoundPage";
+import RegisterPage from "@routes/RegisterPage";
+import RequireNonAuth from "@components/auth/RequireNonAuth/RequireNonAuth";
 
 function App() {
-  const { isLoading } = useContext(NotesContext);
-
   return (
-    <div>
-      <Header />
-      {!isLoading ? (
-        <>
-          <AddNote />
-          <Notes />
-          <EditNoteModal />
-          <DeleteNoteModal />
-        </>
-      ) : (
-        <Loading />
-      )}
+    <>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <RequireNonAuth>
+              <LoginPage />
+            </RequireNonAuth>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <RequireNonAuth>
+              <RegisterPage />
+            </RequireNonAuth>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              <NotesProvider>
+                <HomePage />
+              </NotesProvider>
+            </RequireAuth>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
       <ToastContainer {...toastConfig} />
-    </div>
+    </>
   );
 }
 

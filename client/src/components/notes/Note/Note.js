@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import useHover from "@hooks/useHover";
 import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
-import NotesContext from "@contexts/NotesContext";
 import PropTypes from "prop-types";
+import useNotes from "@hooks/useNotes";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, changeNoteColor, activeNote } =
-    useContext(NotesContext);
+  const { openEditingModal, changeNoteColor, activeNote } = useNotes();
 
   const handleClick = () => {
     openEditingModal(note._id);

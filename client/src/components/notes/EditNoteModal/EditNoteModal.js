@@ -1,17 +1,17 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import NotesContext from "@contexts/NotesContext";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
 import { useEffect } from "../../../../node_modules/react/cjs/react.development";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
+import useNotes from "@hooks/useNotes";
 
 const EditNoteModal = () => {
   const {
     activeNote: note,
     isEditingModalOpen,
     closeEditingModal,
-  } = useContext(NotesContext);
+  } = useNotes();
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");

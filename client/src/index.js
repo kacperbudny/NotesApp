@@ -3,15 +3,18 @@ import ReactDOM from "react-dom";
 import "./styles/general.scss";
 import App from "./App";
 import Modal from "react-modal";
-import { NotesProvider } from "./contexts/NotesContext";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "@contexts/AuthContext";
 
 Modal.setAppElement("#root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <NotesProvider>
-      <App />
-    </NotesProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

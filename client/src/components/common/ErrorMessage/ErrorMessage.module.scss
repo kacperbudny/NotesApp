@@ -1,0 +1,6 @@
+@use "../../../styles/variables.scss";
+
+.message {
+  font-size: 0.9rem;
+  color: variables.$red;
+}

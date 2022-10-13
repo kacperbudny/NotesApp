@@ -1,0 +1,23 @@
+@use "../../../styles/variables.scss";
+
+.input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid variables.$grey;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.label {
+  font-size: 0.9rem;
+}
+
+.label .input {
+  margin-top: 4px;
+}
+
+.error {
+  border: 2px solid variables.$red;
+  background: transparentize(variables.$red, 0.9);
+}

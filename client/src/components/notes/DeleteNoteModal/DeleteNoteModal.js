@@ -1,5 +1,5 @@
-import NotesContext from "@contexts/NotesContext";
-import React, { useContext } from "react";
+import useNotes from "@hooks/useNotes";
+import React from "react";
 import Modal from "react-modal";
 import styles from "./DeleteNoteModal.module.scss";
 
@@ -11,7 +11,7 @@ const DeleteNoteModal = () => {
     closeDeletingModal,
     shouldReturnToEditing,
     setIsEditingModalOpen,
-  } = useContext(NotesContext);
+  } = useNotes();
 
   const handleClose = () => {
     if (shouldReturnToEditing) {

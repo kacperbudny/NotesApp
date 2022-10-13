@@ -2,14 +2,28 @@
 @use "../../../styles/mixins";
 
 .header {
-  padding: 10px;
+  padding: 16px;
   border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   background-color: variables.$plain-white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .appName {
   @include mixins.headerFont;
+  font-weight: 500;
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.userPanel strong {
   font-weight: 500;
 }
