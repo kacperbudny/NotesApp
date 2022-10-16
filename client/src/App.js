@@ -8,6 +8,7 @@ import toastConfig from "@utils/toastConfig";
 import NotFoundPage from "@routes/NotFoundPage";
 import RegisterPage from "@routes/RegisterPage";
 import RequireNonAuth from "@components/auth/RequireNonAuth/RequireNonAuth";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -31,6 +32,16 @@ function App() {
         />
         <Route
           path="/"
+          element={
+            <RequireAuth>
+              <NotesProvider>
+                <HomePage />
+              </NotesProvider>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/archive"
           element={
             <RequireAuth>
               <NotesProvider>
