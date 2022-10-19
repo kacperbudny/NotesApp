@@ -45,7 +45,7 @@ function App() {
           element={
             <RequireAuth>
               <NotesProvider>
-                <HomePage />
+                <HomePage displayAs="Archive" />
               </NotesProvider>
             </RequireAuth>
           }

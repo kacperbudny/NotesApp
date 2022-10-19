@@ -9,30 +9,35 @@ import useNotes from "@hooks/useNotes";
 import Sidebar from "@components/layout/Sidebar";
 import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
+import PropTypes from "prop-types";
 
-function HomePage() {
+function HomePage({ displayAs = "Home" }) {
   const { isLoading } = useNotes();
 
   return (
     <div>
       <Header />
-      {!isLoading ? (
-        <>
-          <PageLayoutContainer>
-            <Sidebar />
-            <MainSectionContainer>
-              <AddNote />
-              <Notes />
-            </MainSectionContainer>
-          </PageLayoutContainer>
-          <EditNoteModal />
-          <DeleteNoteModal />
-        </>
-      ) : (
-        <Loading />
-      )}
+      <PageLayoutContainer>
+        <Sidebar />
+        <MainSectionContainer>
+          {!isLoading ? (
+            <>
+              {displayAs === "Home" && <AddNote />}
+              <Notes displayAs={displayAs} />
+              <EditNoteModal />
+              <DeleteNoteModal />
+            </>
+          ) : (
+            <Loading />
+          )}
+        </MainSectionContainer>
+      </PageLayoutContainer>
     </div>
   );
 }
+
+HomePage.propTypes = {
+  displayAs: PropTypes.oneOf(["Home", "Archive"]),
+};
 
 export default HomePage;

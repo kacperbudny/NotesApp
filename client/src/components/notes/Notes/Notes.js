@@ -3,15 +3,31 @@ import Note from "../Note";
 import styles from "./Notes.module.scss";
 import { XMasonry, XBlock } from "react-xmasonry";
 import useNotes from "@hooks/useNotes";
+import PropTypes from "prop-types";
 
-const Notes = () => {
+const filterNotes = (displayAs) => {
+  return (note) => {
+    switch (displayAs) {
+      case "Home":
+        return !note.archived;
+      case "Archive":
+        return note.archived;
+      default:
+        return true;
+    }
+  };
+};
+
+const Notes = ({ displayAs }) => {
   const { notes } = useNotes();
+
+  const filteredNotes = notes.filter(filterNotes(displayAs));
 
   return (
     <div className={styles.notesContainer}>
-      {notes.length > 0 ? (
+      {filteredNotes.length > 0 ? (
         <XMasonry targetBlockWidth={300} center={false}>
-          {notes
+          {filteredNotes
             .sort((a, b) => b.displayOrder - a.displayOrder)
             .map((note) => (
               <XBlock key={note._id} width={1}>
@@ -26,6 +42,10 @@ const Notes = () => {
       )}
     </div>
   );
+};
+
+Notes.propTypes = {
+  displayAs: PropTypes.oneOf(["Home", "Archive"]).isRequired,
 };
 
 export default Notes;
