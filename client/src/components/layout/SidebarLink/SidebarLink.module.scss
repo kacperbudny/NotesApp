@@ -1,0 +1,29 @@
+@use "../../../styles/mixins";
+@use "../../../styles/variables";
+
+.link {
+  @include mixins.headerFont;
+  font-weight: 600;
+  color: variables.$off-black;
+  display: flex;
+  align-items: center;
+  padding-block: 0.9rem;
+  border-radius: 0 24px 24px 0;
+}
+
+.link:hover {
+  background-color: variables.$darker-grey;
+}
+
+.link:active,
+.link:visited {
+  color: variables.$off-black;
+}
+
+.activeLink {
+  background: transparentize(variables.$main-yellow, 0.3);
+}
+
+.icon {
+  margin-inline: 1.5rem;
+}
