@@ -4,13 +4,14 @@ import styles from "./Notes.module.scss";
 import { XMasonry, XBlock } from "react-xmasonry";
 import useNotes from "@hooks/useNotes";
 import PropTypes from "prop-types";
+import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
 const filterNotes = (displayAs) => {
   return (note) => {
     switch (displayAs) {
-      case "Home":
+      case homePageDisplayModes.home:
         return !note.archived;
-      case "Archive":
+      case homePageDisplayModes.archive:
         return note.archived;
       default:
         return true;
@@ -45,7 +46,7 @@ const Notes = ({ displayAs }) => {
 };
 
 Notes.propTypes = {
-  displayAs: PropTypes.oneOf(["Home", "Archive"]).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
 };
 
 export default Notes;

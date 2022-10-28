@@ -1,5 +1,5 @@
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
+import { faPalette, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ColorPalette from "../ColorPalette";
@@ -14,12 +14,17 @@ const ButtonsBar = ({
   isAdding = false,
   isColorPaletteOpen,
   setIsColorPaletteOpen,
+  archive,
 }) => {
   const { openDeletingModal } = useNotes();
 
   const handleColorPaletteClick = (e) => {
     e.preventDefault();
     setIsColorPaletteOpen(!isColorPaletteOpen);
+  };
+
+  const handleArchiveClick = () => {
+    archive();
   };
 
   return (
@@ -61,6 +66,13 @@ const ButtonsBar = ({
           />
         )}
       </div>
+      <button
+        type="button"
+        className={styles.iconContainer}
+        onClick={handleArchiveClick}
+      >
+        <FontAwesomeIcon icon={faInbox} />
+      </button>
     </div>
   );
 };
@@ -72,6 +84,7 @@ ButtonsBar.propTypes = {
   isAdding: PropTypes.bool,
   isColorPaletteOpen: PropTypes.bool.isRequired,
   setIsColorPaletteOpen: PropTypes.func.isRequired,
+  archive: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;

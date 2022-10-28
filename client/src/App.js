@@ -1,14 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import HomePage from "@routes/HomePage";
 import LoginPage from "@routes/LoginPage";
 import RequireAuth from "components/auth/RequireAuth";
-import { NotesProvider } from "./contexts/NotesContext";
 import { ToastContainer } from "react-toastify";
 import toastConfig from "@utils/toastConfig";
 import NotFoundPage from "@routes/NotFoundPage";
 import RegisterPage from "@routes/RegisterPage";
 import RequireNonAuth from "@components/auth/RequireNonAuth/RequireNonAuth";
 import "react-toastify/dist/ReactToastify.css";
+import { NotesProvider } from "@contexts/NotesContext";
+import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
 function App() {
   return (
@@ -35,21 +36,17 @@ function App() {
           element={
             <RequireAuth>
               <NotesProvider>
-                <HomePage />
+                <Outlet />
               </NotesProvider>
             </RequireAuth>
           }
-        />
-        <Route
-          path="/archive"
-          element={
-            <RequireAuth>
-              <NotesProvider>
-                <HomePage displayAs="Archive" />
-              </NotesProvider>
-            </RequireAuth>
-          }
-        />
+        >
+          <Route index element={<HomePage />}></Route>
+          <Route
+            path="/archive"
+            element={<HomePage displayAs={homePageDisplayModes.archive} />}
+          />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer {...toastConfig} />

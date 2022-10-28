@@ -10,19 +10,21 @@ import Sidebar from "@components/layout/Sidebar";
 import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
 import PropTypes from "prop-types";
+import FullHeightContainer from "@components/layout/FullHeightContainer/FullHeightContainer";
+import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
-function HomePage({ displayAs = "Home" }) {
+function HomePage({ displayAs = homePageDisplayModes.home }) {
   const { isLoading } = useNotes();
 
   return (
-    <div>
-      <Header />
+    <FullHeightContainer>
+      <Header displayAs={displayAs} />
       <PageLayoutContainer>
         <Sidebar />
         <MainSectionContainer>
           {!isLoading ? (
             <>
-              {displayAs === "Home" && <AddNote />}
+              {displayAs === homePageDisplayModes.home && <AddNote />}
               <Notes displayAs={displayAs} />
               <EditNoteModal />
               <DeleteNoteModal />
@@ -32,12 +34,12 @@ function HomePage({ displayAs = "Home" }) {
           )}
         </MainSectionContainer>
       </PageLayoutContainer>
-    </div>
+    </FullHeightContainer>
   );
 }
 
 HomePage.propTypes = {
-  displayAs: PropTypes.oneOf(["Home", "Archive"]),
+  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)),
 };
 
 export default HomePage;

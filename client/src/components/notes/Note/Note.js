@@ -8,7 +8,8 @@ import useNotes from "@hooks/useNotes";
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, changeNoteColor, activeNote } = useNotes();
+  const { openEditingModal, changeNoteColor, activeNote, toggleNoteArchived } =
+    useNotes();
 
   const handleClick = () => {
     openEditingModal(note._id);
@@ -16,6 +17,10 @@ const Note = ({ note }) => {
 
   const setColor = (color) => {
     return changeNoteColor(color, note);
+  };
+
+  const handleArchive = () => {
+    toggleNoteArchived(note);
   };
 
   return (
@@ -43,6 +48,7 @@ const Note = ({ note }) => {
         changeColor={setColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}
+        archive={handleArchive}
       />
     </div>
   );
