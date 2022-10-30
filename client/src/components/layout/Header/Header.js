@@ -4,6 +4,10 @@ import React from "react";
 import styles from "./Header.module.scss";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import { useLayoutContext } from "@contexts/LayoutContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import IconButton from "@components/common/IconButton";
 
 const getPageName = (displayAs) => {
   if (displayAs === homePageDisplayModes.home) {
@@ -20,13 +24,19 @@ const getPageName = (displayAs) => {
 
 const Header = ({ displayAs }) => {
   const { user } = useAuth();
+  const { toggleSidebarOpen } = useLayoutContext();
 
   const pageName = getPageName(displayAs);
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.appName}>{pageName}</h1>
-      <div className={styles.userPanel}>
+      <div className={styles.groupContainer}>
+        <IconButton onClick={toggleSidebarOpen} size={38}>
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </IconButton>
+        <h1 className={styles.appName}>{pageName}</h1>
+      </div>
+      <div className={styles.groupContainer}>
         {user && (
           <p>
             Hello, <strong>{user.email}</strong>!

@@ -1,0 +1,15 @@
+.button {
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

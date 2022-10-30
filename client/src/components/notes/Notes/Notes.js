@@ -5,6 +5,7 @@ import { XMasonry, XBlock } from "react-xmasonry";
 import useNotes from "@hooks/useNotes";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import { useLayoutContext } from "@contexts/LayoutContext";
 
 const filterNotes = (displayAs) => {
   return (note) => {
@@ -21,13 +22,14 @@ const filterNotes = (displayAs) => {
 
 const Notes = ({ displayAs }) => {
   const { notes } = useNotes();
+  const { masonryRef } = useLayoutContext();
 
   const filteredNotes = notes.filter(filterNotes(displayAs));
 
   return (
     <div className={styles.notesContainer}>
       {filteredNotes.length > 0 ? (
-        <XMasonry targetBlockWidth={300} center={false}>
+        <XMasonry targetBlockWidth={300} center={false} ref={masonryRef}>
           {filteredNotes
             .sort((a, b) => b.displayOrder - a.displayOrder)
             .map((note) => (

@@ -6,6 +6,7 @@ import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 import useNotes from "@hooks/useNotes";
+import IconButton from "@components/common/IconButton";
 
 const ButtonsBar = ({
   note,
@@ -41,24 +42,18 @@ const ButtonsBar = ({
       }
     >
       {!isAdding && (
-        <button
-          type="button"
-          className={styles.iconContainer}
+        <IconButton
           onClick={() => {
             openDeletingModal(note);
           }}
         >
           <FontAwesomeIcon icon={faTrashAlt} />
-        </button>
+        </IconButton>
       )}
       <div className={styles.paletteContainer}>
-        <button
-          type="button"
-          className={styles.iconContainer}
-          onClick={handleColorPaletteClick}
-        >
+        <IconButton onClick={handleColorPaletteClick}>
           <FontAwesomeIcon icon={faPalette} />
-        </button>
+        </IconButton>
         {isColorPaletteOpen && (
           <ColorPalette
             changeColor={changeColor}
@@ -66,13 +61,9 @@ const ButtonsBar = ({
           />
         )}
       </div>
-      <button
-        type="button"
-        className={styles.iconContainer}
-        onClick={handleArchiveClick}
-      >
+      <IconButton onClick={handleArchiveClick}>
         <FontAwesomeIcon icon={faInbox} />
-      </button>
+      </IconButton>
     </div>
   );
 };

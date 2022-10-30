@@ -1,5 +1,10 @@
 .container {
   display: flex;
   flex-direction: column;
+  transition: width 1s;
+}
+
+.expanded {
   width: 350px;
+  transition: width 1s;
 }
