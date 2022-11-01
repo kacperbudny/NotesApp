@@ -64,6 +64,11 @@ export function NotesProvider({ children }) {
     updateNote(note);
   };
 
+  const toggleNoteArchived = (note) => {
+    note.archived = !note.archived;
+    updateNote(note);
+  };
+
   const openEditingModal = (_id) => {
     setActiveNote(notes.find((note) => note._id === _id));
     setIsEditingModalOpen(true);
@@ -114,6 +119,7 @@ export function NotesProvider({ children }) {
         closeDeletingModal,
         shouldReturnToEditing,
         setShouldReturnToEditing,
+        toggleNoteArchived,
       }}
     >
       {children}

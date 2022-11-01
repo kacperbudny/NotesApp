@@ -27,6 +27,7 @@ exports.postNote = async (req, res, next) => {
       content: req.body.content,
       displayOrder: req.body.displayOrder,
       color: req.body.color,
+      archived: req.body.archived,
       user: req.userId,
     });
 

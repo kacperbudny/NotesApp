@@ -6,6 +6,7 @@ const getDefaultNotes = (userId) => {
       displayOrder: 1,
       color: "white",
       user: userId,
+      archived: false,
     },
     {
       name: "Another note",
@@ -14,6 +15,7 @@ const getDefaultNotes = (userId) => {
       displayOrder: 2,
       color: "white",
       user: userId,
+      archived: false,
     },
     {
       name: "Shopping list",
@@ -21,6 +23,7 @@ const getDefaultNotes = (userId) => {
       displayOrder: 3,
       color: "white",
       user: userId,
+      archived: false,
     },
     {
       name: "Colorful boy",
@@ -28,6 +31,7 @@ const getDefaultNotes = (userId) => {
       displayOrder: 4,
       color: "#CCFF99",
       user: userId,
+      archived: false,
     },
   ];
 };

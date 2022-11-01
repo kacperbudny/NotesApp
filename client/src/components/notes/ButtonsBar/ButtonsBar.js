@@ -1,11 +1,12 @@
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
+import { faPalette, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 import useNotes from "@hooks/useNotes";
+import IconButton from "@components/common/IconButton";
 
 const ButtonsBar = ({
   note,
@@ -14,12 +15,17 @@ const ButtonsBar = ({
   isAdding = false,
   isColorPaletteOpen,
   setIsColorPaletteOpen,
+  archive,
 }) => {
   const { openDeletingModal } = useNotes();
 
   const handleColorPaletteClick = (e) => {
     e.preventDefault();
     setIsColorPaletteOpen(!isColorPaletteOpen);
+  };
+
+  const handleArchiveClick = () => {
+    archive();
   };
 
   return (
@@ -36,24 +42,18 @@ const ButtonsBar = ({
       }
     >
       {!isAdding && (
-        <button
-          type="button"
-          className={styles.iconContainer}
+        <IconButton
           onClick={() => {
             openDeletingModal(note);
           }}
         >
           <FontAwesomeIcon icon={faTrashAlt} />
-        </button>
+        </IconButton>
       )}
       <div className={styles.paletteContainer}>
-        <button
-          type="button"
-          className={styles.iconContainer}
-          onClick={handleColorPaletteClick}
-        >
+        <IconButton onClick={handleColorPaletteClick}>
           <FontAwesomeIcon icon={faPalette} />
-        </button>
+        </IconButton>
         {isColorPaletteOpen && (
           <ColorPalette
             changeColor={changeColor}
@@ -61,6 +61,9 @@ const ButtonsBar = ({
           />
         )}
       </div>
+      <IconButton onClick={handleArchiveClick}>
+        <FontAwesomeIcon icon={faInbox} />
+      </IconButton>
     </div>
   );
 };
@@ -72,6 +75,7 @@ ButtonsBar.propTypes = {
   isAdding: PropTypes.bool,
   isColorPaletteOpen: PropTypes.bool.isRequired,
   setIsColorPaletteOpen: PropTypes.func.isRequired,
+  archive: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;

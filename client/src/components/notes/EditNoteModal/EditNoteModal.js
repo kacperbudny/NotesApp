@@ -36,6 +36,16 @@ const EditNoteModal = () => {
     textarea.focus();
   };
 
+  const handleArchive = () => {
+    return closeEditingModal({
+      ...note,
+      name,
+      content,
+      color,
+      archived: !note.archived,
+    });
+  };
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -75,6 +85,7 @@ const EditNoteModal = () => {
             note={note}
             isColorPaletteOpen={isColorPaletteOpen}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
+            archive={handleArchive}
           />
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close

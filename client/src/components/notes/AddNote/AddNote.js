@@ -4,6 +4,7 @@ import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
 import useNotes from "@hooks/useNotes";
+import { toast } from "react-toastify";
 
 const AddNote = () => {
   const { addNote } = useNotes();
@@ -30,7 +31,21 @@ const AddNote = () => {
       return;
     }
     resetForm();
-    addNote({ content, name, color });
+    addNote({ content, name, color, archived: false });
+  };
+
+  const handleAddArchivedNote = () => {
+    if (name || content) {
+      addNote({
+        name,
+        content,
+        color,
+        archived: true,
+      });
+      resetForm();
+    } else {
+      toast.warn("Your note cannot be empty.");
+    }
   };
 
   const resetForm = () => {
@@ -72,10 +87,12 @@ const AddNote = () => {
           {isEditing && (
             <div className={styles.buttonsRow}>
               <ButtonsBar
+                note={{ name, content, color }}
                 changeColor={setColor}
                 isAdding={true}
                 isColorPaletteOpen={isColorPaletteOpen}
                 setIsColorPaletteOpen={setIsColorPaletteOpen}
+                archive={handleAddArchivedNote}
               />
               <input type="submit" value="Close" className={styles.btn} />
             </div>
