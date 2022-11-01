@@ -11,7 +11,7 @@ At the moment, the app is mostly doing basic CRUD operations on front-end as wel
 - [x] Changing colors of the notes
 - [x] Toast notifications
 - [x] Authentication
-- [ ] Archiving notes
+- [x] Archiving notes
 - [ ] Pinning notes
 - [ ] Adding tags to the notes & filtering by them
 - [ ] Search functionality
