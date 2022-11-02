@@ -19,7 +19,8 @@ export function LayoutProvider({ children }) {
     setIsSidebarOpen((prev) => !prev);
 
     if (masonryRef) {
-      masonryRef.current.update();
+      const timeout = setTimeout(() => masonryRef.current.update(), 200);
+      return clearTimeout(timeout);
     }
   };
 
