@@ -7,6 +7,7 @@ const getDefaultNotes = (userId) => {
       color: "white",
       user: userId,
       archived: false,
+      pinned: false,
     },
     {
       name: "Another note",
@@ -16,6 +17,7 @@ const getDefaultNotes = (userId) => {
       color: "white",
       user: userId,
       archived: false,
+      pinned: false,
     },
     {
       name: "Shopping list",
@@ -24,6 +26,7 @@ const getDefaultNotes = (userId) => {
       color: "white",
       user: userId,
       archived: false,
+      pinned: false,
     },
     {
       name: "Colorful boy",
@@ -32,6 +35,7 @@ const getDefaultNotes = (userId) => {
       color: "#CCFF99",
       user: userId,
       archived: false,
+      pinned: false,
     },
   ];
 };

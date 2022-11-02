@@ -7,6 +7,7 @@ const noteSchema = new mongoose.Schema(
     displayOrder: { type: Number, required: true },
     color: { type: String, default: "white" },
     archived: { type: Boolean, default: false },
+    pinned: { type: Boolean, default: false },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
