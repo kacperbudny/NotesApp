@@ -2,12 +2,13 @@ import React from "react";
 import { XBlock, XMasonry } from "react-xmasonry";
 import Note from "@components/notes/Note";
 import PropTypes from "prop-types";
+import styles from "./NotesGroup.module.scss";
 
 const NotesGroup = ({ label, notes, displayLabel = true }) => {
   //TODO: Add ref
   return (
-    <>
-      {displayLabel && <h4>{label}</h4>}
+    <div className={styles.container}>
+      {displayLabel && <h5 className={styles.label}>{label}</h5>}
       <XMasonry targetBlockWidth={300} center={false}>
         {notes
           .sort((a, b) => b.displayOrder - a.displayOrder)
@@ -17,7 +18,7 @@ const NotesGroup = ({ label, notes, displayLabel = true }) => {
             </XBlock>
           ))}
       </XMasonry>
-    </>
+    </div>
   );
 };
 
