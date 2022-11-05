@@ -4,6 +4,7 @@ import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
 import useNotes from "@hooks/useNotes";
+import PinIcon from "@components/notes/PinIcon";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -33,6 +34,7 @@ const Note = ({ note }) => {
       }}
     >
       <div className={styles.noteContent} onClick={handleClick}>
+        <PinIcon isHovered={isHovered} note={note} />
         {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>

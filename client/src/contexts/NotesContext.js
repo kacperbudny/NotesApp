@@ -69,6 +69,11 @@ export function NotesProvider({ children }) {
     updateNote(note);
   };
 
+  const toggleNotePinned = (note) => {
+    note.pinned = !note.pinned;
+    updateNote(note);
+  };
+
   const openEditingModal = (_id) => {
     setActiveNote(notes.find((note) => note._id === _id));
     setIsEditingModalOpen(true);
@@ -120,6 +125,7 @@ export function NotesProvider({ children }) {
         shouldReturnToEditing,
         setShouldReturnToEditing,
         toggleNoteArchived,
+        toggleNotePinned,
       }}
     >
       {children}

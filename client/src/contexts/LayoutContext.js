@@ -18,7 +18,7 @@ export function LayoutProvider({ children }) {
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
 
-    if (masonryRef) {
+    if (masonryRef.current) {
       masonryRef.current.update();
     }
   };

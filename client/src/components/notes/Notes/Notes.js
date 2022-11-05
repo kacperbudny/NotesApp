@@ -1,11 +1,10 @@
 import React from "react";
-import Note from "../Note";
 import styles from "./Notes.module.scss";
-import { XMasonry, XBlock } from "react-xmasonry";
 import useNotes from "@hooks/useNotes";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
+import NotesGroup from "../NotesGroup/NotesGroup";
 
 const filterNotes = (displayAs) => {
   return (note) => {
@@ -22,22 +21,41 @@ const filterNotes = (displayAs) => {
 
 const Notes = ({ displayAs }) => {
   const { notes } = useNotes();
-  const { masonryRef } = useLayoutContext();
+  // const { masonryRef } = useLayoutContext();
 
   const filteredNotes = notes.filter(filterNotes(displayAs));
+
+  const pinnedNotes = filteredNotes.filter((note) => note.pinned);
+  const archivedNotes = filteredNotes.filter((note) => note.archived);
+  const otherNotes = filteredNotes.filter(
+    (note) => !note.pinned && !note.archived
+  );
+
+  const displayOtherLabel = pinnedNotes.length > 0 || archivedNotes.length > 0;
+  const displayArchivedLabel = displayAs !== homePageDisplayModes.archive;
 
   return (
     <div className={styles.notesContainer}>
       {filteredNotes.length > 0 ? (
-        <XMasonry targetBlockWidth={300} center={false} ref={masonryRef}>
-          {filteredNotes
-            .sort((a, b) => b.displayOrder - a.displayOrder)
-            .map((note) => (
-              <XBlock key={note._id} width={1}>
-                <Note note={note} />
-              </XBlock>
-            ))}
-        </XMasonry>
+        <>
+          {pinnedNotes.length > 0 && (
+            <NotesGroup label="Pinned" notes={pinnedNotes} />
+          )}
+          {otherNotes.length > 0 && (
+            <NotesGroup
+              label="Other"
+              notes={otherNotes}
+              displayLabel={displayOtherLabel}
+            />
+          )}
+          {archivedNotes.length > 0 && (
+            <NotesGroup
+              label="Archived"
+              notes={archivedNotes}
+              displayLabel={displayArchivedLabel}
+            />
+          )}
+        </>
       ) : (
         <p className={styles.noNotes}>
           There are no notes. Maybe it's time to add some?
