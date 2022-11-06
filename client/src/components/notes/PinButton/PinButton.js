@@ -1,17 +1,16 @@
 import IconButton from "@components/common/IconButton/IconButton";
 import React from "react";
-import styles from "./PinIcon.module.scss";
+import styles from "./PinButton.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faBookmark as faSolidBookmark } from "@fortawesome/free-solid-svg-icons";
-import useNotes from "@hooks/useNotes";
+import PropTypes from "prop-types";
 
-const PinIcon = ({ isHovered, isAdding = false, note }) => {
-  const { toggleNotePinned } = useNotes();
-
+const PinButton = ({ isHovered = true, isAdding = false, note, onClick }) => {
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    toggleNotePinned(note);
+    onClick();
   };
 
   return (
@@ -31,4 +30,11 @@ const PinIcon = ({ isHovered, isAdding = false, note }) => {
   );
 };
 
-export default PinIcon;
+PinButton.propTypes = {
+  isHovered: PropTypes.bool,
+  isAdding: PropTypes.bool,
+  note: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+export default PinButton;

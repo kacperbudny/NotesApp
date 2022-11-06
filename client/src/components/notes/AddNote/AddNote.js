@@ -5,6 +5,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
 import useNotes from "@hooks/useNotes";
 import { toast } from "react-toastify";
+import PinButton from "../PinButton/PinButton";
 
 const AddNote = () => {
   const { addNote } = useNotes();
@@ -13,6 +14,9 @@ const AddNote = () => {
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("white");
+  const [pinned, setPinned] = useState(false);
+
+  const note = { name, content, color, pinned };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,15 +35,14 @@ const AddNote = () => {
       return;
     }
     resetForm();
-    addNote({ content, name, color, archived: false });
+    addNote({ ...note, archived: false });
   };
 
-  const handleAddArchivedNote = () => {
+  const handleArchiveClick = () => {
     if (name || content) {
       addNote({
-        name,
-        content,
-        color,
+        ...note,
+        pinned: false,
         archived: true,
       });
       resetForm();
@@ -48,10 +51,15 @@ const AddNote = () => {
     }
   };
 
+  const handlePinClick = () => {
+    setPinned((prev) => !prev);
+  };
+
   const resetForm = () => {
     setName("");
     setContent("");
     setColor("white");
+    setPinned(false);
     setIsEditing(false);
   };
 
@@ -67,13 +75,16 @@ const AddNote = () => {
           style={{ background: color }}
         >
           {isEditing && (
-            <input
-              type="text"
-              placeholder="Title"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={styles.title}
-            />
+            <>
+              <input
+                type="text"
+                placeholder="Title"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={styles.title}
+              />
+              <PinButton note={note} onClick={handlePinClick} />
+            </>
           )}
           <TextareaAutosize
             placeholder="New note..."
@@ -87,12 +98,12 @@ const AddNote = () => {
           {isEditing && (
             <div className={styles.buttonsRow}>
               <ButtonsBar
-                note={{ name, content, color }}
+                note={note}
                 changeColor={setColor}
                 isAdding={true}
                 isColorPaletteOpen={isColorPaletteOpen}
                 setIsColorPaletteOpen={setIsColorPaletteOpen}
-                archive={handleAddArchivedNote}
+                archive={handleArchiveClick}
               />
               <input type="submit" value="Close" className={styles.btn} />
             </div>

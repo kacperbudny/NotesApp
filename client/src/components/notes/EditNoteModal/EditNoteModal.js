@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
-import { useEffect } from "../../../../node_modules/react/cjs/react.development";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
 import useNotes from "@hooks/useNotes";
+import PinButton from "@components/notes/PinButton";
 
 const EditNoteModal = () => {
   const {
@@ -16,17 +16,21 @@ const EditNoteModal = () => {
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [color, setColor] = useState("white");
+  const [pinned, setPinned] = useState(false);
   const contentRef = useRef(null);
+
+  const editedNote = { content, name, color, pinned };
 
   useEffect(() => {
     if (!note) return;
     setContent(note.content);
     setName(note.name);
     setColor(note.color);
+    setPinned(note.pinned);
   }, [note]);
 
   const handleClose = () => {
-    return closeEditingModal({ ...note, name, content, color });
+    return closeEditingModal({ ...note, ...editedNote });
   };
 
   const handleAfterOpen = () => {
@@ -39,11 +43,14 @@ const EditNoteModal = () => {
   const handleArchive = () => {
     return closeEditingModal({
       ...note,
-      name,
-      content,
-      color,
+      ...editedNote,
+      pinned: note.archived ? pinned : false,
       archived: !note.archived,
     });
+  };
+
+  const handlePin = () => {
+    setPinned((prev) => !prev);
   };
 
   return (
@@ -70,6 +77,7 @@ const EditNoteModal = () => {
           onChange={(e) => setName(e.target.value)}
           className={styles.title}
         />
+        <PinButton note={editedNote} onClick={handlePin} />
         <TextareaAutosize
           placeholder="New note..."
           value={content}
