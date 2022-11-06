@@ -28,6 +28,7 @@ exports.postNote = async (req, res, next) => {
       displayOrder: req.body.displayOrder,
       color: req.body.color,
       archived: req.body.archived,
+      pinned: req.body.pinned,
       user: req.userId,
     });
 

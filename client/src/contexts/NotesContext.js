@@ -65,7 +65,18 @@ export function NotesProvider({ children }) {
   };
 
   const toggleNoteArchived = (note) => {
+    if (note.pinned) {
+      note.pinned = false;
+    }
     note.archived = !note.archived;
+    updateNote(note);
+  };
+
+  const toggleNotePinned = (note) => {
+    if (note.archived) {
+      note.archived = false;
+    }
+    note.pinned = !note.pinned;
     updateNote(note);
   };
 
@@ -120,6 +131,7 @@ export function NotesProvider({ children }) {
         shouldReturnToEditing,
         setShouldReturnToEditing,
         toggleNoteArchived,
+        toggleNotePinned,
       }}
     >
       {children}

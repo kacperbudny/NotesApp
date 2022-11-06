@@ -14,6 +14,7 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   background-color: variables.$plain-white;
   transition: background 0.2s linear;
+  position: relative;
 }
 
 .textInput {

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 const IconButton = ({ onClick, size = 30, children }) => {
   return (
     <button
+      type="button"
       className={styles.button}
       onClick={onClick}
       style={{ width: `${size}px`, height: `${size}px` }}

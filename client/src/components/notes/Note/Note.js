@@ -4,12 +4,18 @@ import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
 import useNotes from "@hooks/useNotes";
+import PinButton from "@components/notes/PinButton";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, changeNoteColor, activeNote, toggleNoteArchived } =
-    useNotes();
+  const {
+    openEditingModal,
+    changeNoteColor,
+    activeNote,
+    toggleNoteArchived,
+    toggleNotePinned,
+  } = useNotes();
 
   const handleClick = () => {
     openEditingModal(note._id);
@@ -23,6 +29,10 @@ const Note = ({ note }) => {
     toggleNoteArchived(note);
   };
 
+  const handlePin = () => {
+    toggleNotePinned(note);
+  };
+
   return (
     <div
       ref={hoverRef}
@@ -33,6 +43,7 @@ const Note = ({ note }) => {
       }}
     >
       <div className={styles.noteContent} onClick={handleClick}>
+        <PinButton isHovered={isHovered} note={note} onClick={handlePin} />
         {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>
