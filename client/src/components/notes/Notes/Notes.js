@@ -21,7 +21,7 @@ const filterNotes = (displayAs) => {
 
 const Notes = ({ displayAs }) => {
   const { notes } = useNotes();
-  // const { masonryRef } = useLayoutContext();
+  const { masonryRefs } = useLayoutContext();
 
   const filteredNotes = notes.filter(filterNotes(displayAs));
 
@@ -39,13 +39,18 @@ const Notes = ({ displayAs }) => {
       {filteredNotes.length > 0 ? (
         <>
           {pinnedNotes.length > 0 && (
-            <NotesGroup label="Pinned" notes={pinnedNotes} />
+            <NotesGroup
+              label="Pinned"
+              notes={pinnedNotes}
+              masonryRef={masonryRefs.pinned}
+            />
           )}
           {otherNotes.length > 0 && (
             <NotesGroup
               label="Other"
               notes={otherNotes}
               displayLabel={displayOtherLabel}
+              masonryRef={masonryRefs.other}
             />
           )}
           {archivedNotes.length > 0 && (
@@ -53,6 +58,7 @@ const Notes = ({ displayAs }) => {
               label="Archived"
               notes={archivedNotes}
               displayLabel={displayArchivedLabel}
+              masonryRef={masonryRefs.archived}
             />
           )}
         </>

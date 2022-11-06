@@ -8,7 +8,12 @@ import {
 } from "react";
 
 const LayoutContext = createContext();
-const masonryRef = createRef();
+
+const masonryRefs = {
+  archived: createRef(),
+  other: createRef(),
+  pinned: createRef(),
+};
 
 export function LayoutProvider({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(
@@ -18,10 +23,11 @@ export function LayoutProvider({ children }) {
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
 
-    if (masonryRef) {
-      const timeout = setTimeout(() => masonryRef.current.update(), 200);
-      return clearTimeout(timeout);
-    }
+    Object.values(masonryRefs).forEach((ref) => {
+      if (ref.current) {
+        setTimeout(() => ref.current.update(), 250);
+      }
+    });
   };
 
   useEffect(() => {
@@ -30,7 +36,11 @@ export function LayoutProvider({ children }) {
 
   return (
     <LayoutContext.Provider
-      value={{ isSidebarOpen, toggleSidebarOpen, masonryRef }}
+      value={{
+        isSidebarOpen,
+        toggleSidebarOpen,
+        masonryRefs,
+      }}
     >
       {children}
     </LayoutContext.Provider>
