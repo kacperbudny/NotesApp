@@ -30,7 +30,11 @@ const EditNoteModal = () => {
   }, [note]);
 
   const handleClose = () => {
-    return closeEditingModal({ ...note, ...editedNote });
+    return closeEditingModal({
+      ...note,
+      ...editedNote,
+      archived: pinned ? false : note.archived,
+    });
   };
 
   const handleAfterOpen = () => {
