@@ -18,8 +18,9 @@ export function LayoutProvider({ children }) {
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
 
-    if (masonryRef.current) {
-      masonryRef.current.update();
+    if (masonryRef) {
+      const timeout = setTimeout(() => masonryRef.current.update(), 200);
+      return clearTimeout(timeout);
     }
   };
 
