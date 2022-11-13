@@ -28,19 +28,10 @@ const ButtonsBar = ({
     archive();
   };
 
+  const isVisible = isAdding || isParentHovered || isColorPaletteOpen;
+
   return (
-    <div
-      className={styles.buttonsBar}
-      style={
-        isAdding
-          ? { opacity: "100%" }
-          : {
-              opacity: `${
-                isParentHovered || isColorPaletteOpen ? "100%" : "0"
-              }`,
-            }
-      }
-    >
+    <div className={`${styles.buttonsBar} ${isVisible && styles.visible}`}>
       {!isAdding && (
         <IconButton
           onClick={() => {

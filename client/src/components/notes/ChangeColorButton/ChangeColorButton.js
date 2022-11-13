@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 const ChangeColorButton = ({ color, changeColor }) => {
   const handleClick = (e) => {
     e.preventDefault();
-    if (!color) color = "white";
+
+    if (!color) {
+      color = "white";
+    }
+
     changeColor(color);
   };
 

@@ -33,13 +33,14 @@ const Note = ({ note }) => {
     toggleNotePinned(note);
   };
 
+  const isActiveNote = activeNote && activeNote._id === note._id;
+
   return (
     <div
       ref={hoverRef}
-      className={styles.note}
+      className={`${styles.note} ${isActiveNote && styles.hidden}`}
       style={{
         background: `${note.color}`,
-        opacity: activeNote && activeNote._id === note._id ? "0" : "1",
       }}
     >
       <div className={styles.noteContent} onClick={handleClick}>

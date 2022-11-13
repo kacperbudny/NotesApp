@@ -13,13 +13,10 @@ const PinButton = ({ isHovered = true, isAdding = false, note, onClick }) => {
     onClick();
   };
 
+  const isVisible = isAdding || isHovered;
+
   return (
-    <div
-      style={{
-        opacity: `${isAdding || isHovered ? "80%" : "0"}`,
-      }}
-      className={styles.container}
-    >
+    <div className={`${styles.container} ${isVisible && styles.visible}`}>
       <IconButton onClick={handleClick} size={34}>
         <FontAwesomeIcon
           icon={note.pinned ? faSolidBookmark : faBookmark}
