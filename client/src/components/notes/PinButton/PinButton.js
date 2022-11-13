@@ -1,4 +1,4 @@
-import IconButton from "@components/common/IconButton/IconButton";
+import IconButton from "@components/common/IconButton";
 import React from "react";
 import styles from "./PinButton.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

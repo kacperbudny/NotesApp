@@ -1,4 +1,4 @@
-import LogoutButton from "@components/auth/LogoutButton/LogoutButton";
+import LogoutButton from "@components/auth/LogoutButton";
 import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import styles from "./Header.module.scss";

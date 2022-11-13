@@ -2,7 +2,7 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faPalette, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import ColorPalette from "../ColorPalette";
+import ColorPalette from "@components/notes/ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 import { useNotesContext } from "@contexts/NotesContext";

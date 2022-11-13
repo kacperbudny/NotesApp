@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useHover from "@hooks/useHover";
-import ButtonsBar from "../ButtonsBar";
+import ButtonsBar from "@components/notes/ButtonsBar";
 import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
 import { useNotesContext } from "@contexts/NotesContext";

@@ -4,7 +4,7 @@ import { useNotesContext } from "@contexts/NotesContext";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
-import NotesGroup from "../NotesGroup/NotesGroup";
+import NotesGroup from "@components/notes/NotesGroup";
 
 const filterNotes = (displayAs) => {
   return (note) => {

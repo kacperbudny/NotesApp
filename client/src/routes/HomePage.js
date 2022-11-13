@@ -10,7 +10,7 @@ import Sidebar from "@components/layout/Sidebar";
 import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
 import PropTypes from "prop-types";
-import FullHeightContainer from "@components/layout/FullHeightContainer/FullHeightContainer";
+import FullHeightContainer from "@components/layout/FullHeightContainer";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
 function HomePage({ displayAs = homePageDisplayModes.home }) {

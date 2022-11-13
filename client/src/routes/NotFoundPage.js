@@ -1,4 +1,4 @@
-import CenteredContainer from "@components/common/CenteredContainer/CenteredContainer";
+import CenteredContainer from "@components/common/CenteredContainer";
 import React from "react";
 import { Link } from "react-router-dom";
 

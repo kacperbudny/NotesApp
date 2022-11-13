@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
-import ButtonsBar from "../ButtonsBar/ButtonsBar";
+import ButtonsBar from "@components/notes/ButtonsBar";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
-import ButtonsBar from "../ButtonsBar/ButtonsBar";
+import ButtonsBar from "@components/notes/ButtonsBar";
 import { useNotesContext } from "@contexts/NotesContext";
 import { toast } from "react-toastify";
-import PinButton from "../PinButton/PinButton";
+import PinButton from "@components/notes/PinButton";
 
 const AddNote = () => {
   const { addNote } = useNotesContext();

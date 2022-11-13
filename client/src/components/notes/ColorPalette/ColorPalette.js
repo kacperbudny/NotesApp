@@ -1,5 +1,5 @@
 import React from "react";
-import ChangeColorButton from "../ChangeColorButton";
+import ChangeColorButton from "@components/notes/ChangeColorButton";
 import colors from "@constants/colors";
 import styles from "./ColorPalette.module.scss";
 import PropTypes from "prop-types";
