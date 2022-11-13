@@ -26,14 +26,7 @@ First you need to install packages:
 npm run install-modules
 ```
 
-You also have to create .env file in the server directory with your own MongoDB credentials and a secret key, like this:
-
-```
-MONGO_USER="your_username"
-MONGO_PASSWORD="your_password"
-SECRET_KEY="secret_of_your_choice"
-REFRESH_SECRET_KEY="secret_of_your_choice"
-```
+You also have to create .env file in the server directory with your own MongoDB credentials and a secret key. You can find a sample .env file in `server/.env.sample` - you can just copy it, rename it to .env and provide your own values.
 
 Then to start the app you have to run two consoles, one for front-end and one for back-end. There are commands for the root directory:
 
@@ -60,6 +53,15 @@ Password: testing
 Username: test2@user.com
 Password: testing
 ```
+
+### Environment variables
+
+| Variable name      | Description                                                           | Required? |
+| ------------------ | --------------------------------------------------------------------- | --------- |
+| MONGO_USER         | Username for your MongoDB connection string.                          | Yes       |
+| MONGO_PASSWORD     | Password for your MongoDB connection string.                          | Yes       |
+| SECRET_KEY         | A secret key that will be used to sign and verify JWTs.               | Yes       |
+| REFRESH_SECRET_KEY | A secret key that will be used to sign and verify JWT refresh tokens. | Yes       |
 
 ## Technologies
 
