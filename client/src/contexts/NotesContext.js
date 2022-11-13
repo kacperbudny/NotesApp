@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
-import { destroyNote, patchNote, saveNote } from "@services/notesApi";
+import notesProvider from "@services/notesProvider";
 import toastifyRequest from "@utils/toastifyRequest";
 import useHandleError from "@hooks/useHandleError";
 
@@ -27,7 +27,7 @@ export function NotesProvider({ children }) {
     setNotes([...notes, newNote]);
 
     try {
-      await toastifyRequest(saveNote(newNote));
+      await toastifyRequest(notesProvider.add(newNote));
     } catch (error) {
       handleError(error);
     }
@@ -40,7 +40,7 @@ export function NotesProvider({ children }) {
     setNotes(newNotes);
 
     try {
-      await toastifyRequest(patchNote(updatedNote));
+      await toastifyRequest(notesProvider.update(updatedNote));
     } catch (error) {
       handleError(error);
     }
@@ -53,7 +53,7 @@ export function NotesProvider({ children }) {
     setNotes(filteredNotes);
 
     try {
-      await toastifyRequest(destroyNote(id));
+      await toastifyRequest(notesProvider.delete(id));
     } catch (error) {
       handleError(error);
     }

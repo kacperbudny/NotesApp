@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNotes } from "@services/notesApi";
+import notesProvider from "@services/notesProvider";
 import useHandleError from "@hooks/useHandleError";
 import useAuth from "@hooks/useAuth";
 
@@ -14,7 +14,7 @@ export default function useGetNotes() {
     const fetchNotes = async () => {
       setIsLoading(true);
       try {
-        const response = await getNotes();
+        const response = await notesProvider.get();
         const data = await response.json();
         setNotes(data);
         setIsLoading(false);
