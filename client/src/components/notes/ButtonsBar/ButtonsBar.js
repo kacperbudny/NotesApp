@@ -5,7 +5,7 @@ import React from "react";
 import ColorPalette from "../ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import IconButton from "@components/common/IconButton";
 
 const ButtonsBar = ({
@@ -17,7 +17,7 @@ const ButtonsBar = ({
   setIsColorPaletteOpen,
   archive,
 }) => {
-  const { openDeletingModal } = useNotes();
+  const { openDeletingModal } = useNotesContext();
 
   const handleColorPaletteClick = (e) => {
     e.preventDefault();

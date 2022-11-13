@@ -3,7 +3,7 @@ import CenteredContainer from "@components/common/CenteredContainer/CenteredCont
 import ErrorMessage from "@components/common/ErrorMessage/ErrorMessage";
 import Form from "@components/common/Form/Form";
 import Input from "@components/common/Input/Input";
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@contexts/AuthContext";
 import { validateEmail, validatePassword } from "@utils/validation";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -20,7 +20,7 @@ const RegisterPage = () => {
   });
 
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { signUp } = useAuthContext();
 
   const areInputsEmpty =
     email.trim().length === 0 ||

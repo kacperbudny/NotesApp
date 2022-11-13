@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import useGetNotes from "@hooks/useGetNotes";
 import { ObjectId } from "bson";
 import notesProvider from "@services/notesProvider";
@@ -137,6 +137,10 @@ export function NotesProvider({ children }) {
       {children}
     </NotesContext.Provider>
   );
+}
+
+export function useNotesContext() {
+  return useContext(NotesContext);
 }
 
 export default NotesContext;

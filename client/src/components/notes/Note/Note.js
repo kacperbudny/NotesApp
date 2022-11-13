@@ -3,7 +3,7 @@ import useHover from "@hooks/useHover";
 import ButtonsBar from "../ButtonsBar";
 import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 
 const Note = ({ note }) => {
@@ -15,7 +15,7 @@ const Note = ({ note }) => {
     activeNote,
     toggleNoteArchived,
     toggleNotePinned,
-  } = useNotes();
+  } = useNotesContext();
 
   const handleClick = () => {
     openEditingModal(note._id);

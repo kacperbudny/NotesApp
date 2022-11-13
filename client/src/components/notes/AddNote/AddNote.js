@@ -3,12 +3,12 @@ import TextareaAutosize from "react-textarea-autosize";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import { toast } from "react-toastify";
 import PinButton from "../PinButton/PinButton";
 
 const AddNote = () => {
-  const { addNote } = useNotes();
+  const { addNote } = useNotesContext();
   const [isEditing, setIsEditing] = useState(false);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");

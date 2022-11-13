@@ -1,5 +1,5 @@
 import LogoutButton from "@components/auth/LogoutButton/LogoutButton";
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import styles from "./Header.module.scss";
 import PropTypes from "prop-types";
@@ -23,7 +23,7 @@ const getPageName = (displayAs) => {
 };
 
 const Header = ({ displayAs }) => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const { toggleSidebarOpen } = useLayoutContext();
 
   const pageName = getPageName(displayAs);

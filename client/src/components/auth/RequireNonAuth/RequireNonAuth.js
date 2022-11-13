@@ -1,9 +1,9 @@
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import { Navigate } from "react-router-dom";
 
 const RequireNonAuth = ({ children }) => {
-  const { token } = useAuth();
+  const { token } = useAuthContext();
 
   if (token) {
     return <Navigate to="/" replace />;

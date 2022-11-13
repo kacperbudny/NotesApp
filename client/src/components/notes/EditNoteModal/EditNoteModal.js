@@ -3,7 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
 import ButtonsBar from "../ButtonsBar/ButtonsBar";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 
 const EditNoteModal = () => {
@@ -11,7 +11,7 @@ const EditNoteModal = () => {
     activeNote: note,
     isEditingModalOpen,
     closeEditingModal,
-  } = useNotes();
+  } = useNotesContext();
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");

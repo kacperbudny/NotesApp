@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Notes.module.scss";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
@@ -20,7 +20,7 @@ const filterNotes = (displayAs) => {
 };
 
 const Notes = ({ displayAs }) => {
-  const { notes } = useNotes();
+  const { notes } = useNotesContext();
   const { masonryRefs } = useLayoutContext();
 
   const filteredNotes = notes.filter(filterNotes(displayAs));

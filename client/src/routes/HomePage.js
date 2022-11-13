@@ -5,7 +5,7 @@ import AddNote from "@components/notes/AddNote";
 import EditNoteModal from "@components/notes/EditNoteModal";
 import Loading from "@components/common/Loading";
 import DeleteNoteModal from "@components/notes/DeleteNoteModal";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import Sidebar from "@components/layout/Sidebar";
 import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
@@ -14,7 +14,7 @@ import FullHeightContainer from "@components/layout/FullHeightContainer/FullHeig
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
 function HomePage({ displayAs = homePageDisplayModes.home }) {
-  const { isLoading } = useNotes();
+  const { isLoading } = useNotesContext();
 
   return (
     <FullHeightContainer>
