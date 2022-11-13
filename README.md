@@ -56,12 +56,13 @@ Password: testing
 
 ### Environment variables
 
-| Variable name      | Description                                                           | Required? |
-| ------------------ | --------------------------------------------------------------------- | --------- |
-| MONGO_USER         | Username for your MongoDB connection string.                          | Yes       |
-| MONGO_PASSWORD     | Password for your MongoDB connection string.                          | Yes       |
-| SECRET_KEY         | A secret key that will be used to sign and verify JWTs.               | Yes       |
-| REFRESH_SECRET_KEY | A secret key that will be used to sign and verify JWT refresh tokens. | Yes       |
+| Variable name      | Description                                                              | Required? |
+| ------------------ | ------------------------------------------------------------------------ | --------- |
+| MONGO_USER         | Username for your MongoDB connection string.                             | Yes       |
+| MONGO_PASSWORD     | Password for your MongoDB connection string.                             | Yes       |
+| SECRET_KEY         | A secret key that will be used to sign and verify JWTs.                  | Yes       |
+| REFRESH_SECRET_KEY | A secret key that will be used to sign and verify JWT refresh tokens.    | Yes       |
+| FORCE_SEED         | If you set it to "true", the database will be cleaned up before seeding. | No        |
 
 ## Technologies
 
