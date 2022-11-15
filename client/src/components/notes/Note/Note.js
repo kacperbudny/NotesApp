@@ -9,28 +9,31 @@ import PinButton from "@components/notes/PinButton";
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const {
-    openEditingModal,
-    changeNoteColor,
-    activeNote,
-    toggleNoteArchived,
-    toggleNotePinned,
-  } = useNotesContext();
+  const { openEditingModal, updateNote, activeNote } = useNotesContext();
 
   const handleClick = () => {
     openEditingModal(note._id);
   };
 
-  const setColor = (color) => {
-    return changeNoteColor(color, note);
+  const handleChangeColor = (color) => {
+    note.color = color;
+    updateNote(note);
   };
 
   const handleArchive = () => {
-    toggleNoteArchived(note);
+    if (note.pinned) {
+      note.pinned = false;
+    }
+    note.archived = !note.archived;
+    updateNote(note);
   };
 
   const handlePin = () => {
-    toggleNotePinned(note);
+    if (note.archived) {
+      note.archived = false;
+    }
+    note.pinned = !note.pinned;
+    updateNote(note);
   };
 
   const isActiveNote = activeNote && activeNote._id === note._id;
@@ -63,10 +66,10 @@ const Note = ({ note }) => {
       <ButtonsBar
         note={note}
         isVisible={areButtonsVisible}
-        changeColor={setColor}
+        changeColor={handleChangeColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}
-        archive={handleArchive}
+        onArchiveClick={handleArchive}
       />
     </div>
   );

@@ -38,7 +38,11 @@ const AddNote = () => {
     addNote({ ...note, archived: false });
   };
 
-  const handleArchiveClick = () => {
+  const handleChangeColor = (color) => {
+    setColor(color);
+  };
+
+  const handleArchive = () => {
     if (name || content) {
       addNote({
         ...note,
@@ -51,7 +55,7 @@ const AddNote = () => {
     }
   };
 
-  const handlePinClick = () => {
+  const handlePin = () => {
     setPinned((prev) => !prev);
   };
 
@@ -83,11 +87,7 @@ const AddNote = () => {
                 onChange={(e) => setName(e.target.value)}
                 className={styles.title}
               />
-              <PinButton
-                note={note}
-                onClick={handlePinClick}
-                isVisible={true}
-              />
+              <PinButton note={note} onClick={handlePin} isVisible={true} />
             </>
           )}
           <TextareaAutosize
@@ -104,11 +104,11 @@ const AddNote = () => {
               <ButtonsBar
                 note={note}
                 isVisible={true}
-                changeColor={setColor}
+                changeColor={handleChangeColor}
                 isAdding={true}
                 isColorPaletteOpen={isColorPaletteOpen}
                 setIsColorPaletteOpen={setIsColorPaletteOpen}
-                archive={handleArchiveClick}
+                onArchiveClick={handleArchive}
               />
               <input type="submit" value="Close" className={styles.btn} />
             </div>

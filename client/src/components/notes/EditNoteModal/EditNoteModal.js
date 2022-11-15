@@ -11,6 +11,7 @@ const EditNoteModal = () => {
     activeNote: note,
     isEditingModalOpen,
     closeEditingModal,
+    updateNote,
   } = useNotesContext();
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -29,8 +30,13 @@ const EditNoteModal = () => {
     setPinned(note.pinned);
   }, [note]);
 
+  const closeModalAndSave = (note) => {
+    updateNote(note);
+    closeEditingModal();
+  };
+
   const handleClose = () => {
-    return closeEditingModal({
+    closeModalAndSave({
       ...note,
       ...editedNote,
       archived: pinned ? false : note.archived,
@@ -44,8 +50,12 @@ const EditNoteModal = () => {
     textarea.focus();
   };
 
+  const handleChangeColor = (color) => {
+    setColor(color);
+  };
+
   const handleArchive = () => {
-    return closeEditingModal({
+    closeModalAndSave({
       ...note,
       ...editedNote,
       pinned: note.archived ? pinned : false,
@@ -93,12 +103,12 @@ const EditNoteModal = () => {
         />
         <div className={styles.buttonsRow}>
           <ButtonsBar
-            changeColor={setColor}
+            changeColor={handleChangeColor}
             note={note}
             isVisible={true}
             isColorPaletteOpen={isColorPaletteOpen}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
-            archive={handleArchive}
+            onArchiveClick={handleArchive}
           />
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close

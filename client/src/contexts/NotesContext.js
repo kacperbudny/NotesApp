@@ -59,34 +59,12 @@ export function NotesProvider({ children }) {
     }
   };
 
-  const changeNoteColor = (color, note) => {
-    note.color = color;
-    updateNote(note);
-  };
-
-  const toggleNoteArchived = (note) => {
-    if (note.pinned) {
-      note.pinned = false;
-    }
-    note.archived = !note.archived;
-    updateNote(note);
-  };
-
-  const toggleNotePinned = (note) => {
-    if (note.archived) {
-      note.archived = false;
-    }
-    note.pinned = !note.pinned;
-    updateNote(note);
-  };
-
   const openEditingModal = (_id) => {
     setActiveNote(notes.find((note) => note._id === _id));
     setIsEditingModalOpen(true);
   };
 
-  const closeEditingModal = (note) => {
-    updateNote(note);
+  const closeEditingModal = () => {
     setActiveNote(null);
     setIsEditingModalOpen(false);
   };
@@ -112,11 +90,9 @@ export function NotesProvider({ children }) {
     <NotesContext.Provider
       value={{
         notes,
-        setNotes,
         isLoading,
         addNote,
         deleteNote,
-        changeNoteColor,
         updateNote,
         activeNote,
         setActiveNote,
@@ -130,8 +106,6 @@ export function NotesProvider({ children }) {
         closeDeletingModal,
         shouldReturnToEditing,
         setShouldReturnToEditing,
-        toggleNoteArchived,
-        toggleNotePinned,
       }}
     >
       {children}

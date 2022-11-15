@@ -15,7 +15,7 @@ const ButtonsBar = ({
   isAdding = false,
   isColorPaletteOpen,
   setIsColorPaletteOpen,
-  archive,
+  onArchiveClick,
 }) => {
   const { openDeletingModal } = useNotesContext();
 
@@ -24,18 +24,14 @@ const ButtonsBar = ({
     setIsColorPaletteOpen(!isColorPaletteOpen);
   };
 
-  const handleArchiveClick = () => {
-    archive();
+  const handleDeleteClick = () => {
+    openDeletingModal(note);
   };
 
   return (
     <div className={`${styles.buttonsBar} ${isVisible && styles.visible}`}>
       {!isAdding && (
-        <IconButton
-          onClick={() => {
-            openDeletingModal(note);
-          }}
-        >
+        <IconButton onClick={handleDeleteClick}>
           <FontAwesomeIcon icon={faTrashAlt} />
         </IconButton>
       )}
@@ -50,7 +46,7 @@ const ButtonsBar = ({
           />
         )}
       </div>
-      <IconButton onClick={handleArchiveClick}>
+      <IconButton onClick={onArchiveClick}>
         <FontAwesomeIcon icon={faInbox} />
       </IconButton>
     </div>
@@ -64,7 +60,7 @@ ButtonsBar.propTypes = {
   isAdding: PropTypes.bool,
   isColorPaletteOpen: PropTypes.bool.isRequired,
   setIsColorPaletteOpen: PropTypes.func.isRequired,
-  archive: PropTypes.func.isRequired,
+  onArchiveClick: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;
