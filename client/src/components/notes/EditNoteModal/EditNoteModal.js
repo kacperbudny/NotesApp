@@ -81,7 +81,7 @@ const EditNoteModal = () => {
           onChange={(e) => setName(e.target.value)}
           className={styles.title}
         />
-        <PinButton note={editedNote} onClick={handlePin} />
+        <PinButton note={editedNote} onClick={handlePin} isVisible={true} />
         <TextareaAutosize
           placeholder="New note..."
           value={content}
@@ -95,6 +95,7 @@ const EditNoteModal = () => {
           <ButtonsBar
             changeColor={setColor}
             note={note}
+            isVisible={true}
             isColorPaletteOpen={isColorPaletteOpen}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
             archive={handleArchive}

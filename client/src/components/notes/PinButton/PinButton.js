@@ -6,14 +6,12 @@ import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faBookmark as faSolidBookmark } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
-const PinButton = ({ isHovered = true, isAdding = false, note, onClick }) => {
+const PinButton = ({ isVisible, isAdding = false, note, onClick }) => {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     onClick();
   };
-
-  const isVisible = isAdding || isHovered;
 
   return (
     <div className={`${styles.container} ${isVisible && styles.visible}`}>
@@ -28,7 +26,7 @@ const PinButton = ({ isHovered = true, isAdding = false, note, onClick }) => {
 };
 
 PinButton.propTypes = {
-  isHovered: PropTypes.bool,
+  isVisible: PropTypes.bool.isRequired,
   isAdding: PropTypes.bool,
   note: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,

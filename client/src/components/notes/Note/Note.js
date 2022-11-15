@@ -35,6 +35,8 @@ const Note = ({ note }) => {
 
   const isActiveNote = activeNote && activeNote._id === note._id;
 
+  const areButtonsVisible = isHovered || isColorPaletteOpen;
+
   return (
     <div
       ref={hoverRef}
@@ -44,7 +46,11 @@ const Note = ({ note }) => {
       }}
     >
       <div className={styles.noteContent} onClick={handleClick}>
-        <PinButton isHovered={isHovered} note={note} onClick={handlePin} />
+        <PinButton
+          isVisible={areButtonsVisible}
+          note={note}
+          onClick={handlePin}
+        />
         {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>
@@ -56,7 +62,7 @@ const Note = ({ note }) => {
       </div>
       <ButtonsBar
         note={note}
-        isHovered={isHovered}
+        isVisible={areButtonsVisible}
         changeColor={setColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}

@@ -10,7 +10,7 @@ import IconButton from "@components/common/IconButton";
 
 const ButtonsBar = ({
   note,
-  isHovered: isParentHovered = true,
+  isVisible,
   changeColor,
   isAdding = false,
   isColorPaletteOpen,
@@ -27,8 +27,6 @@ const ButtonsBar = ({
   const handleArchiveClick = () => {
     archive();
   };
-
-  const isVisible = isAdding || isParentHovered || isColorPaletteOpen;
 
   return (
     <div className={`${styles.buttonsBar} ${isVisible && styles.visible}`}>
@@ -61,7 +59,7 @@ const ButtonsBar = ({
 
 ButtonsBar.propTypes = {
   note: PropTypes.object,
-  isHovered: PropTypes.bool,
+  isVisible: PropTypes.bool.isRequired,
   changeColor: PropTypes.func.isRequired,
   isAdding: PropTypes.bool,
   isColorPaletteOpen: PropTypes.bool.isRequired,

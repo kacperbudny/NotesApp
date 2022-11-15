@@ -83,7 +83,11 @@ const AddNote = () => {
                 onChange={(e) => setName(e.target.value)}
                 className={styles.title}
               />
-              <PinButton note={note} onClick={handlePinClick} />
+              <PinButton
+                note={note}
+                onClick={handlePinClick}
+                isVisible={true}
+              />
             </>
           )}
           <TextareaAutosize
@@ -99,6 +103,7 @@ const AddNote = () => {
             <div className={styles.buttonsRow}>
               <ButtonsBar
                 note={note}
+                isVisible={true}
                 changeColor={setColor}
                 isAdding={true}
                 isColorPaletteOpen={isColorPaletteOpen}
