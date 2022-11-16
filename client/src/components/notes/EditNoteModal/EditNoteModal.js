@@ -8,8 +8,8 @@ import PinButton from "@components/notes/PinButton";
 
 const EditNoteModal = () => {
   const {
-    activeNote: note,
-    isEditingModalOpen,
+    noteToEdit: note,
+    noteToDelete,
     closeEditingModal,
     updateNote,
   } = useNotesContext();
@@ -21,6 +21,7 @@ const EditNoteModal = () => {
   const contentRef = useRef(null);
 
   const editedNote = { content, name, color, pinned };
+  const isEditingModalOpen = !!(note && !noteToDelete);
 
   useEffect(() => {
     if (!note) return;

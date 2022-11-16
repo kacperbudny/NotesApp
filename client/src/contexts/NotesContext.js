@@ -9,10 +9,8 @@ const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
   const [notes, setNotes, isLoading] = useGetNotes();
-  const [activeNote, setActiveNote] = useState(null);
-  const [isEditingModalOpen, setIsEditingModalOpen] = useState(false);
-  const [isDeletingModalOpen, setIsDeletingModalOpen] = useState(false);
-  const [shouldReturnToEditing, setShouldReturnToEditing] = useState(false);
+  const [noteToEdit, setNoteToEdit] = useState(null);
+  const [noteToDelete, setNoteToDelete] = useState(null);
 
   const handleError = useHandleError();
 
@@ -60,30 +58,19 @@ export function NotesProvider({ children }) {
   };
 
   const openEditingModal = (_id) => {
-    setActiveNote(notes.find((note) => note._id === _id));
-    setIsEditingModalOpen(true);
+    setNoteToEdit(notes.find((note) => note._id === _id));
   };
 
   const closeEditingModal = () => {
-    setActiveNote(null);
-    setIsEditingModalOpen(false);
+    setNoteToEdit(null);
   };
 
   const openDeletingModal = (note) => {
-    if (isEditingModalOpen) {
-      setIsEditingModalOpen(false);
-      setShouldReturnToEditing(true);
-    }
-    setActiveNote(note);
-    setIsDeletingModalOpen(true);
+    setNoteToDelete(note);
   };
 
   const closeDeletingModal = () => {
-    if (!shouldReturnToEditing) {
-      setActiveNote(null);
-    }
-    setIsDeletingModalOpen(false);
-    setShouldReturnToEditing(false);
+    setNoteToDelete(null);
   };
 
   return (
@@ -94,15 +81,12 @@ export function NotesProvider({ children }) {
         addNote,
         deleteNote,
         updateNote,
-        activeNote,
-        isEditingModalOpen,
-        setIsEditingModalOpen,
+        noteToEdit,
+        noteToDelete,
         openEditingModal,
         closeEditingModal,
-        isDeletingModalOpen,
         openDeletingModal,
         closeDeletingModal,
-        shouldReturnToEditing,
       }}
     >
       {children}

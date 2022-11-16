@@ -9,7 +9,8 @@ import PinButton from "@components/notes/PinButton";
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, updateNote, activeNote } = useNotesContext();
+  const { openEditingModal, updateNote, noteToEdit, noteToDelete } =
+    useNotesContext();
 
   const handleClick = () => {
     openEditingModal(note._id);
@@ -35,6 +36,8 @@ const Note = ({ note }) => {
     note.pinned = !note.pinned;
     updateNote(note);
   };
+
+  const activeNote = noteToEdit || noteToDelete;
 
   const isActiveNote = activeNote && activeNote._id === note._id;
 

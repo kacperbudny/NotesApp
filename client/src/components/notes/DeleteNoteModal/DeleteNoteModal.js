@@ -5,18 +5,14 @@ import styles from "./DeleteNoteModal.module.scss";
 
 const DeleteNoteModal = () => {
   const {
-    activeNote: note,
-    isDeletingModalOpen,
+    noteToDelete: note,
     deleteNote,
     closeDeletingModal,
-    shouldReturnToEditing,
-    setIsEditingModalOpen,
   } = useNotesContext();
 
+  const isDeletingModalOpen = !!note;
+
   const handleClose = () => {
-    if (shouldReturnToEditing) {
-      setIsEditingModalOpen(true);
-    }
     return closeDeletingModal();
   };
 
