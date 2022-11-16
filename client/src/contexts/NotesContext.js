@@ -95,17 +95,14 @@ export function NotesProvider({ children }) {
         deleteNote,
         updateNote,
         activeNote,
-        setActiveNote,
         isEditingModalOpen,
         setIsEditingModalOpen,
         openEditingModal,
         closeEditingModal,
         isDeletingModalOpen,
-        setIsDeletingModalOpen,
         openDeletingModal,
         closeDeletingModal,
         shouldReturnToEditing,
-        setShouldReturnToEditing,
       }}
     >
       {children}
