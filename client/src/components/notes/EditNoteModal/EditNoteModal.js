@@ -11,6 +11,7 @@ const EditNoteModal = () => {
     noteToEdit: note,
     noteToDelete,
     closeEditingModal,
+    openDeletingModal,
     updateNote,
   } = useNotesContext();
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -53,6 +54,10 @@ const EditNoteModal = () => {
 
   const handleChangeColor = (color) => {
     setColor(color);
+  };
+
+  const handleDelete = () => {
+    openDeletingModal(note);
   };
 
   const handleArchive = () => {
@@ -104,12 +109,12 @@ const EditNoteModal = () => {
         />
         <div className={styles.buttonsRow}>
           <ButtonsBar
-            changeColor={handleChangeColor}
-            note={note}
+            onChangeColorClick={handleChangeColor}
             isVisible={true}
             isColorPaletteOpen={isColorPaletteOpen}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
             onArchiveClick={handleArchive}
+            onDeleteClick={handleDelete}
           />
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close

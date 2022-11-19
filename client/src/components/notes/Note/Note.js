@@ -9,8 +9,13 @@ import PinButton from "@components/notes/PinButton";
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const { openEditingModal, updateNote, noteToEdit, noteToDelete } =
-    useNotesContext();
+  const {
+    openEditingModal,
+    updateNote,
+    noteToEdit,
+    noteToDelete,
+    openDeletingModal,
+  } = useNotesContext();
 
   const handleClick = () => {
     openEditingModal(note._id);
@@ -19,6 +24,10 @@ const Note = ({ note }) => {
   const handleChangeColor = (color) => {
     note.color = color;
     updateNote(note);
+  };
+
+  const handleDelete = () => {
+    openDeletingModal(note);
   };
 
   const handleArchive = () => {
@@ -67,12 +76,12 @@ const Note = ({ note }) => {
         )}
       </div>
       <ButtonsBar
-        note={note}
         isVisible={areButtonsVisible}
-        changeColor={handleChangeColor}
+        onChangeColorClick={handleChangeColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}
         onArchiveClick={handleArchive}
+        onDeleteClick={handleDelete}
       />
     </div>
   );

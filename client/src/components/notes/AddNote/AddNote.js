@@ -102,13 +102,11 @@ const AddNote = () => {
           {isEditing && (
             <div className={styles.buttonsRow}>
               <ButtonsBar
-                note={note}
                 isVisible={true}
-                changeColor={handleChangeColor}
-                isAdding={true}
                 isColorPaletteOpen={isColorPaletteOpen}
                 setIsColorPaletteOpen={setIsColorPaletteOpen}
                 onArchiveClick={handleArchive}
+                onChangeColorClick={handleChangeColor}
               />
               <input type="submit" value="Close" className={styles.btn} />
             </div>
