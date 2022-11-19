@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useReducer } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
@@ -6,42 +6,89 @@ import ButtonsBar from "@components/notes/ButtonsBar";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 
+const actionTypes = {
+  SET_NOTE: "SET_NOTE",
+  SET_COLOR: "SET_COLOR",
+  TOGGLE_PINNED: "TOGGLE_PINNED",
+  SET_NAME: "SET_NAME",
+  SET_CONTENT: "SET_CONTENT",
+};
+
+const noteReducer = (state, action) => {
+  if (action.type === actionTypes.SET_NOTE) {
+    return {
+      name: action.payload.name,
+      content: action.payload.content,
+      color: action.payload.color,
+      pinned: action.payload.pinned,
+    };
+  }
+  if (action.type === actionTypes.SET_COLOR) {
+    return {
+      ...state,
+      color: action.payload,
+    };
+  }
+  if (action.type === actionTypes.TOGGLE_PINNED) {
+    return {
+      ...state,
+      pinned: !state.pinned,
+    };
+  }
+  if (action.type === actionTypes.SET_NAME) {
+    return {
+      ...state,
+      name: action.payload,
+    };
+  }
+  if (action.type === actionTypes.SET_CONTENT) {
+    return {
+      ...state,
+      content: action.payload,
+    };
+  }
+  throw Error("Unknown action: " + action.type);
+};
+
+const initialValues = { name: "", content: "", color: "white", pinned: false };
+
 const EditNoteModal = () => {
+  const [note, dispatchNote] = useReducer(noteReducer, initialValues);
+  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const contentRef = useRef(null);
   const {
-    noteToEdit: note,
+    noteToEdit,
     noteToDelete,
     closeEditingModal,
     openDeletingModal,
     updateNote,
   } = useNotesContext();
-  const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
-  const [content, setContent] = useState("");
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("white");
-  const [pinned, setPinned] = useState(false);
-  const contentRef = useRef(null);
 
-  const editedNote = { content, name, color, pinned };
-  const isEditingModalOpen = !!(note && !noteToDelete);
+  const isEditingModalOpen = !!(noteToEdit && !noteToDelete);
 
   useEffect(() => {
-    if (!note) return;
-    setContent(note.content);
-    setName(note.name);
-    setColor(note.color);
-    setPinned(note.pinned);
-  }, [note]);
+    if (!noteToEdit) return;
+    dispatchNote({ type: actionTypes.SET_NOTE, payload: noteToEdit });
+  }, [noteToEdit]);
 
   const closeModalAndSave = (note) => {
     updateNote(note);
     closeEditingModal();
   };
 
+  const handleChangeName = (e) => {
+    dispatchNote({ type: actionTypes.SET_NAME, payload: e.target.value });
+  };
+
+  const handleChangeContent = (e) => {
+    dispatchNote({ type: actionTypes.SET_CONTENT, payload: e.target.value });
+  };
+
   const handleClose = () => {
     closeModalAndSave({
+      ...noteToEdit,
       ...note,
-      ...editedNote,
-      archived: pinned ? false : note.archived,
+      archived: note.pinned ? false : noteToEdit.archived,
     });
   };
 
@@ -53,31 +100,31 @@ const EditNoteModal = () => {
   };
 
   const handleChangeColor = (color) => {
-    setColor(color);
+    dispatchNote({ type: actionTypes.SET_COLOR, payload: color });
   };
 
   const handleDelete = () => {
-    openDeletingModal(note);
+    openDeletingModal(noteToEdit);
   };
 
   const handleArchive = () => {
     closeModalAndSave({
+      ...noteToEdit,
       ...note,
-      ...editedNote,
-      pinned: note.archived ? pinned : false,
-      archived: !note.archived,
+      pinned: noteToEdit.archived ? note.pinned : false,
+      archived: !noteToEdit.archived,
     });
   };
 
   const handlePin = () => {
-    setPinned((prev) => !prev);
+    dispatchNote({ type: actionTypes.TOGGLE_PINNED });
   };
 
   return (
     <Modal
       isOpen={isEditingModalOpen}
       onAfterOpen={handleAfterOpen}
-      contentLabel={`Editing ${name}`}
+      contentLabel={`Editing ${note.name}`}
       onRequestClose={handleClose}
       shouldFocusAfterRender={false}
       className={styles.modalWindow}
@@ -85,7 +132,7 @@ const EditNoteModal = () => {
       closeTimeoutMS={200}
       style={{
         content: {
-          background: color,
+          background: note.color,
         },
       }}
     >
@@ -93,17 +140,15 @@ const EditNoteModal = () => {
         <input
           type="text"
           placeholder="Title"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={note.name}
+          onChange={handleChangeName}
           className={styles.title}
         />
-        <PinButton note={editedNote} onClick={handlePin} isVisible={true} />
+        <PinButton note={note} onClick={handlePin} isVisible={true} />
         <TextareaAutosize
           placeholder="New note..."
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
+          value={note.content}
+          onChange={handleChangeContent}
           className={styles.text}
           ref={contentRef}
         />
