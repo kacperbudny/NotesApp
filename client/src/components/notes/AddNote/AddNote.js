@@ -1,22 +1,18 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
-import ButtonsBar from "../ButtonsBar/ButtonsBar";
-import useNotes from "@hooks/useNotes";
+import ButtonsBar from "@components/notes/ButtonsBar";
+import { useNotesContext } from "@contexts/NotesContext";
 import { toast } from "react-toastify";
-import PinButton from "../PinButton/PinButton";
+import PinButton from "@components/notes/PinButton";
+import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 
 const AddNote = () => {
-  const { addNote } = useNotes();
+  const [note, dispatchNote] = useReducer(noteReducer, initialValues);
   const [isEditing, setIsEditing] = useState(false);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
-  const [content, setContent] = useState("");
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("white");
-  const [pinned, setPinned] = useState(false);
-
-  const note = { name, content, color, pinned };
+  const { addNote } = useNotesContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,16 +26,27 @@ const AddNote = () => {
   };
 
   const handleAddNote = () => {
-    if (!content && !name) {
-      resetForm();
-      return;
+    if (!note.content && !note.name) {
+      return resetForm();
     }
     resetForm();
     addNote({ ...note, archived: false });
   };
 
-  const handleArchiveClick = () => {
-    if (name || content) {
+  const handleChangeName = (e) => {
+    dispatchNote({ type: actionTypes.SET_NAME, payload: e.target.value });
+  };
+
+  const handleChangeContent = (e) => {
+    dispatchNote({ type: actionTypes.SET_CONTENT, payload: e.target.value });
+  };
+
+  const handleChangeColor = (color) => {
+    dispatchNote({ type: actionTypes.SET_COLOR, payload: color });
+  };
+
+  const handleArchive = () => {
+    if (note.name || note.content) {
       addNote({
         ...note,
         pinned: false,
@@ -51,15 +58,12 @@ const AddNote = () => {
     }
   };
 
-  const handlePinClick = () => {
-    setPinned((prev) => !prev);
+  const handlePin = () => {
+    dispatchNote({ type: actionTypes.TOGGLE_PINNED });
   };
 
   const resetForm = () => {
-    setName("");
-    setContent("");
-    setColor("white");
-    setPinned(false);
+    dispatchNote({ type: actionTypes.SET_NOTE, payload: initialValues });
     setIsEditing(false);
   };
 
@@ -72,38 +76,35 @@ const AddNote = () => {
         <form
           className={styles.form}
           onSubmit={handleSubmit}
-          style={{ background: color }}
+          style={{ background: note.color }}
         >
           {isEditing && (
             <>
               <input
                 type="text"
                 placeholder="Title"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={note.name}
+                onChange={handleChangeName}
                 className={styles.title}
               />
-              <PinButton note={note} onClick={handlePinClick} />
+              <PinButton note={note} onClick={handlePin} isVisible={true} />
             </>
           )}
           <TextareaAutosize
             placeholder="New note..."
-            value={content}
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
+            value={note.content}
+            onChange={handleChangeContent}
             className={styles.text}
             rows="1"
           />
           {isEditing && (
             <div className={styles.buttonsRow}>
               <ButtonsBar
-                note={note}
-                changeColor={setColor}
-                isAdding={true}
+                isVisible={true}
                 isColorPaletteOpen={isColorPaletteOpen}
                 setIsColorPaletteOpen={setIsColorPaletteOpen}
-                archive={handleArchiveClick}
+                onArchiveClick={handleArchive}
+                onChangeColorClick={handleChangeColor}
               />
               <input type="submit" value="Close" className={styles.btn} />
             </div>

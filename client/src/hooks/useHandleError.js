@@ -2,11 +2,11 @@ import { RefreshTokenError } from "@utils/errors";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAuth from "./useAuth";
+import { useAuthContext } from "@contexts/AuthContext";
 
 const useHandleError = () => {
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const { signOut } = useAuthContext();
 
   return useCallback(
     async (error) => {

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "start:force-seed": "cross-env FORCE_SEED=true nodemon app.js",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
@@ -13,6 +14,7 @@
   "author": "Kacper Budny",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "nodemon": "^2.0.16",
@@ -24,8 +26,6 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.5.0",
-    "mongoose": "^6.3.1",
-    "uuid": "^8.3.2"
+    "mongoose": "^6.3.1"
   }
 }

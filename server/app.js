@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const seed = require("./utils/seed/seed");
 const noteRoutes = require("./routes/note");
 const authRoutes = require("./routes/auth");
+const cleanupDb = require("./utils/seed/cleanupDb");
 
 require("dotenv").config();
 const MONGODB_CONNECTION_STRING =
@@ -28,6 +29,11 @@ app.use((error, req, res, _) => {
 
 mongoose
   .connect(MONGODB_CONNECTION_STRING)
+  .then(() => {
+    if (process.env.FORCE_SEED === "true") {
+      return cleanupDb();
+    }
+  })
   .then(() => {
     seed();
     app.listen(port, () => {

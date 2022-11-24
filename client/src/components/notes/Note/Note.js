@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import useHover from "@hooks/useHover";
-import ButtonsBar from "../ButtonsBar";
+import ButtonsBar from "@components/notes/ButtonsBar";
 import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
-import useNotes from "@hooks/useNotes";
+import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 
 const Note = ({ note }) => {
@@ -11,39 +11,61 @@ const Note = ({ note }) => {
   const [hoverRef, isHovered] = useHover();
   const {
     openEditingModal,
-    changeNoteColor,
-    activeNote,
-    toggleNoteArchived,
-    toggleNotePinned,
-  } = useNotes();
+    updateNote,
+    noteToEdit,
+    noteToDelete,
+    openDeletingModal,
+  } = useNotesContext();
 
   const handleClick = () => {
     openEditingModal(note._id);
   };
 
-  const setColor = (color) => {
-    return changeNoteColor(color, note);
+  const handleChangeColor = (color) => {
+    note.color = color;
+    updateNote(note);
+  };
+
+  const handleDelete = () => {
+    openDeletingModal(note);
   };
 
   const handleArchive = () => {
-    toggleNoteArchived(note);
+    if (note.pinned) {
+      note.pinned = false;
+    }
+    note.archived = !note.archived;
+    updateNote(note);
   };
 
   const handlePin = () => {
-    toggleNotePinned(note);
+    if (note.archived) {
+      note.archived = false;
+    }
+    note.pinned = !note.pinned;
+    updateNote(note);
   };
+
+  const activeNote = noteToEdit || noteToDelete;
+
+  const isActiveNote = activeNote && activeNote._id === note._id;
+
+  const areButtonsVisible = isHovered || isColorPaletteOpen;
 
   return (
     <div
       ref={hoverRef}
-      className={styles.note}
+      className={`${styles.note} ${isActiveNote && styles.hidden}`}
       style={{
         background: `${note.color}`,
-        opacity: activeNote && activeNote._id === note._id ? "0" : "1",
       }}
     >
       <div className={styles.noteContent} onClick={handleClick}>
-        <PinButton isHovered={isHovered} note={note} onClick={handlePin} />
+        <PinButton
+          isVisible={areButtonsVisible}
+          note={note}
+          onClick={handlePin}
+        />
         {note.name || note.content ? (
           <div>
             <h3>{note.name}</h3>
@@ -54,12 +76,12 @@ const Note = ({ note }) => {
         )}
       </div>
       <ButtonsBar
-        note={note}
-        isHovered={isHovered}
-        changeColor={setColor}
+        isVisible={areButtonsVisible}
+        onChangeColorClick={handleChangeColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}
-        archive={handleArchive}
+        onArchiveClick={handleArchive}
+        onDeleteClick={handleDelete}
       />
     </div>
   );

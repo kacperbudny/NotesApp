@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import authProvider from "@services/authProvider";
 import tokenProvider from "@services/tokenProvider";
 
@@ -54,6 +54,10 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuthContext() {
+  return useContext(AuthContext);
 }
 
 export default AuthContext;

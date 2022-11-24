@@ -1,39 +1,49 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useReducer } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./EditNoteModal.module.scss";
 import Modal from "react-modal";
-import ButtonsBar from "../ButtonsBar/ButtonsBar";
-import useNotes from "@hooks/useNotes";
+import ButtonsBar from "@components/notes/ButtonsBar";
+import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
+import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 
 const EditNoteModal = () => {
-  const {
-    activeNote: note,
-    isEditingModalOpen,
-    closeEditingModal,
-  } = useNotes();
+  const [note, dispatchNote] = useReducer(noteReducer, initialValues);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
-  const [content, setContent] = useState("");
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("white");
-  const [pinned, setPinned] = useState(false);
   const contentRef = useRef(null);
+  const {
+    noteToEdit,
+    noteToDelete,
+    closeEditingModal,
+    openDeletingModal,
+    updateNote,
+  } = useNotesContext();
 
-  const editedNote = { content, name, color, pinned };
+  const isEditingModalOpen = !!(noteToEdit && !noteToDelete);
 
   useEffect(() => {
-    if (!note) return;
-    setContent(note.content);
-    setName(note.name);
-    setColor(note.color);
-    setPinned(note.pinned);
-  }, [note]);
+    if (!noteToEdit) return;
+    dispatchNote({ type: actionTypes.SET_NOTE, payload: noteToEdit });
+  }, [noteToEdit]);
+
+  const closeModalAndSave = (note) => {
+    updateNote(note);
+    closeEditingModal();
+  };
+
+  const handleChangeName = (e) => {
+    dispatchNote({ type: actionTypes.SET_NAME, payload: e.target.value });
+  };
+
+  const handleChangeContent = (e) => {
+    dispatchNote({ type: actionTypes.SET_CONTENT, payload: e.target.value });
+  };
 
   const handleClose = () => {
-    return closeEditingModal({
+    closeModalAndSave({
+      ...noteToEdit,
       ...note,
-      ...editedNote,
-      archived: pinned ? false : note.archived,
+      archived: note.pinned ? false : noteToEdit.archived,
     });
   };
 
@@ -44,24 +54,32 @@ const EditNoteModal = () => {
     textarea.focus();
   };
 
+  const handleChangeColor = (color) => {
+    dispatchNote({ type: actionTypes.SET_COLOR, payload: color });
+  };
+
+  const handleDelete = () => {
+    openDeletingModal(noteToEdit);
+  };
+
   const handleArchive = () => {
-    return closeEditingModal({
+    closeModalAndSave({
+      ...noteToEdit,
       ...note,
-      ...editedNote,
-      pinned: note.archived ? pinned : false,
-      archived: !note.archived,
+      pinned: noteToEdit.archived ? note.pinned : false,
+      archived: !noteToEdit.archived,
     });
   };
 
   const handlePin = () => {
-    setPinned((prev) => !prev);
+    dispatchNote({ type: actionTypes.TOGGLE_PINNED });
   };
 
   return (
     <Modal
       isOpen={isEditingModalOpen}
       onAfterOpen={handleAfterOpen}
-      contentLabel={`Editing ${name}`}
+      contentLabel={`Editing ${note.name}`}
       onRequestClose={handleClose}
       shouldFocusAfterRender={false}
       className={styles.modalWindow}
@@ -69,7 +87,7 @@ const EditNoteModal = () => {
       closeTimeoutMS={200}
       style={{
         content: {
-          background: color,
+          background: note.color,
         },
       }}
     >
@@ -77,27 +95,26 @@ const EditNoteModal = () => {
         <input
           type="text"
           placeholder="Title"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={note.name}
+          onChange={handleChangeName}
           className={styles.title}
         />
-        <PinButton note={editedNote} onClick={handlePin} />
+        <PinButton note={note} onClick={handlePin} isVisible={true} />
         <TextareaAutosize
           placeholder="New note..."
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
+          value={note.content}
+          onChange={handleChangeContent}
           className={styles.text}
           ref={contentRef}
         />
         <div className={styles.buttonsRow}>
           <ButtonsBar
-            changeColor={setColor}
-            note={note}
+            onChangeColorClick={handleChangeColor}
+            isVisible={true}
             isColorPaletteOpen={isColorPaletteOpen}
             setIsColorPaletteOpen={setIsColorPaletteOpen}
-            archive={handleArchive}
+            onArchiveClick={handleArchive}
+            onDeleteClick={handleDelete}
           />
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close

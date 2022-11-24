@@ -1,11 +1,10 @@
-import LogoutButton from "@components/auth/LogoutButton/LogoutButton";
-import useAuth from "@hooks/useAuth";
+import LogoutButton from "@components/auth/LogoutButton";
+import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import styles from "./Header.module.scss";
 import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@components/common/IconButton";
 
@@ -23,7 +22,7 @@ const getPageName = (displayAs) => {
 };
 
 const Header = ({ displayAs }) => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const { toggleSidebarOpen } = useLayoutContext();
 
   const pageName = getPageName(displayAs);
@@ -31,9 +30,12 @@ const Header = ({ displayAs }) => {
   return (
     <header className={styles.header}>
       <div className={styles.groupContainer}>
-        <IconButton onClick={toggleSidebarOpen} size={38}>
-          <FontAwesomeIcon icon={faBars} size="lg" />
-        </IconButton>
+        <IconButton
+          onClick={toggleSidebarOpen}
+          size={38}
+          icon={faBars}
+          iconSize="lg"
+        />
         <h1 className={styles.appName}>{pageName}</h1>
       </div>
       <div className={styles.groupContainer}>
