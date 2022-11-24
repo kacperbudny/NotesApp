@@ -17,24 +17,26 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
   const { isLoading } = useNotesContext();
 
   return (
-    <FullHeightContainer>
-      <Header displayAs={displayAs} />
-      <PageLayoutContainer>
-        <Sidebar />
-        <MainSectionContainer>
-          {!isLoading ? (
-            <>
-              {displayAs === homePageDisplayModes.home && <AddNote />}
-              <Notes displayAs={displayAs} />
-              <EditNoteModal />
-              <DeleteNoteModal />
-            </>
-          ) : (
-            <Loading />
-          )}
-        </MainSectionContainer>
-      </PageLayoutContainer>
-    </FullHeightContainer>
+    <>
+      <FullHeightContainer>
+        <Header displayAs={displayAs} />
+        <PageLayoutContainer>
+          <Sidebar />
+          <MainSectionContainer>
+            {!isLoading ? (
+              <>
+                {displayAs === homePageDisplayModes.home && <AddNote />}
+                <Notes displayAs={displayAs} />
+              </>
+            ) : (
+              <Loading />
+            )}
+          </MainSectionContainer>
+        </PageLayoutContainer>
+      </FullHeightContainer>
+      <EditNoteModal />
+      <DeleteNoteModal />
+    </>
   );
 }
 
