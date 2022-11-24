@@ -5,52 +5,7 @@ import Modal from "react-modal";
 import ButtonsBar from "@components/notes/ButtonsBar";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
-
-const actionTypes = {
-  SET_NOTE: "SET_NOTE",
-  SET_COLOR: "SET_COLOR",
-  TOGGLE_PINNED: "TOGGLE_PINNED",
-  SET_NAME: "SET_NAME",
-  SET_CONTENT: "SET_CONTENT",
-};
-
-const noteReducer = (state, action) => {
-  if (action.type === actionTypes.SET_NOTE) {
-    return {
-      name: action.payload.name,
-      content: action.payload.content,
-      color: action.payload.color,
-      pinned: action.payload.pinned,
-    };
-  }
-  if (action.type === actionTypes.SET_COLOR) {
-    return {
-      ...state,
-      color: action.payload,
-    };
-  }
-  if (action.type === actionTypes.TOGGLE_PINNED) {
-    return {
-      ...state,
-      pinned: !state.pinned,
-    };
-  }
-  if (action.type === actionTypes.SET_NAME) {
-    return {
-      ...state,
-      name: action.payload,
-    };
-  }
-  if (action.type === actionTypes.SET_CONTENT) {
-    return {
-      ...state,
-      content: action.payload,
-    };
-  }
-  throw Error("Unknown action: " + action.type);
-};
-
-const initialValues = { name: "", content: "", color: "white", pinned: false };
+import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 
 const EditNoteModal = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);

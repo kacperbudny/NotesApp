@@ -13,7 +13,6 @@ const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
       }}
     >
       <div className={styles.colorPalette}>
-        <ChangeColorButton changeColor={changeColor} />
         {Object.values(colors).map((color) => (
           <ChangeColorButton
             key={`${color}-button`}
