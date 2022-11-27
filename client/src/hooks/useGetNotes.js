@@ -5,6 +5,7 @@ import { useAuthContext } from "@contexts/AuthContext";
 
 export default function useGetNotes() {
   const [notes, setNotes] = useState([]);
+  const [tags, setTags] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
   const handleError = useHandleError();
@@ -16,7 +17,8 @@ export default function useGetNotes() {
       try {
         const response = await notesProvider.get();
         const data = await response.json();
-        setNotes(data);
+        setNotes(data.notes);
+        setTags(data.tags);
         setIsLoading(false);
         setFetched(true);
       } catch (error) {
@@ -28,5 +30,5 @@ export default function useGetNotes() {
     }
   }, [handleError, user, fetched]);
 
-  return [notes, setNotes, isLoading];
+  return { notes, setNotes, tags, isLoading };
 }

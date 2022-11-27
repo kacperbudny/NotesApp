@@ -8,7 +8,7 @@ import useHandleError from "@hooks/useHandleError";
 const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
-  const [notes, setNotes, isLoading] = useGetNotes();
+  const { notes, setNotes, tags, isLoading } = useGetNotes();
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [noteToDelete, setNoteToDelete] = useState(null);
 
@@ -77,6 +77,7 @@ export function NotesProvider({ children }) {
     <NotesContext.Provider
       value={{
         notes,
+        tags,
         isLoading,
         addNote,
         deleteNote,
