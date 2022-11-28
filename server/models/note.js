@@ -9,7 +9,7 @@ const noteSchema = new mongoose.Schema(
     archived: { type: Boolean, default: false },
     pinned: { type: Boolean, default: false },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    tags: [String],
+    tags: { type: [String], default: [] },
   },
   { timestamps: true }
 );

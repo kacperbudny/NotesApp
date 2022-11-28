@@ -1,27 +1,24 @@
 import React from "react";
 import ChangeColorButton from "@components/notes/ChangeColorButton";
 import colors from "@constants/colors";
-import styles from "./ColorPalette.module.scss";
 import PropTypes from "prop-types";
-import OutsideClickHandler from "react-outside-click-handler";
+import FloatingBox from "@components/common/FloatingBox";
 
 const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
+  const handleOutsideClick = () => {
+    setIsColorPaletteOpen(false);
+  };
+
   return (
-    <OutsideClickHandler
-      onOutsideClick={() => {
-        setIsColorPaletteOpen(false);
-      }}
-    >
-      <div className={styles.colorPalette}>
-        {Object.values(colors).map((color) => (
-          <ChangeColorButton
-            key={`${color}-button`}
-            color={color}
-            changeColor={changeColor}
-          />
-        ))}
-      </div>
-    </OutsideClickHandler>
+    <FloatingBox onOutsideClick={handleOutsideClick}>
+      {Object.values(colors).map((color) => (
+        <ChangeColorButton
+          key={`${color}-button`}
+          color={color}
+          changeColor={changeColor}
+        />
+      ))}
+    </FloatingBox>
   );
 };
 

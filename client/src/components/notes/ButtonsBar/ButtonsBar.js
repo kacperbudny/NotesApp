@@ -1,5 +1,5 @@
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { faPalette, faInbox } from "@fortawesome/free-solid-svg-icons";
+import { faPalette, faInbox, faTag } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import ColorPalette from "@components/notes/ColorPalette";
 import styles from "./ButtonsBar.module.scss";
@@ -13,6 +13,7 @@ const ButtonsBar = ({
   onArchiveClick,
   onDeleteClick,
   onChangeColorClick,
+  onTagClick,
 }) => {
   const handleColorPaletteClick = (e) => {
     e.preventDefault();
@@ -24,7 +25,8 @@ const ButtonsBar = ({
       {onDeleteClick && (
         <IconButton onClick={onDeleteClick} icon={faTrashAlt} />
       )}
-      <div className={styles.paletteContainer}>
+
+      <div className={styles.relativeContainer}>
         <IconButton onClick={handleColorPaletteClick} icon={faPalette} />
         {isColorPaletteOpen && (
           <ColorPalette
@@ -33,7 +35,10 @@ const ButtonsBar = ({
           />
         )}
       </div>
+
       <IconButton onClick={onArchiveClick} icon={faInbox} />
+
+      <IconButton onClick={onTagClick} icon={faTag} />
     </div>
   );
 };
@@ -45,6 +50,7 @@ ButtonsBar.propTypes = {
   onArchiveClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
   onChangeColorClick: PropTypes.func.isRequired,
+  onTagClick: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;

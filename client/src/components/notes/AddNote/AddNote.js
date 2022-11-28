@@ -7,6 +7,7 @@ import { useNotesContext } from "@contexts/NotesContext";
 import { toast } from "react-toastify";
 import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
+import TagsBar from "../TagsBar/TagsBar";
 
 const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -98,16 +99,19 @@ const AddNote = () => {
             rows="1"
           />
           {isEditing && (
-            <div className={styles.buttonsRow}>
-              <ButtonsBar
-                isVisible={true}
-                isColorPaletteOpen={isColorPaletteOpen}
-                setIsColorPaletteOpen={setIsColorPaletteOpen}
-                onArchiveClick={handleArchive}
-                onChangeColorClick={handleChangeColor}
-              />
-              <input type="submit" value="Close" className={styles.btn} />
-            </div>
+            <>
+              <TagsBar tags={note.tags} />
+              <div className={styles.buttonsRow}>
+                <ButtonsBar
+                  isVisible={true}
+                  isColorPaletteOpen={isColorPaletteOpen}
+                  setIsColorPaletteOpen={setIsColorPaletteOpen}
+                  onArchiveClick={handleArchive}
+                  onChangeColorClick={handleChangeColor}
+                />
+                <input type="submit" value="Close" className={styles.btn} />
+              </div>
+            </>
           )}
         </form>
       </OutsideClickHandler>

@@ -18,11 +18,6 @@ const Sidebar = () => {
             Notes
           </SidebarLink>
         </li>
-        <li>
-          <SidebarLink icon={faInbox} to="/archive">
-            Archive
-          </SidebarLink>
-        </li>
         {tags.length > 0 &&
           tags.map((tag) => (
             <li key={tag}>
@@ -31,6 +26,11 @@ const Sidebar = () => {
               </SidebarLink>
             </li>
           ))}
+        <li>
+          <SidebarLink icon={faInbox} to="/archive">
+            Archive
+          </SidebarLink>
+        </li>
       </ul>
     </nav>
   );

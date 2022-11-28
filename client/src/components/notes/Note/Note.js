@@ -5,6 +5,7 @@ import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
+import TagsBar from "@components/notes/TagsBar/TagsBar";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -70,6 +71,7 @@ const Note = ({ note }) => {
           <div>
             <h3>{note.name}</h3>
             <p>{note.content}</p>
+            <TagsBar tags={note.tags} />
           </div>
         ) : (
           <p className={styles.emptyNote}>Empty note</p>

@@ -53,4 +53,5 @@ export const initialValues = {
   content: "",
   color: colors.white,
   pinned: false,
+  tags: [],
 };
