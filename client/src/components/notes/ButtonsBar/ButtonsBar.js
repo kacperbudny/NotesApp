@@ -5,19 +5,26 @@ import ColorPalette from "@components/notes/ColorPalette";
 import styles from "./ButtonsBar.module.scss";
 import PropTypes from "prop-types";
 import IconButton from "@components/common/IconButton";
+import TaggingBox from "@components/notes/TaggingBox";
 
 const ButtonsBar = ({
   isVisible,
   isColorPaletteOpen,
   setIsColorPaletteOpen,
+  isTaggingBoxOpen,
+  setIsTaggingBoxOpen,
   onArchiveClick,
   onDeleteClick,
   onChangeColorClick,
-  onTagClick,
 }) => {
-  const handleColorPaletteClick = (e) => {
+  const handleColorPaletteButtonClick = (e) => {
     e.preventDefault();
-    setIsColorPaletteOpen(!isColorPaletteOpen);
+    setIsColorPaletteOpen((prev) => !prev);
+  };
+
+  const handleTaggingButtonClick = (e) => {
+    e.preventDefault();
+    setIsTaggingBoxOpen((prev) => !prev);
   };
 
   return (
@@ -27,7 +34,7 @@ const ButtonsBar = ({
       )}
 
       <div className={styles.relativeContainer}>
-        <IconButton onClick={handleColorPaletteClick} icon={faPalette} />
+        <IconButton onClick={handleColorPaletteButtonClick} icon={faPalette} />
         {isColorPaletteOpen && (
           <ColorPalette
             changeColor={onChangeColorClick}
@@ -38,7 +45,10 @@ const ButtonsBar = ({
 
       <IconButton onClick={onArchiveClick} icon={faInbox} />
 
-      <IconButton onClick={onTagClick} icon={faTag} />
+      <div className={styles.relativeContainer}>
+        <IconButton onClick={handleTaggingButtonClick} icon={faTag} />
+        {isTaggingBoxOpen && <TaggingBox setIsOpen={setIsTaggingBoxOpen} />}
+      </div>
     </div>
   );
 };
@@ -47,10 +57,11 @@ ButtonsBar.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   isColorPaletteOpen: PropTypes.bool.isRequired,
   setIsColorPaletteOpen: PropTypes.func.isRequired,
+  isTaggingBoxOpen: PropTypes.bool.isRequired,
+  setIsTaggingBoxOpen: PropTypes.func.isRequired,
   onArchiveClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
   onChangeColorClick: PropTypes.func.isRequired,
-  onTagClick: PropTypes.func.isRequired,
 };
 
 export default ButtonsBar;

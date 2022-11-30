@@ -9,6 +9,7 @@ import TagsBar from "@components/notes/TagsBar/TagsBar";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
   const {
     openEditingModal,
@@ -51,7 +52,7 @@ const Note = ({ note }) => {
 
   const isActiveNote = activeNote && activeNote._id === note._id;
 
-  const areButtonsVisible = isHovered || isColorPaletteOpen;
+  const areButtonsVisible = isHovered || isColorPaletteOpen || isTaggingBoxOpen;
 
   return (
     <div
@@ -82,6 +83,8 @@ const Note = ({ note }) => {
         onChangeColorClick={handleChangeColor}
         isColorPaletteOpen={isColorPaletteOpen}
         setIsColorPaletteOpen={setIsColorPaletteOpen}
+        isTaggingBoxOpen={isTaggingBoxOpen}
+        setIsTaggingBoxOpen={setIsTaggingBoxOpen}
         onArchiveClick={handleArchive}
         onDeleteClick={handleDelete}
       />

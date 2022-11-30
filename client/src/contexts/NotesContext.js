@@ -11,7 +11,6 @@ export function NotesProvider({ children }) {
   const { notes, setNotes, tags, isLoading } = useGetNotes();
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [noteToDelete, setNoteToDelete] = useState(null);
-  const [noteToTag, setNoteToTag] = useState(null);
 
   const handleError = useHandleError();
 
@@ -74,14 +73,6 @@ export function NotesProvider({ children }) {
     setNoteToDelete(null);
   };
 
-  const openTaggingModal = (note) => {
-    setNoteToTag(note);
-  };
-
-  const closeTaggingModal = () => {
-    setNoteToTag(null);
-  };
-
   return (
     <NotesContext.Provider
       value={{
@@ -93,13 +84,10 @@ export function NotesProvider({ children }) {
         updateNote,
         noteToEdit,
         noteToDelete,
-        noteToTag,
         openEditingModal,
         closeEditingModal,
         openDeletingModal,
         closeDeletingModal,
-        openTaggingModal,
-        closeTaggingModal,
       }}
     >
       {children}

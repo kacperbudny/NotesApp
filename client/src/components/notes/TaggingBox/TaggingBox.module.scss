@@ -1,0 +1,30 @@
+@use "../../../styles/variables.scss";
+@use "../../../styles/mixins.scss";
+
+.container {
+  padding: 6px;
+}
+
+.header {
+  @include mixins.fonts;
+  font-weight: 500;
+}
+
+.input {
+  margin-block: 6px;
+  margin-inline: 2px;
+  width: 200px;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.inputWithIconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-left: 8px;
+  margin-right: 4px;
+  color: variables.$grey;
+}
