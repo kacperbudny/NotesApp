@@ -2,7 +2,7 @@
 @use "../../../styles/mixins.scss";
 
 .container {
-  padding: 6px;
+  padding: 10px;
 }
 
 .header {
@@ -23,8 +23,35 @@
   align-items: center;
 }
 
-.icon {
+.searchIcon {
   margin-left: 8px;
   margin-right: 4px;
   color: variables.$grey;
+}
+
+.plusIcon {
+  margin-inline: 12px;
+  color: variables.$grey;
+}
+
+.addButton {
+  background: none;
+  border: none;
+  width: 100%;
+  border-top: 1px solid variables.$darker-grey;
+  padding-block: 6px;
+  text-align: start;
+  border-radius: 0 0 8px 8px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background: variables.$light-grey;
+}
+
+.buttonText {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

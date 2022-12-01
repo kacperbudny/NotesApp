@@ -3,6 +3,7 @@ import ChangeColorButton from "@components/notes/ChangeColorButton";
 import colors from "@constants/colors";
 import PropTypes from "prop-types";
 import FloatingBox from "@components/common/FloatingBox";
+import styles from "./ColorPalette.module.scss";
 
 const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
   const handleOutsideClick = () => {
@@ -11,13 +12,15 @@ const ColorPalette = ({ setIsColorPaletteOpen, changeColor }) => {
 
   return (
     <FloatingBox onOutsideClick={handleOutsideClick}>
-      {Object.values(colors).map((color) => (
-        <ChangeColorButton
-          key={`${color}-button`}
-          color={color}
-          changeColor={changeColor}
-        />
-      ))}
+      <div className={styles.container}>
+        {Object.values(colors).map((color) => (
+          <ChangeColorButton
+            key={`${color}-button`}
+            color={color}
+            changeColor={changeColor}
+          />
+        ))}
+      </div>
     </FloatingBox>
   );
 };
