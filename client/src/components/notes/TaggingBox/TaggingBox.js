@@ -6,16 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNotesContext } from "@contexts/NotesContext";
 
-const TaggingBox = ({ setIsOpen }) => {
+const TaggingBox = ({ setIsOpen, tags }) => {
   const [inputValue, setInputValue] = useState("");
-  const { tags } = useNotesContext();
+  const { tags: allTags } = useNotesContext();
 
-  const filteredTags = tags.filter((tag) =>
+  const filteredTags = allTags.filter((tag) =>
     tag.toUpperCase().includes(inputValue.toUpperCase())
   );
   const showAddButton =
     inputValue.length > 0 &&
-    !tags.map((tag) => tag.toUpperCase()).includes(inputValue.toUpperCase());
+    !allTags.map((tag) => tag.toUpperCase()).includes(inputValue.toUpperCase());
 
   const handleClose = () => {
     setIsOpen(false);
@@ -26,6 +26,15 @@ const TaggingBox = ({ setIsOpen }) => {
       return;
     }
     setInputValue(e.target.value);
+  };
+
+  const handleCheckboxChange = (e) => {
+    if (e.currentTarget.checked) {
+      console.log("checked");
+    } else {
+      // tags.filter((tag) => tag !== e.currentTarget.name);
+      tags = [];
+    }
   };
 
   return (
@@ -47,9 +56,20 @@ const TaggingBox = ({ setIsOpen }) => {
               className={styles.searchIcon}
             />
           </div>
-          <ul>
+          <ul className={styles.tagsList}>
             {filteredTags.map((tag) => (
-              <li key={tag}>{tag}</li>
+              <li key={tag} className={styles.tag}>
+                <label className={styles.tagLabel}>
+                  <input
+                    type="checkbox"
+                    name={tag}
+                    className={styles.checkbox}
+                    checked={tags.includes(tag)}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span className={styles.tagText}>{tag}</span>
+                </label>
+              </li>
             ))}
           </ul>
         </div>
@@ -72,6 +92,7 @@ const TaggingBox = ({ setIsOpen }) => {
 
 TaggingBox.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default TaggingBox;

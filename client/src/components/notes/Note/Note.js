@@ -87,6 +87,7 @@ const Note = ({ note }) => {
         setIsTaggingBoxOpen={setIsTaggingBoxOpen}
         onArchiveClick={handleArchive}
         onDeleteClick={handleDelete}
+        tags={note.tags}
       />
     </div>
   );
