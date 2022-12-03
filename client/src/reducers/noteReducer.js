@@ -6,16 +6,15 @@ export const actionTypes = {
   TOGGLE_PINNED: "TOGGLE_PINNED",
   SET_NAME: "SET_NAME",
   SET_CONTENT: "SET_CONTENT",
+  ADD_TAG: "ADD_TAG",
+  REMOVE_TAG: "REMOVE_TAG",
 };
 
 export const noteReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_NOTE: {
       return {
-        name: action.payload.name,
-        content: action.payload.content,
-        color: action.payload.color,
-        pinned: action.payload.pinned,
+        ...action.payload,
       };
     }
     case actionTypes.SET_COLOR: {
@@ -40,6 +39,18 @@ export const noteReducer = (state, action) => {
       return {
         ...state,
         content: action.payload,
+      };
+    }
+    case actionTypes.ADD_TAG: {
+      return {
+        ...state,
+        tags: [...state.tags, action.payload],
+      };
+    }
+    case actionTypes.REMOVE_TAG: {
+      return {
+        ...state,
+        tags: state.tags.filter((tag) => tag !== action.payload),
       };
     }
     default: {

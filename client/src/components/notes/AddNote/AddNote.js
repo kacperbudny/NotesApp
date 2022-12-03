@@ -13,6 +13,7 @@ const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
   const [isEditing, setIsEditing] = useState(false);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const { addNote } = useNotesContext();
 
   const handleSubmit = (e) => {
@@ -46,6 +47,14 @@ const AddNote = () => {
     dispatchNote({ type: actionTypes.SET_COLOR, payload: color });
   };
 
+  const handleAddTag = (tag) => {
+    dispatchNote({ type: actionTypes.ADD_TAG, payload: tag });
+  };
+
+  const handleRemoveTag = (tag) => {
+    dispatchNote({ type: actionTypes.REMOVE_TAG, payload: tag });
+  };
+
   const handleArchive = () => {
     if (note.name || note.content) {
       addNote({
@@ -68,11 +77,12 @@ const AddNote = () => {
     setIsEditing(false);
   };
 
+  const handleFocus = () => {
+    setIsEditing(true);
+  };
+
   return (
-    <div
-      onFocus={() => setIsEditing(true)}
-      className={styles.centeringContainer}
-    >
+    <div onFocus={handleFocus} className={styles.centeringContainer}>
       <OutsideClickHandler onOutsideClick={handleClickOutside}>
         <form
           className={styles.form}
@@ -100,14 +110,21 @@ const AddNote = () => {
           />
           {isEditing && (
             <>
-              <TagsBar tags={note.tags} />
+              <div className={styles.tagsBarContainer}>
+                <TagsBar tags={note.tags} />
+              </div>
               <div className={styles.buttonsRow}>
                 <ButtonsBar
                   isVisible={true}
                   isColorPaletteOpen={isColorPaletteOpen}
                   setIsColorPaletteOpen={setIsColorPaletteOpen}
+                  isTaggingBoxOpen={isTaggingBoxOpen}
+                  setIsTaggingBoxOpen={setIsTaggingBoxOpen}
                   onArchiveClick={handleArchive}
                   onChangeColorClick={handleChangeColor}
+                  onAddTag={handleAddTag}
+                  onRemoveTag={handleRemoveTag}
+                  tags={note.tags}
                 />
                 <input type="submit" value="Close" className={styles.btn} />
               </div>

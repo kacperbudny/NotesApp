@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNotesContext } from "@contexts/NotesContext";
 
-const TaggingBox = ({ setIsOpen, tags }) => {
+const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
   const [inputValue, setInputValue] = useState("");
-  const { tags: allTags } = useNotesContext();
+  const { tags: savedTags } = useNotesContext();
+
+  const allTags = Array.from(new Set([...savedTags, ...noteTags]));
 
   const filteredTags = allTags.filter((tag) =>
     tag.toUpperCase().includes(inputValue.toUpperCase())
@@ -29,12 +31,17 @@ const TaggingBox = ({ setIsOpen, tags }) => {
   };
 
   const handleCheckboxChange = (e) => {
+    const tag = e.currentTarget.name;
     if (e.currentTarget.checked) {
-      console.log("checked");
+      onAddTag(tag);
     } else {
-      // tags.filter((tag) => tag !== e.currentTarget.name);
-      tags = [];
+      onRemoveTag(tag);
     }
+  };
+
+  const handleAddButtonClick = () => {
+    onAddTag(inputValue);
+    setInputValue("");
   };
 
   return (
@@ -64,7 +71,7 @@ const TaggingBox = ({ setIsOpen, tags }) => {
                     type="checkbox"
                     name={tag}
                     className={styles.checkbox}
-                    checked={tags.includes(tag)}
+                    checked={noteTags.includes(tag)}
                     onChange={handleCheckboxChange}
                   />
                   <span className={styles.tagText}>{tag}</span>
@@ -74,7 +81,7 @@ const TaggingBox = ({ setIsOpen, tags }) => {
           </ul>
         </div>
         {showAddButton && (
-          <button className={styles.addButton}>
+          <button className={styles.addButton} onClick={handleAddButtonClick}>
             <FontAwesomeIcon
               icon={faPlus}
               size="md"
@@ -93,6 +100,8 @@ const TaggingBox = ({ setIsOpen, tags }) => {
 TaggingBox.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
+  onAddTag: PropTypes.func.isRequired,
+  onRemoveTag: PropTypes.func.isRequired,
 };
 
 export default TaggingBox;

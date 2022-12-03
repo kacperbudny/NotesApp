@@ -48,6 +48,16 @@ const Note = ({ note }) => {
     updateNote(note);
   };
 
+  const handleAddTag = (tag) => {
+    note.tags = [...note.tags, tag];
+    updateNote(note);
+  };
+
+  const handleRemoveTag = (tag) => {
+    note.tags = note.tags.filter((t) => t !== tag);
+    updateNote(note);
+  };
+
   const activeNote = noteToEdit || noteToDelete;
 
   const isActiveNote = activeNote && activeNote._id === note._id;
@@ -87,6 +97,8 @@ const Note = ({ note }) => {
         setIsTaggingBoxOpen={setIsTaggingBoxOpen}
         onArchiveClick={handleArchive}
         onDeleteClick={handleDelete}
+        onAddTag={handleAddTag}
+        onRemoveTag={handleRemoveTag}
         tags={note.tags}
       />
     </div>

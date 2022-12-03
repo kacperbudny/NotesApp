@@ -16,6 +16,8 @@ const ButtonsBar = ({
   onArchiveClick,
   onDeleteClick,
   onChangeColorClick,
+  onAddTag,
+  onRemoveTag,
   tags,
 }) => {
   const handleColorPaletteButtonClick = (e) => {
@@ -49,7 +51,12 @@ const ButtonsBar = ({
       <div className={styles.relativeContainer}>
         <IconButton onClick={handleTaggingButtonClick} icon={faTag} />
         {isTaggingBoxOpen && (
-          <TaggingBox setIsOpen={setIsTaggingBoxOpen} tags={tags} />
+          <TaggingBox
+            setIsOpen={setIsTaggingBoxOpen}
+            noteTags={tags}
+            onAddTag={onAddTag}
+            onRemoveTag={onRemoveTag}
+          />
         )}
       </div>
     </div>
@@ -65,6 +72,8 @@ ButtonsBar.propTypes = {
   onArchiveClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
   onChangeColorClick: PropTypes.func.isRequired,
+  onAddTag: PropTypes.func.isRequired,
+  onRemoveTag: PropTypes.func.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
 };
 

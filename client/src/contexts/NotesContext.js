@@ -8,9 +8,11 @@ import useHandleError from "@hooks/useHandleError";
 const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
-  const { notes, setNotes, tags, isLoading } = useGetNotes();
+  const { notes, setNotes, isLoading } = useGetNotes();
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [noteToDelete, setNoteToDelete] = useState(null);
+
+  const tags = Array.from(new Set(notes.map((note) => note.tags).flat()));
 
   const handleError = useHandleError();
 

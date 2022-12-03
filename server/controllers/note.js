@@ -5,11 +5,8 @@ const { validationResult } = require("express-validator");
 exports.getAllNotes = async (req, res, next) => {
   try {
     const allNotes = await Note.find({ user: req.userId });
-    const allTags = Array.from(
-      new Set(allNotes.map((note) => note.tags).flat())
-    );
 
-    return res.json({ notes: allNotes, tags: allTags });
+    return res.json({ notes: allNotes });
   } catch (err) {
     next(err);
   }
