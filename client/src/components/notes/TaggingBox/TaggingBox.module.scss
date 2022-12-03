@@ -80,33 +80,3 @@
 .tagText {
   margin-left: 8px;
 }
-
-.checkbox {
-  -webkit-appearance: none;
-  appearance: none;
-  display: inline-block;
-  position: relative;
-  color: variables.$grey;
-  width: 14px;
-  height: 14px;
-  border: 2px solid variables.$grey;
-  border-radius: 2px;
-  display: grid;
-  place-content: center;
-}
-
-.checkbox:active,
-.checkbox:checked:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-    inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.checkbox:checked:after {
-  content: "\2714";
-  font-size: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: variables.$grey;
-}

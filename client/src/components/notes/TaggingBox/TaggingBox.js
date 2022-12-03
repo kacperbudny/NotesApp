@@ -5,6 +5,7 @@ import styles from "./TaggingBox.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNotesContext } from "@contexts/NotesContext";
+import Checkbox from "@components/common/Checkbox/Checkbox";
 
 const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
   const [inputValue, setInputValue] = useState("");
@@ -30,13 +31,14 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
     setInputValue(e.target.value);
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxCheck = (e) => {
     const tag = e.currentTarget.name;
-    if (e.currentTarget.checked) {
-      onAddTag(tag);
-    } else {
-      onRemoveTag(tag);
-    }
+    onAddTag(tag);
+  };
+
+  const handleCheckboxUncheck = (e) => {
+    const tag = e.currentTarget.name;
+    onRemoveTag(tag);
   };
 
   const handleAddButtonClick = () => {
@@ -67,12 +69,11 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
             {filteredTags.map((tag) => (
               <li key={tag} className={styles.tag}>
                 <label className={styles.tagLabel}>
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={tag}
-                    className={styles.checkbox}
-                    checked={noteTags.includes(tag)}
-                    onChange={handleCheckboxChange}
+                    isChecked={noteTags.includes(tag)}
+                    onCheck={handleCheckboxCheck}
+                    onUncheck={handleCheckboxUncheck}
                   />
                   <span className={styles.tagText}>{tag}</span>
                 </label>
