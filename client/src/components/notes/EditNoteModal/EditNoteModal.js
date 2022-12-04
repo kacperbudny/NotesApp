@@ -85,6 +85,10 @@ const EditNoteModal = () => {
     dispatchNote({ type: actionTypes.REMOVE_TAG, payload: tag });
   };
 
+  const handleTagBadgeClick = () => {
+    handleClose();
+  };
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -118,7 +122,11 @@ const EditNoteModal = () => {
           ref={contentRef}
         />
         <div className={styles.tagsBarContainer}>
-          <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
+          <TagsBar
+            tags={note.tags}
+            onRemoveTag={handleRemoveTag}
+            onBadgeClick={handleTagBadgeClick}
+          />
         </div>
         <div className={styles.buttonsRow}>
           <ButtonsBar

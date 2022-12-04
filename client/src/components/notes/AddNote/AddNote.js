@@ -81,6 +81,10 @@ const AddNote = () => {
     setIsEditing(true);
   };
 
+  const handleTagBadgeClick = () => {
+    handleAddNote();
+  };
+
   return (
     <div onFocus={handleFocus} className={styles.centeringContainer}>
       <OutsideClickHandler onOutsideClick={handleClickOutside}>
@@ -111,7 +115,11 @@ const AddNote = () => {
           {isEditing && (
             <>
               <div className={styles.tagsBarContainer}>
-                <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
+                <TagsBar
+                  tags={note.tags}
+                  onRemoveTag={handleRemoveTag}
+                  onBadgeClick={handleTagBadgeClick}
+                />
               </div>
               <div className={styles.buttonsRow}>
                 <ButtonsBar
