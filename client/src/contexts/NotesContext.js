@@ -5,7 +5,20 @@ import notesProvider from "@services/notesProvider";
 import toastifyRequest from "@utils/toastifyRequest";
 import useHandleError from "@hooks/useHandleError";
 
-const NotesContext = createContext();
+const NotesContext = createContext({
+  notes: [],
+  tags: [],
+  isLoading: true,
+  addNote: () => {},
+  deleteNote: () => {},
+  updateNote: () => {},
+  noteToEdit: {},
+  noteToDelete: {},
+  openEditingModal: () => {},
+  closeEditingModal: () => {},
+  openDeletingModal: () => {},
+  closeDeletingModal: () => {},
+});
 
 export function NotesProvider({ children }) {
   const { notes, setNotes, isLoading } = useGetNotes();

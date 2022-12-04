@@ -2,7 +2,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 import authProvider from "@services/authProvider";
 import tokenProvider from "@services/tokenProvider";
 
-const AuthContext = createContext();
+const AuthContext = createContext({
+  user: {},
+  signIn: () => {},
+  signOut: () => {},
+  signUp: () => {},
+  token: "",
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);

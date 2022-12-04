@@ -22,13 +22,6 @@
   width: 100%;
 }
 
-.tagName:link,
-.tagName:visited,
-.tagName:hover,
-.tagName:active {
-  color: variables.$black;
-}
-
 .tagNameShortened {
   width: calc(100% - 4px);
 }

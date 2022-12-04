@@ -12,6 +12,7 @@ import MainSectionContainer from "@components/layout/MainSectionContainer";
 import PropTypes from "prop-types";
 import FullHeightContainer from "@components/layout/FullHeightContainer";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import TagsModal from "@components/notes/TagsModal/TagsModal";
 
 function HomePage({ displayAs = homePageDisplayModes.home }) {
   const { isLoading } = useNotesContext();
@@ -36,6 +37,7 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
       </FullHeightContainer>
       <EditNoteModal />
       <DeleteNoteModal />
+      <TagsModal />
     </>
   );
 }
