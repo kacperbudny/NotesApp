@@ -111,7 +111,7 @@ const AddNote = () => {
           {isEditing && (
             <>
               <div className={styles.tagsBarContainer}>
-                <TagsBar tags={note.tags} />
+                <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
               </div>
               <div className={styles.buttonsRow}>
                 <ButtonsBar

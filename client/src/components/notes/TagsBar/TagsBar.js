@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./TagsBar.module.scss";
 import PropTypes from "prop-types";
+import TagsBadge from "../TagsBadge/TagsBadge";
 
-const TagsBar = ({ tags }) => {
+const TagsBar = ({ tags, onRemoveTag }) => {
   if (!tags?.length) {
     return null;
   }
@@ -10,9 +11,7 @@ const TagsBar = ({ tags }) => {
   return (
     <div className={styles.container}>
       {tags.map((tag) => (
-        <span className={styles.badge} key={tag}>
-          {tag}
-        </span>
+        <TagsBadge tag={tag} key={tag} onRemoveTag={onRemoveTag} />
       ))}
     </div>
   );
@@ -20,6 +19,7 @@ const TagsBar = ({ tags }) => {
 
 TagsBar.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
+  onRemoveTag: PropTypes.func.isRequired,
 };
 
 export default TagsBar;

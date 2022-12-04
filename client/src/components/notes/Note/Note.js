@@ -82,7 +82,7 @@ const Note = ({ note }) => {
           <div>
             <h3>{note.name}</h3>
             <p>{note.content}</p>
-            <TagsBar tags={note.tags} />
+            <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
           </div>
         ) : (
           <p className={styles.emptyNote}>Empty note</p>
