@@ -5,7 +5,7 @@ import { faNoteSticky } from "@fortawesome/free-regular-svg-icons";
 import { faInbox, faTag, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import { useNotesContext } from "@contexts/NotesContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SidebarButton from "@components/layout/SidebarButton";
 
 const Sidebar = () => {
   const { isSidebarOpen, setIsTagsModalOpen } = useLayoutContext();
@@ -32,10 +32,9 @@ const Sidebar = () => {
             </li>
           ))}
         <li>
-          <button onClick={openTagsModal}>
-            <FontAwesomeIcon icon={faPen} size="lg" />
+          <SidebarButton onClick={openTagsModal} icon={faPen}>
             Edit tags
-          </button>
+          </SidebarButton>
         </li>
         <li>
           <SidebarLink icon={faInbox} to="/archive">

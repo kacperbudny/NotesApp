@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLayoutContext } from "@contexts/LayoutContext";
 
-const SidebarItem = ({ isActive, icon, children }) => {
+const SidebarItem = ({ isActive = false, icon, children }) => {
   const { isSidebarOpen } = useLayoutContext();
 
   return (

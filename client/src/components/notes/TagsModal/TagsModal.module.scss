@@ -1,9 +1,14 @@
 @use "../../../styles/modals.scss";
+@use "../../../styles/variables.scss";
 
 .modalWindow {
   @extend .modalWindow;
-  padding: 20px 16px 16px 16px;
-  text-align: center;
-  width: fit-content;
   transition: transform 0.2s ease-out;
+  width: 300px;
+}
+
+.buttons {
+  padding: 16px;
+  text-align: right;
+  border-top: 1px solid variables.$darker-grey;
 }
