@@ -1,14 +1,24 @@
 @use "../../../styles/modals.scss";
 @use "../../../styles/variables.scss";
+@use "../../../styles/buttons.scss";
 
 .modalWindow {
   @extend .modalWindow;
   transition: transform 0.2s ease-out;
-  width: 300px;
+  width: 350px;
 }
 
 .buttons {
-  padding: 16px;
+  padding: 8px;
   text-align: right;
   border-top: 1px solid variables.$darker-grey;
+}
+
+.container {
+  padding: 8px 16px;
+}
+
+.tagsList {
+  list-style-type: none;
+  padding: 8px 0 4px 0;
 }

@@ -23,11 +23,13 @@ const TagsModal = () => {
       closeTimeoutMS={200}
       onRequestClose={handleClose}
     >
-      <div>
+      <div className={styles.container}>
         <h3>Edit tags</h3>
-        {tags.map((tag) => (
-          <TagEditItem key={tag} tag={tag} />
-        ))}
+        <ul className={styles.tagsList}>
+          {tags.map((tag) => (
+            <TagEditItem key={tag} tag={tag} />
+          ))}
+        </ul>
       </div>
       <form className={styles.buttons}>
         <button type="button" className={styles.btn} onClick={handleClose}>
