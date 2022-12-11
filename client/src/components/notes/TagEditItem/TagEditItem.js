@@ -9,22 +9,35 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./TagEditItem.module.scss";
+import { useNotesContext } from "@contexts/NotesContext";
 
 const TagEditItem = ({ tag }) => {
   const [inputValue, setInputValue] = useState(tag);
   const [isFocused, setIsFocused] = useState(false);
   const [hoverRef, isHovered] = useHover();
 
+  const { updateTags } = useNotesContext();
+
   const deleteButtonIcon = isHovered || isFocused ? faTrash : faTag;
   const editButtonIcon = isFocused ? faCheck : faPen;
 
   const handleChange = (e) => {
+    if (e.currentTarget.value.length > 20) {
+      return;
+    }
     setInputValue(e.currentTarget.value);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    updateTags(tag, null);
+  };
 
-  const handleEdit = () => {};
+  const handleUpdate = () => {
+    if (inputValue.length === 0) {
+      return;
+    }
+    updateTags(tag, inputValue);
+  };
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -56,7 +69,7 @@ const TagEditItem = ({ tag }) => {
       </div>
       <IconButton
         icon={editButtonIcon}
-        onClick={handleEdit}
+        onClick={handleUpdate}
         size={28}
         variant="grey"
       />

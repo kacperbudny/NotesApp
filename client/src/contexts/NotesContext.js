@@ -18,6 +18,7 @@ const NotesContext = createContext({
   closeEditingModal: () => {},
   openDeletingModal: () => {},
   closeDeletingModal: () => {},
+  updateTags: () => {},
 });
 
 export function NotesProvider({ children }) {
@@ -88,6 +89,35 @@ export function NotesProvider({ children }) {
     setNoteToDelete(null);
   };
 
+  const updateTags = async (oldTag, newTag) => {
+    const notesToUpdate = [];
+
+    setNotes((prev) =>
+      prev.map((note) => {
+        const willTagsUpdate = note.tags.includes(oldTag);
+        const updatedTags =
+          newTag === null
+            ? note.tags.filter((tag) => tag !== oldTag)
+            : note.tags.map((tag) => (tag === oldTag ? newTag : tag));
+        const updatedNote = { ...note, tags: updatedTags };
+
+        if (willTagsUpdate) {
+          notesToUpdate.push(updatedNote);
+        }
+
+        return updatedNote;
+      })
+    );
+
+    try {
+      await toastifyRequest(
+        Promise.all(notesToUpdate.map((note) => notesProvider.update(note)))
+      );
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   return (
     <NotesContext.Provider
       value={{
@@ -103,6 +133,7 @@ export function NotesProvider({ children }) {
         closeEditingModal,
         openDeletingModal,
         closeDeletingModal,
+        updateTags,
       }}
     >
       {children}
