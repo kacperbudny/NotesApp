@@ -83,11 +83,7 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
         </div>
         {showAddButton && (
           <button className={styles.addButton} onClick={handleAddButtonClick}>
-            <FontAwesomeIcon
-              icon={faPlus}
-              size="md"
-              className={styles.plusIcon}
-            />
+            <FontAwesomeIcon icon={faPlus} className={styles.plusIcon} />
             <span className={styles.buttonText}>
               Add tag "<strong>{inputValue}</strong>"
             </span>

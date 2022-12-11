@@ -16,6 +16,8 @@
 
 .container {
   padding: 8px 16px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .tagsList {
