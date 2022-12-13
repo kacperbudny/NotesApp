@@ -1,6 +1,6 @@
 import Header from "@components/layout/Header";
 import Notes from "@components/notes/Notes";
-import React from "react";
+import React, { useEffect } from "react";
 import AddNote from "@components/notes/AddNote";
 import EditNoteModal from "@components/notes/EditNoteModal";
 import Loading from "@components/common/Loading";
@@ -13,9 +13,19 @@ import PropTypes from "prop-types";
 import FullHeightContainer from "@components/layout/FullHeightContainer";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import TagsModal from "@components/notes/TagsModal/TagsModal";
+import { useParams, useNavigate } from "react-router-dom";
 
 function HomePage({ displayAs = homePageDisplayModes.home }) {
-  const { isLoading } = useNotesContext();
+  const { isLoading, tags } = useNotesContext();
+  // const { tag: tagFromParams } = useParams();
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const isTagRouteExisting = tags.includes(tagFromParams);
+  //   if (!isLoading && !isTagRouteExisting) {
+  //     navigate("/");
+  //   }
+  // }, [isLoading, tags, tagFromParams, navigate]);
 
   return (
     <>
@@ -26,7 +36,7 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
           <MainSectionContainer>
             {!isLoading ? (
               <>
-                {displayAs === homePageDisplayModes.home && <AddNote />}
+                {displayAs !== homePageDisplayModes.archive && <AddNote />}
                 <Notes displayAs={displayAs} />
               </>
             ) : (

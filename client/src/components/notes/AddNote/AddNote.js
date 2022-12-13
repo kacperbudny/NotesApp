@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 import TagsBar from "../TagsBar/TagsBar";
+import { useParams } from "react-router-dom";
 
 const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -15,6 +16,22 @@ const AddNote = () => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const { addNote } = useNotesContext();
+  const { tag: tagFromParams } = useParams();
+
+  const initialValuesWithTagFromParams = useMemo(
+    () => ({
+      ...initialValues,
+      tags: tagFromParams ? [tagFromParams] : [],
+    }),
+    [tagFromParams]
+  );
+
+  useEffect(() => {
+    dispatchNote({
+      type: actionTypes.SET_NOTE,
+      payload: initialValuesWithTagFromParams,
+    });
+  }, [initialValuesWithTagFromParams]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,7 +90,10 @@ const AddNote = () => {
   };
 
   const resetForm = () => {
-    dispatchNote({ type: actionTypes.SET_NOTE, payload: initialValues });
+    dispatchNote({
+      type: actionTypes.SET_NOTE,
+      payload: initialValuesWithTagFromParams,
+    });
     setIsEditing(false);
   };
 

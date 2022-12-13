@@ -26,9 +26,11 @@ const TagsModal = () => {
       <div className={styles.container}>
         <h3>Edit tags</h3>
         <ul className={styles.tagsList}>
-          {tags.map((tag) => (
-            <TagEditItem key={tag} tag={tag} />
-          ))}
+          {tags.length > 0 ? (
+            tags.map((tag) => <TagEditItem key={tag} tag={tag} />)
+          ) : (
+            <p className={styles.centeredText}>No tags on your notes.</p>
+          )}
         </ul>
       </div>
       <form className={styles.buttons}>

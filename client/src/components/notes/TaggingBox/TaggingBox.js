@@ -20,6 +20,14 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
     inputValue.length > 0 &&
     !allTags.map((tag) => tag.toUpperCase()).includes(inputValue.toUpperCase());
 
+  const addTag = () => {
+    if (inputValue.length === 0) {
+      return;
+    }
+    onAddTag(inputValue);
+    setInputValue("");
+  };
+
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -29,6 +37,12 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
       return;
     }
     setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      addTag();
+    }
   };
 
   const handleCheckboxCheck = (e) => {
@@ -42,8 +56,7 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
   };
 
   const handleAddButtonClick = () => {
-    onAddTag(inputValue);
-    setInputValue("");
+    addTag();
   };
 
   return (
@@ -58,6 +71,7 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
               placeholder="Enter a tag"
               value={inputValue}
               onChange={handleChangeInput}
+              onKeyDown={handleKeyDown}
             />
             <FontAwesomeIcon
               icon={faMagnifyingGlass}

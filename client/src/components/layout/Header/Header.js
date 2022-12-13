@@ -7,25 +7,33 @@ import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@components/common/IconButton";
+import { useParams } from "react-router-dom";
 
-const getPageName = (displayAs) => {
-  if (displayAs === homePageDisplayModes.home) {
-    return "Notes App";
-  } else {
-    return displayAs
-      .split("")
-      .map((letter, index) =>
-        index === 0 ? letter.toUpperCase() : letter.toLowerCase()
-      )
-      .join("");
+const getPageName = (displayAs, tag) => {
+  switch (displayAs) {
+    case homePageDisplayModes.home: {
+      return "Notes App";
+    }
+    case homePageDisplayModes.tags: {
+      return tag || "Tags";
+    }
+    default: {
+      return displayAs
+        .split("")
+        .map((letter, index) =>
+          index === 0 ? letter.toUpperCase() : letter.toLowerCase()
+        )
+        .join("");
+    }
   }
 };
 
 const Header = ({ displayAs }) => {
   const { user } = useAuthContext();
   const { toggleSidebarOpen } = useLayoutContext();
+  const { tag } = useParams();
 
-  const pageName = getPageName(displayAs);
+  const pageName = getPageName(displayAs, tag);
 
   return (
     <header className={styles.header}>
