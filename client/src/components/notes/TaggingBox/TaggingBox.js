@@ -5,7 +5,7 @@ import styles from "./TaggingBox.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNotesContext } from "@contexts/NotesContext";
-import Checkbox from "@components/common/Checkbox/Checkbox";
+import TaggingBoxTagItem from "../TaggingBoxTagItem/TaggingBoxTagItem";
 
 const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
   const [inputValue, setInputValue] = useState("");
@@ -45,16 +45,6 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
     }
   };
 
-  const handleCheckboxCheck = (e) => {
-    const tag = e.currentTarget.name;
-    onAddTag(tag);
-  };
-
-  const handleCheckboxUncheck = (e) => {
-    const tag = e.currentTarget.name;
-    onRemoveTag(tag);
-  };
-
   const handleAddButtonClick = () => {
     addTag();
   };
@@ -81,17 +71,13 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
           </div>
           <ul className={styles.tagsList}>
             {filteredTags.map((tag) => (
-              <li key={tag} className={styles.tag}>
-                <label className={styles.tagLabel}>
-                  <Checkbox
-                    name={tag}
-                    isChecked={noteTags.includes(tag)}
-                    onCheck={handleCheckboxCheck}
-                    onUncheck={handleCheckboxUncheck}
-                  />
-                  <span className={styles.tagText}>{tag}</span>
-                </label>
-              </li>
+              <TaggingBoxTagItem
+                key={tag}
+                tag={tag}
+                onAddTag={onAddTag}
+                onRemoveTag={onRemoveTag}
+                noteTags={noteTags}
+              />
             ))}
           </ul>
         </div>
@@ -110,7 +96,7 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
 
 TaggingBox.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string),
+  noteTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddTag: PropTypes.func.isRequired,
   onRemoveTag: PropTypes.func.isRequired,
 };
