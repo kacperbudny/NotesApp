@@ -26,7 +26,7 @@ const Sidebar = () => {
         {tags.length > 0 &&
           tags.map((tag) => (
             <li key={tag}>
-              <SidebarLink icon={faTag} to={`/tag/${tag}`}>
+              <SidebarLink icon={faTag} to={`/tag/${encodeURIComponent(tag)}`}>
                 {tag}
               </SidebarLink>
             </li>

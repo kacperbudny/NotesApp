@@ -14,18 +14,25 @@ import FullHeightContainer from "@components/layout/FullHeightContainer";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import TagsModal from "@components/notes/TagsModal/TagsModal";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function HomePage({ displayAs = homePageDisplayModes.home }) {
   const { isLoading, tags } = useNotesContext();
-  // const { tag: tagFromParams } = useParams();
-  // const navigate = useNavigate();
+  const { tag: tagFromParams } = useParams();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const isTagRouteExisting = tags.includes(tagFromParams);
-  //   if (!isLoading && !isTagRouteExisting) {
-  //     navigate("/");
-  //   }
-  // }, [isLoading, tags, tagFromParams, navigate]);
+  useEffect(() => {
+    if (!tagFromParams) {
+      return;
+    }
+
+    const isTagRouteExisting = tags.includes(tagFromParams);
+
+    if (!isLoading && !isTagRouteExisting) {
+      navigate("/");
+      toast.warn(`Tag '${tagFromParams}' doesn't exist.`);
+    }
+  }, [isLoading, tags, tagFromParams, navigate]);
 
   return (
     <>

@@ -13,6 +13,10 @@ router.post(
     body("name").trim(),
     body("content").trim(),
     body("displayOrder").isNumeric(),
+    body("tags.*")
+      .trim()
+      .isLength({ min: 1, max: 20 })
+      .withMessage("The tag is too long."),
   ],
   noteController.postNote
 );
@@ -23,6 +27,10 @@ router.patch(
     body("name").trim(),
     body("content").trim(),
     body("displayOrder").isNumeric(),
+    body("tags.*")
+      .trim()
+      .isLength({ min: 1, max: 20 })
+      .withMessage("The tag is too long."),
   ],
   noteController.updateNote
 );

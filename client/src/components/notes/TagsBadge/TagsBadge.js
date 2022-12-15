@@ -16,7 +16,7 @@ const TagsBadge = ({ tag, onRemoveTag, onBadgeClick }) => {
     if (onBadgeClick) {
       onBadgeClick(tag);
     }
-    navigate(`/tag/${tag}`);
+    navigate(`/tag/${encodeURIComponent(tag)}`);
   };
 
   const handleRemoveButtonClick = (e) => {
