@@ -13,7 +13,7 @@ At the moment, the app is mostly doing basic CRUD operations on front-end as wel
 - [x] Authentication
 - [x] Archiving notes
 - [x] Pinning notes
-- [ ] Adding tags to the notes & filtering by them
+- [x] Adding tags to the notes & filtering by them
 - [ ] Search functionality
 - [ ] Changing order via drag & drop
 - [ ] Checklists inside notes
