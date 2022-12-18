@@ -95,15 +95,18 @@ export function NotesProvider({ children }) {
     setNotes((prev) =>
       prev.map((note) => {
         const willTagsUpdate = note.tags.includes(oldTag);
+
+        if (!willTagsUpdate) {
+          return note;
+        }
+
         const updatedTags =
-          newTag === null
-            ? note.tags.filter((tag) => tag !== oldTag)
-            : note.tags.map((tag) => (tag === oldTag ? newTag : tag));
+          newTag !== null
+            ? note.tags.map((tag) => (tag === oldTag ? newTag : tag))
+            : note.tags.filter((tag) => tag !== oldTag);
         const updatedNote = { ...note, tags: updatedTags };
 
-        if (willTagsUpdate) {
-          notesToUpdate.push(updatedNote);
-        }
+        notesToUpdate.push(updatedNote);
 
         return updatedNote;
       })
