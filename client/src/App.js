@@ -50,6 +50,10 @@ function App() {
             path="/tag/:tag"
             element={<HomePage displayAs={homePageDisplayModes.tags} />}
           />
+          <Route
+            path="/search"
+            element={<HomePage displayAs={homePageDisplayModes.search} />}
+          />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

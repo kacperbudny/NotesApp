@@ -16,6 +16,8 @@ const filterNotes = (displayAs, tag) => {
         return note.archived;
       case homePageDisplayModes.tags:
         return note.tags.includes(tag);
+      case homePageDisplayModes.search:
+        return true;
       default:
         return true;
     }

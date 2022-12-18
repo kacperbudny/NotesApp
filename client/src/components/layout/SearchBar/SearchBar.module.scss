@@ -1,0 +1,33 @@
+@use "../../../styles/variables.scss";
+@use "../../../styles/mixins.scss";
+
+.container {
+  width: 35%;
+  height: 100%;
+  background: variables.$light-grey;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.focused {
+  background: variables.$plain-white;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.iconContainer {
+  margin-inline: 8px;
+}
+
+.input {
+  @include mixins.headerFont;
+  height: 100%;
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+}
+
+.hidden {
+  visibility: hidden;
+}
