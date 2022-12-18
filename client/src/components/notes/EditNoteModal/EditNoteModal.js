@@ -129,19 +129,22 @@ const EditNoteModal = () => {
           />
         </div>
         <div className={styles.buttonsRow}>
-          <ButtonsBar
-            onChangeColorClick={handleChangeColor}
-            isVisible={true}
-            isColorPaletteOpen={isColorPaletteOpen}
-            setIsColorPaletteOpen={setIsColorPaletteOpen}
-            isTaggingBoxOpen={isTaggingBoxOpen}
-            setIsTaggingBoxOpen={setIsTaggingBoxOpen}
-            onArchiveClick={handleArchive}
-            onDeleteClick={handleDelete}
-            onAddTag={handleAddTag}
-            onRemoveTag={handleRemoveTag}
-            tags={note.tags}
-          />
+          <ButtonsBar isVisible={true}>
+            <ButtonsBar.ArchiveButton onArchive={handleArchive} />
+            <ButtonsBar.DeleteButton onDelete={handleDelete} />
+            <ButtonsBar.PaletteButton
+              isColorPaletteOpen={isColorPaletteOpen}
+              setIsColorPaletteOpen={setIsColorPaletteOpen}
+              onChangeColor={handleChangeColor}
+            />
+            <ButtonsBar.TagButton
+              isTaggingBoxOpen={isTaggingBoxOpen}
+              setIsTaggingBoxOpen={setIsTaggingBoxOpen}
+              onAddTag={handleAddTag}
+              onRemoveTag={handleRemoveTag}
+              tags={note.tags}
+            />
+          </ButtonsBar>
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close
           </button>

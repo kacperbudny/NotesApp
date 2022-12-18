@@ -56,27 +56,7 @@
   overflow: hidden;
 }
 
-.tagLabel {
-  display: flex;
-  transition: background 0.2s;
-  font-size: 0.9rem;
-  padding-block: 2px;
-  align-items: center;
-}
-
-.tagLabel:hover {
-  background: variables.$light-grey;
-}
-
-.tag {
-  list-style-type: none;
-}
-
 .tagsList {
   max-height: 200px;
   overflow-y: auto;
-}
-
-.tagText {
-  margin-left: 8px;
 }

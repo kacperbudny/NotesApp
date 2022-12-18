@@ -88,19 +88,22 @@ const Note = ({ note }) => {
           <p className={styles.emptyNote}>Empty note</p>
         )}
       </div>
-      <ButtonsBar
-        isVisible={areButtonsVisible}
-        onChangeColorClick={handleChangeColor}
-        isColorPaletteOpen={isColorPaletteOpen}
-        setIsColorPaletteOpen={setIsColorPaletteOpen}
-        isTaggingBoxOpen={isTaggingBoxOpen}
-        setIsTaggingBoxOpen={setIsTaggingBoxOpen}
-        onArchiveClick={handleArchive}
-        onDeleteClick={handleDelete}
-        onAddTag={handleAddTag}
-        onRemoveTag={handleRemoveTag}
-        tags={note.tags}
-      />
+      <ButtonsBar isVisible={areButtonsVisible}>
+        <ButtonsBar.ArchiveButton onArchive={handleArchive} />
+        <ButtonsBar.DeleteButton onDelete={handleDelete} />
+        <ButtonsBar.PaletteButton
+          isColorPaletteOpen={isColorPaletteOpen}
+          setIsColorPaletteOpen={setIsColorPaletteOpen}
+          onChangeColor={handleChangeColor}
+        />
+        <ButtonsBar.TagButton
+          isTaggingBoxOpen={isTaggingBoxOpen}
+          setIsTaggingBoxOpen={setIsTaggingBoxOpen}
+          onAddTag={handleAddTag}
+          onRemoveTag={handleRemoveTag}
+          tags={note.tags}
+        />
+      </ButtonsBar>
     </div>
   );
 };
