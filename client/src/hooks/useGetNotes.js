@@ -16,7 +16,7 @@ export default function useGetNotes() {
       try {
         const response = await notesProvider.get();
         const data = await response.json();
-        setNotes(data);
+        setNotes(data.notes);
         setIsLoading(false);
         setFetched(true);
       } catch (error) {
@@ -28,5 +28,5 @@ export default function useGetNotes() {
     }
   }, [handleError, user, fetched]);
 
-  return [notes, setNotes, isLoading];
+  return { notes, setNotes, isLoading };
 }

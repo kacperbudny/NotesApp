@@ -1,0 +1,51 @@
+@use "../../../styles/mixins.scss";
+@use "../../../styles/variables.scss";
+
+.badge {
+  @include mixins.headerFont;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  border-radius: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  margin-block: 2px;
+}
+
+.tagName {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.tagNameShortened {
+  width: calc(100% - 4px);
+}
+
+.closeButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 2px;
+  visibility: hidden;
+}
+
+.closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.visible {
+  visibility: visible;
+}

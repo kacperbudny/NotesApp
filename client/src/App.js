@@ -46,6 +46,10 @@ function App() {
             path="/archive"
             element={<HomePage displayAs={homePageDisplayModes.archive} />}
           />
+          <Route
+            path="/tag/:tag"
+            element={<HomePage displayAs={homePageDisplayModes.tags} />}
+          />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

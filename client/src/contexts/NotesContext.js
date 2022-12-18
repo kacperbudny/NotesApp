@@ -5,12 +5,28 @@ import notesProvider from "@services/notesProvider";
 import toastifyRequest from "@utils/toastifyRequest";
 import useHandleError from "@hooks/useHandleError";
 
-const NotesContext = createContext();
+const NotesContext = createContext({
+  notes: [],
+  tags: [],
+  isLoading: true,
+  addNote: () => {},
+  deleteNote: () => {},
+  updateNote: () => {},
+  noteToEdit: {},
+  noteToDelete: {},
+  openEditingModal: () => {},
+  closeEditingModal: () => {},
+  openDeletingModal: () => {},
+  closeDeletingModal: () => {},
+  updateTags: () => {},
+});
 
 export function NotesProvider({ children }) {
-  const [notes, setNotes, isLoading] = useGetNotes();
+  const { notes, setNotes, isLoading } = useGetNotes();
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [noteToDelete, setNoteToDelete] = useState(null);
+
+  const tags = Array.from(new Set(notes.map((note) => note.tags).flat()));
 
   const handleError = useHandleError();
 
@@ -73,10 +89,43 @@ export function NotesProvider({ children }) {
     setNoteToDelete(null);
   };
 
+  const updateTags = async (oldTag, newTag) => {
+    const notesToUpdate = [];
+
+    setNotes((prev) =>
+      prev.map((note) => {
+        const willTagsUpdate = note.tags.includes(oldTag);
+
+        if (!willTagsUpdate) {
+          return note;
+        }
+
+        const updatedTags =
+          newTag !== null
+            ? note.tags.map((tag) => (tag === oldTag ? newTag : tag))
+            : note.tags.filter((tag) => tag !== oldTag);
+        const updatedNote = { ...note, tags: updatedTags };
+
+        notesToUpdate.push(updatedNote);
+
+        return updatedNote;
+      })
+    );
+
+    try {
+      await toastifyRequest(
+        Promise.all(notesToUpdate.map((note) => notesProvider.update(note)))
+      );
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   return (
     <NotesContext.Provider
       value={{
         notes,
+        tags,
         isLoading,
         addNote,
         deleteNote,
@@ -87,6 +136,7 @@ export function NotesProvider({ children }) {
         closeEditingModal,
         openDeletingModal,
         closeDeletingModal,
+        updateTags,
       }}
     >
       {children}

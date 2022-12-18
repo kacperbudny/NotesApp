@@ -7,7 +7,13 @@ import {
   useState,
 } from "react";
 
-const LayoutContext = createContext();
+const LayoutContext = createContext({
+  isSidebarOpen: false,
+  toggleSidebarOpen: () => {},
+  isTagsModalOpen: false,
+  setIsTagsModalOpen: () => {},
+  masonryRefs: {},
+});
 
 const masonryRefs = {
   archived: createRef(),
@@ -19,6 +25,7 @@ export function LayoutProvider({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(
     layoutProvider.getSidebarOpen()
   );
+  const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
 
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -39,6 +46,8 @@ export function LayoutProvider({ children }) {
       value={{
         isSidebarOpen,
         toggleSidebarOpen,
+        isTagsModalOpen,
+        setIsTagsModalOpen,
         masonryRefs,
       }}
     >

@@ -1,3 +1,5 @@
+@use "../../../styles/variables.scss";
+
 .button {
   border: none;
   border-radius: 50%;
@@ -12,4 +14,8 @@
 
 .button:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.greyIcon {
+  color: variables.$off-black;
 }

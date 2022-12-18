@@ -6,10 +6,12 @@ import ButtonsBar from "@components/notes/ButtonsBar";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
+import TagsBar from "@components/notes/TagsBar";
 
 const EditNoteModal = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
+  const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const contentRef = useRef(null);
   const {
     noteToEdit,
@@ -75,6 +77,18 @@ const EditNoteModal = () => {
     dispatchNote({ type: actionTypes.TOGGLE_PINNED });
   };
 
+  const handleAddTag = (tag) => {
+    dispatchNote({ type: actionTypes.ADD_TAG, payload: tag });
+  };
+
+  const handleRemoveTag = (tag) => {
+    dispatchNote({ type: actionTypes.REMOVE_TAG, payload: tag });
+  };
+
+  const handleTagBadgeClick = () => {
+    handleClose();
+  };
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -107,15 +121,30 @@ const EditNoteModal = () => {
           className={styles.text}
           ref={contentRef}
         />
-        <div className={styles.buttonsRow}>
-          <ButtonsBar
-            onChangeColorClick={handleChangeColor}
-            isVisible={true}
-            isColorPaletteOpen={isColorPaletteOpen}
-            setIsColorPaletteOpen={setIsColorPaletteOpen}
-            onArchiveClick={handleArchive}
-            onDeleteClick={handleDelete}
+        <div className={styles.tagsBarContainer}>
+          <TagsBar
+            tags={note.tags}
+            onRemoveTag={handleRemoveTag}
+            onBadgeClick={handleTagBadgeClick}
           />
+        </div>
+        <div className={styles.buttonsRow}>
+          <ButtonsBar isVisible={true}>
+            <ButtonsBar.ArchiveButton onArchive={handleArchive} />
+            <ButtonsBar.DeleteButton onDelete={handleDelete} />
+            <ButtonsBar.PaletteButton
+              isColorPaletteOpen={isColorPaletteOpen}
+              setIsColorPaletteOpen={setIsColorPaletteOpen}
+              onChangeColor={handleChangeColor}
+            />
+            <ButtonsBar.TagButton
+              isTaggingBoxOpen={isTaggingBoxOpen}
+              setIsTaggingBoxOpen={setIsTaggingBoxOpen}
+              onAddTag={handleAddTag}
+              onRemoveTag={handleRemoveTag}
+              tags={note.tags}
+            />
+          </ButtonsBar>
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close
           </button>

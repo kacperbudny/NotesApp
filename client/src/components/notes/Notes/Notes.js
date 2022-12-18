@@ -5,14 +5,17 @@ import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import NotesGroup from "@components/notes/NotesGroup";
+import { useParams } from "react-router-dom";
 
-const filterNotes = (displayAs) => {
+const filterNotes = (displayAs, tag) => {
   return (note) => {
     switch (displayAs) {
       case homePageDisplayModes.home:
         return !note.archived;
       case homePageDisplayModes.archive:
         return note.archived;
+      case homePageDisplayModes.tags:
+        return note.tags.includes(tag);
       default:
         return true;
     }
@@ -20,10 +23,12 @@ const filterNotes = (displayAs) => {
 };
 
 const Notes = ({ displayAs }) => {
+  const { tag } = useParams();
+
   const { notes } = useNotesContext();
   const { masonryRefs } = useLayoutContext();
 
-  const filteredNotes = notes.filter(filterNotes(displayAs));
+  const filteredNotes = notes.filter(filterNotes(displayAs, tag));
 
   const pinnedNotes = filteredNotes.filter((note) => note.pinned);
   const archivedNotes = filteredNotes.filter((note) => note.archived);
