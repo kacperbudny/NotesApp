@@ -2,21 +2,28 @@ import IconButton from "@components/common/IconButton";
 import React, { useRef, useState } from "react";
 import styles from "./SearchBar.module.scss";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isOnSearchRoute = location.pathname === "/search";
 
   const handleSearchButtonClick = () => {
     navigate("/search");
     inputRef.current.focus();
   };
 
-  const handleInputClick = () => {};
+  const handleInputClick = () => {
+    navigate("/search");
+  };
 
-  const handleCloseButtonClick = () => {};
+  const handleCloseButtonClick = () => {
+    navigate("/");
+  };
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -45,7 +52,11 @@ const SearchBar = () => {
         onBlur={handleBlur}
         ref={inputRef}
       />
-      <div className={`${styles.iconContainer} ${!isFocused && styles.hidden}`}>
+      <div
+        className={`${styles.iconContainer} ${
+          !isOnSearchRoute && styles.hidden
+        }`}
+      >
         <IconButton
           onClick={handleCloseButtonClick}
           icon={faXmark}
