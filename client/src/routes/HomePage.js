@@ -21,6 +21,10 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
   const { tag: tagFromParams } = useParams();
   const navigate = useNavigate();
 
+  const shouldDisplayAddNote =
+    displayAs !== homePageDisplayModes.archive &&
+    displayAs !== homePageDisplayModes.search;
+
   useEffect(() => {
     if (!tagFromParams) {
       return;
@@ -43,7 +47,7 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
           <MainSectionContainer>
             {!isLoading ? (
               <>
-                {displayAs !== homePageDisplayModes.archive && <AddNote />}
+                {shouldDisplayAddNote && <AddNote />}
                 <Notes displayAs={displayAs} />
               </>
             ) : (

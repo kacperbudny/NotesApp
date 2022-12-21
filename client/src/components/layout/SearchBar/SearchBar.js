@@ -1,16 +1,32 @@
 import IconButton from "@components/common/IconButton";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./SearchBar.module.scss";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 const SearchBar = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [, setSearchParams] = useSearchParams();
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   const isOnSearchRoute = location.pathname === "/search";
+
+  useEffect(() => {
+    if (isOnSearchRoute) {
+      const timeout = setTimeout(() => {
+        setSearchParams({ q: searchQuery });
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [searchQuery, setSearchParams, isOnSearchRoute]);
+
+  useEffect(() => {
+    setSearchQuery("");
+  }, [location.pathname]);
 
   const handleSearchButtonClick = () => {
     navigate("/search");
@@ -19,6 +35,10 @@ const SearchBar = () => {
 
   const handleInputClick = () => {
     navigate("/search");
+  };
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.currentTarget.value);
   };
 
   const handleCloseButtonClick = () => {
@@ -50,6 +70,8 @@ const SearchBar = () => {
         placeholder="Search"
         onFocus={handleFocus}
         onBlur={handleBlur}
+        value={searchQuery}
+        onChange={handleInputChange}
         ref={inputRef}
       />
       <div
