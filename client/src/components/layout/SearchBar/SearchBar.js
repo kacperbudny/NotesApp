@@ -17,7 +17,11 @@ const SearchBar = () => {
   useEffect(() => {
     if (isOnSearchRoute) {
       const timeout = setTimeout(() => {
-        setSearchParams({ q: searchQuery });
+        if (searchQuery.length) {
+          setSearchParams({ q: searchQuery });
+        } else {
+          setSearchParams({});
+        }
       }, 500);
 
       return () => clearTimeout(timeout);
