@@ -5,7 +5,9 @@ import styles from "./Note.module.scss";
 import PropTypes from "prop-types";
 import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
-import TagsBar from "@components/notes/TagsBar/TagsBar";
+import TagsBar from "@components/notes/TagsBar";
+import { useDrag } from "react-dnd";
+import { dragTypes } from "@utils/constants/dragTypes";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -18,6 +20,10 @@ const Note = ({ note }) => {
     noteToDelete,
     openDeletingModal,
   } = useNotesContext();
+  const [{ isDragging }, drag] = useDrag({
+    type: dragTypes.note,
+    collect: (monitor) => ({ isDragging: !!monitor.isDragging }),
+  });
 
   const handleClick = () => {
     openEditingModal(note._id);
