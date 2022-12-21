@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import NotesGroup from "@components/notes/NotesGroup";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
-const filterNotes = (displayAs, tag) => {
+const filterNotes = (displayAs, payload) => {
   return (note) => {
     switch (displayAs) {
       case homePageDisplayModes.home:
@@ -15,7 +15,13 @@ const filterNotes = (displayAs, tag) => {
       case homePageDisplayModes.archive:
         return note.archived;
       case homePageDisplayModes.tags:
-        return note.tags.includes(tag);
+        return note.tags.includes(payload.tag);
+      case homePageDisplayModes.search:
+        return (
+          note.name.includes(payload.searchQuery) ||
+          note.content.includes(payload.searchQuery) ||
+          note.tags.some((tag) => tag.includes(payload.searchQuery))
+        );
       default:
         return true;
     }
@@ -23,12 +29,17 @@ const filterNotes = (displayAs, tag) => {
 };
 
 const Notes = ({ displayAs }) => {
+  const [searchParams] = useSearchParams();
   const { tag } = useParams();
 
   const { notes } = useNotesContext();
   const { masonryRefs } = useLayoutContext();
 
-  const filteredNotes = notes.filter(filterNotes(displayAs, tag));
+  const searchQuery = searchParams.get("q") || "";
+
+  const filteredNotes = notes.filter(
+    filterNotes(displayAs, { tag, searchQuery })
+  );
 
   const pinnedNotes = filteredNotes.filter((note) => note.pinned);
   const archivedNotes = filteredNotes.filter((note) => note.archived);
@@ -39,9 +50,22 @@ const Notes = ({ displayAs }) => {
   const displayOtherLabel = pinnedNotes.length > 0 || archivedNotes.length > 0;
   const displayArchivedLabel = displayAs !== homePageDisplayModes.archive;
 
+  const areThereAnyNotes = filteredNotes.length > 0;
+  const isOnSearchRoute = displayAs === homePageDisplayModes.search;
+  const isSearchQueryEmpty = searchQuery.length === 0;
+
+  const shouldDisplaySearchPrompt = isOnSearchRoute && isSearchQueryEmpty;
+  const shouldDisplayNotes = areThereAnyNotes && !shouldDisplaySearchPrompt;
+
+  const noNotesMessage = shouldDisplaySearchPrompt
+    ? "Start typing to search."
+    : isOnSearchRoute
+    ? "No search results."
+    : "There are no notes. Maybe it's time to add some?";
+
   return (
     <div className={styles.notesContainer}>
-      {filteredNotes.length > 0 ? (
+      {shouldDisplayNotes ? (
         <>
           {pinnedNotes.length > 0 && (
             <NotesGroup
@@ -68,9 +92,7 @@ const Notes = ({ displayAs }) => {
           )}
         </>
       ) : (
-        <p className={styles.noNotes}>
-          There are no notes. Maybe it's time to add some?
-        </p>
+        <p className={styles.noNotes}>{noNotesMessage}</p>
       )}
     </div>
   );

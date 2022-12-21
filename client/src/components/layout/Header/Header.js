@@ -8,10 +8,13 @@ import { useLayoutContext } from "@contexts/LayoutContext";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@components/common/IconButton";
 import { useParams } from "react-router-dom";
+import SearchBar from "@components/layout/SearchBar";
+import { Link } from "react-router-dom";
 
 const getPageName = (displayAs, tag) => {
   switch (displayAs) {
-    case homePageDisplayModes.home: {
+    case homePageDisplayModes.home:
+    case homePageDisplayModes.search: {
       return "Notes App";
     }
     case homePageDisplayModes.tags: {
@@ -44,8 +47,18 @@ const Header = ({ displayAs }) => {
           icon={faBars}
           iconSize="lg"
         />
-        <h1 className={styles.appName}>{pageName}</h1>
+        <h1 className={styles.appName}>
+          {displayAs === homePageDisplayModes.home ||
+          displayAs === homePageDisplayModes.search ? (
+            <Link to="/" className={styles.link}>
+              {pageName}
+            </Link>
+          ) : (
+            pageName
+          )}
+        </h1>
       </div>
+      <SearchBar />
       <div className={styles.groupContainer}>
         {user && (
           <p>
