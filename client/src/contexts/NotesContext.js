@@ -12,6 +12,7 @@ const NotesContext = createContext({
   addNote: () => {},
   deleteNote: () => {},
   updateNote: () => {},
+  reorderNotes: () => {},
   noteToEdit: {},
   noteToDelete: {},
   openEditingModal: () => {},
@@ -73,6 +74,36 @@ export function NotesProvider({ children }) {
     }
   };
 
+  const reorderNotes = (draggedNote, hoveredNote) => {
+    setNotes((prevNotes) => {
+      const hoveredOrder = hoveredNote.displayOrder;
+
+      const notesWithHigherDisplayOrder = prevNotes.filter(
+        (note) => note.displayOrder >= hoveredOrder
+      );
+      const notesWithLowerDisplayOrder = prevNotes.filter(
+        (note) => note.displayOrder < hoveredOrder
+      );
+
+      const notesWithNewDisplayOrder = notesWithHigherDisplayOrder.map(
+        (note) => ({ ...note, displayOrder: note.displayOrder + 1 })
+      );
+
+      const newNotesExcludingDraggedNote = [
+        ...notesWithLowerDisplayOrder,
+        ...notesWithNewDisplayOrder,
+      ].filter((note) => note._id !== draggedNote._id);
+
+      const newDraggedNote = { ...draggedNote, displayOrder: hoveredOrder };
+      const newNotes = [...newNotesExcludingDraggedNote, newDraggedNote];
+
+      // console.log(prevNotes);
+      // console.log(newNotes);
+
+      return newNotes;
+    });
+  };
+
   const openEditingModal = (_id) => {
     setNoteToEdit(notes.find((note) => note._id === _id));
   };
@@ -130,6 +161,7 @@ export function NotesProvider({ children }) {
         addNote,
         deleteNote,
         updateNote,
+        reorderNotes,
         noteToEdit,
         noteToDelete,
         openEditingModal,

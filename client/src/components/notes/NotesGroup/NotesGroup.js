@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import styles from "./NotesGroup.module.scss";
 
 const NotesGroup = ({ label, notes, displayLabel = true, masonryRef }) => {
+  console.log(notes);
   return (
     <div className={styles.container}>
       {displayLabel && <h5 className={styles.label}>{label}</h5>}
