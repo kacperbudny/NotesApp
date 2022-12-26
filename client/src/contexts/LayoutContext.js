@@ -13,6 +13,7 @@ const LayoutContext = createContext({
   isTagsModalOpen: false,
   setIsTagsModalOpen: () => {},
   masonryRefs: {},
+  refreshMasonry: () => {},
 });
 
 const masonryRefs = {
@@ -29,10 +30,13 @@ export function LayoutProvider({ children }) {
 
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
+    refreshMasonry(250);
+  };
 
+  const refreshMasonry = (delayInMs) => {
     Object.values(masonryRefs).forEach((ref) => {
       if (ref.current) {
-        setTimeout(() => ref.current.update(), 250);
+        setTimeout(() => ref.current.update(), delayInMs);
       }
     });
   };
@@ -49,6 +53,7 @@ export function LayoutProvider({ children }) {
         isTagsModalOpen,
         setIsTagsModalOpen,
         masonryRefs,
+        refreshMasonry,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import PinButton from "@components/notes/PinButton";
 import TagsBar from "@components/notes/TagsBar";
 import { useDrag, useDrop } from "react-dnd";
 import { dragTypes } from "@utils/constants/dragTypes";
+import { useLayoutContext } from "@contexts/LayoutContext";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -36,11 +37,10 @@ const Note = ({ note }) => {
   };
 
   const handleArchive = () => {
-    // if (note.pinned) {
-    //   note.pinned = false;
-    // }
-    // note.archived = !note.archived;
-    note.displayOrder = -999;
+    if (note.pinned) {
+      note.pinned = false;
+    }
+    note.archived = !note.archived;
     updateNote(note);
   };
 
@@ -68,8 +68,6 @@ const Note = ({ note }) => {
 
   const areButtonsVisible = isHovered || isColorPaletteOpen || isTaggingBoxOpen;
 
-  const ref = useRef(null);
-
   const [{ handlerId }, drop] = useDrop({
     accept: dragTypes.note,
     collect(monitor) {
@@ -78,44 +76,18 @@ const Note = ({ note }) => {
       };
     },
     drop(item, monitor) {
-      if (!ref.current) {
+      if (!hoverRef.current) {
         return;
       }
+
       const draggedItem = item;
       const hoveredItem = note;
-      // Don't replace items with themselves
+
       if (draggedItem._id === hoveredItem._id) {
         return;
       }
 
       reorderNotes(draggedItem, hoveredItem);
-      // Determine rectangle on screen
-      // const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // // Get vertical middle
-      // const hoverMiddleY =
-      //   (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // // Determine mouse position
-      // const clientOffset = monitor.getClientOffset();
-      // // Get pixels to the top
-      // const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      // // Only perform the move when the mouse has crossed half of the items height
-      // // When dragging downwards, only move when the cursor is below 50%
-      // // When dragging upwards, only move when the cursor is above 50%
-      // // Dragging downwards
-      // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      //   return;
-      // }
-      // // Dragging upwards
-      // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      //   return;
-      // }
-      // // Time to actually perform the action
-      // moveCard(dragIndex, hoverIndex);
-      // // Note: we're mutating the monitor item here!
-      // // Generally it's better to avoid mutations,
-      // // but it's good here for the sake of performance
-      // // to avoid expensive index searches.
-      // item.index = hoverIndex;
     },
   });
 
@@ -131,10 +103,12 @@ const Note = ({ note }) => {
 
   drag(drop(hoverRef));
 
+  const isHidden = isActiveNote || isDragging;
+
   return (
     <div
       ref={hoverRef}
-      className={`${styles.note} ${isActiveNote && styles.hidden}`}
+      className={`${styles.note} ${isHidden && styles.hidden}`}
       style={{
         background: `${note.color}`,
       }}
