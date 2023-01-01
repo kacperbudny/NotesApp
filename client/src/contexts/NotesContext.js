@@ -74,17 +74,6 @@ export function NotesProvider({ children }) {
     }
   };
 
-  //   1. weź order hoverowanej notatki
-  // 2. przypisz go dragowanej notatce
-  // 3. spróbuj zwiększyć order hoverowanej notatce o 1
-  // 4. jeśli inna notatka ma taki sam order, też zwiększ go o 1
-  // 5. powtarzaj, aż skończą się notatki lub aż następna notatka nie będzie miała takiego samego orderu
-
-  //   wybierz notatkę której chcesz przypisać nowy order (przy pierwszym wykonaniu będzie to dragged note)
-  // pobierz order na który chcesz zamienić (przy pierwszym wykonaniu będzie to hovered id, przy kolejnym - aktualne id + 1)
-  // sprawdź, czy jakaś inna notatka ma taki sam order. jeśli tak, zapisz ją.
-  // ustaw nowy order.
-  // wykonuj, dopóki istnieje notatka, której order będzie do zmiany.
   const reorderNotes = (draggedNote, hoveredNote) => {
     setNotes((prevNotes) => {
       const newNotes = [...prevNotes];
@@ -193,34 +182,3 @@ export function useNotesContext() {
 }
 
 export default NotesContext;
-
-//WERSJA KTÓRA DZIAŁA DLA WIĘKSZY ORDER => MNIEJSZY ORDER
-
-// setNotes((prevNotes) => {
-//   const hoveredOrder = hoveredNote.displayOrder;
-
-//   const newNotes = [...prevNotes]
-//     .filter((n) => n._id !== draggedNote._id)
-//     .sort((a, b) => a.displayOrder - b.displayOrder);
-
-//   let i = newNotes.findIndex((n) => n._id === hoveredNote._id);
-
-//   do {
-//     newNotes[i] = {
-//       ...newNotes[i],
-//       displayOrder: newNotes[i].displayOrder + 1,
-//     };
-//     i++;
-//   } while (
-//     newNotes[i] &&
-//     newNotes[i].displayOrder === newNotes[i - 1].displayOrder
-//   );
-
-//   const newDraggedNote = { ...draggedNote, displayOrder: hoveredOrder };
-//   const result = [...newNotes, newDraggedNote];
-
-//   console.log(prevNotes);
-//   console.log(result);
-
-//   return result;
-// });
