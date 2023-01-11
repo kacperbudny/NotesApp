@@ -2,8 +2,6 @@
 
 NotesApp is a Google Keep clone that is still under development. It is supposed to be a bit more advanced take on a classic "NotesApp".
 
-At the moment, the app is mostly doing basic CRUD operations on front-end as well as the back-end while imitating Google Keep UI on the front-end. You can find the list of planned features below.
-
 ## Features
 
 - [x] Basic CRUD operations on front-end
@@ -15,7 +13,7 @@ At the moment, the app is mostly doing basic CRUD operations on front-end as wel
 - [x] Pinning notes
 - [x] Adding tags to the notes & filtering by them
 - [x] Search functionality
-- [ ] Changing order via drag & drop
+- [x] Changing order via drag & drop
 - [ ] Checklists inside notes
 
 ## Setup

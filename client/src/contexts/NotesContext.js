@@ -12,6 +12,7 @@ const NotesContext = createContext({
   addNote: () => {},
   deleteNote: () => {},
   updateNote: () => {},
+  reorderNotes: () => {},
   noteToEdit: {},
   noteToDelete: {},
   openEditingModal: () => {},
@@ -68,6 +69,47 @@ export function NotesProvider({ children }) {
 
     try {
       await toastifyRequest(notesProvider.delete(id));
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const reorderNotes = async (draggedNote, hoveredNote) => {
+    const notesToUpdate = [];
+
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      const isMovingNoteToHigherOrder =
+        hoveredNote.displayOrder > draggedNote.displayOrder;
+
+      let orderToApply = hoveredNote.displayOrder;
+      let idOfNoteToChange = newNotes.findIndex(
+        (n) => n._id === draggedNote._id
+      );
+
+      while (idOfNoteToChange >= 0) {
+        const id = idOfNoteToChange;
+        const order = orderToApply;
+
+        idOfNoteToChange = newNotes.findIndex((n) => n.displayOrder === order);
+        if (isMovingNoteToHigherOrder) {
+          orderToApply = orderToApply - 1;
+        } else {
+          orderToApply = orderToApply + 1;
+        }
+
+        const updatedNote = { ...newNotes[id], displayOrder: order };
+        newNotes[id] = updatedNote;
+        notesToUpdate.push(updatedNote);
+      }
+
+      return newNotes;
+    });
+
+    try {
+      await toastifyRequest(
+        Promise.all(notesToUpdate.map((note) => notesProvider.update(note)))
+      );
     } catch (error) {
       handleError(error);
     }
@@ -130,6 +172,7 @@ export function NotesProvider({ children }) {
         addNote,
         deleteNote,
         updateNote,
+        reorderNotes,
         noteToEdit,
         noteToDelete,
         openEditingModal,
