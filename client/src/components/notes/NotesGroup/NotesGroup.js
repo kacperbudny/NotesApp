@@ -3,8 +3,15 @@ import { XBlock, XMasonry } from "react-xmasonry";
 import Note from "@components/notes/Note";
 import PropTypes from "prop-types";
 import styles from "./NotesGroup.module.scss";
+import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
-const NotesGroup = ({ label, notes, displayLabel = true, masonryRef }) => {
+const NotesGroup = ({
+  label,
+  notes,
+  displayLabel = true,
+  masonryRef,
+  displayAs,
+}) => {
   return (
     <div className={styles.container}>
       {displayLabel && <h5 className={styles.label}>{label}</h5>}
@@ -13,7 +20,7 @@ const NotesGroup = ({ label, notes, displayLabel = true, masonryRef }) => {
           .sort((a, b) => b.displayOrder - a.displayOrder)
           .map((note) => (
             <XBlock key={`${note._id}-${note.displayOrder}`} width={1}>
-              <Note note={note} />
+              <Note note={note} displayAs={displayAs} />
             </XBlock>
           ))}
       </XMasonry>
@@ -26,6 +33,7 @@ NotesGroup.propTypes = {
   label: PropTypes.string.isRequired,
   displayLabel: PropTypes.bool,
   masonryRef: PropTypes.object.isRequired,
+  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
 };
 
 export default NotesGroup;

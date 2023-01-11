@@ -72,6 +72,7 @@ const Notes = ({ displayAs }) => {
               label="Pinned"
               notes={pinnedNotes}
               masonryRef={masonryRefs.pinned}
+              displayAs={displayAs}
             />
           )}
           {otherNotes.length > 0 && (
@@ -80,6 +81,7 @@ const Notes = ({ displayAs }) => {
               notes={otherNotes}
               displayLabel={displayOtherLabel}
               masonryRef={masonryRefs.other}
+              displayAs={displayAs}
             />
           )}
           {archivedNotes.length > 0 && (
@@ -88,6 +90,7 @@ const Notes = ({ displayAs }) => {
               notes={archivedNotes}
               displayLabel={displayArchivedLabel}
               masonryRef={masonryRefs.archived}
+              displayAs={displayAs}
             />
           )}
         </>

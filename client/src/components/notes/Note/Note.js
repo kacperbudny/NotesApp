@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import useHover from "@hooks/useHover";
 import ButtonsBar from "@components/notes/ButtonsBar";
 import styles from "./Note.module.scss";
@@ -8,9 +8,9 @@ import PinButton from "@components/notes/PinButton";
 import TagsBar from "@components/notes/TagsBar";
 import { useDrag, useDrop } from "react-dnd";
 import { dragTypes } from "@utils/constants/dragTypes";
-import { useLayoutContext } from "@contexts/LayoutContext";
+import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 
-const Note = ({ note }) => {
+const Note = ({ note, displayAs }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
@@ -22,6 +22,41 @@ const Note = ({ note }) => {
     noteToDelete,
     openDeletingModal,
   } = useNotesContext();
+
+  const [, drop] = useDrop({
+    accept: dragTypes.note,
+    drop(item) {
+      if (!hoverRef.current) {
+        return;
+      }
+
+      const draggedItem = item;
+      const hoveredItem = note;
+
+      if (draggedItem._id === hoveredItem._id) {
+        return;
+      }
+
+      if (draggedItem.pinned !== hoveredItem.pinned) {
+        return;
+      }
+
+      reorderNotes(draggedItem, hoveredItem);
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: dragTypes.note,
+    item: () => {
+      return note;
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    canDrag: () => displayAs === homePageDisplayModes.home,
+  });
+
+  drag(drop(hoverRef));
 
   const handleClick = () => {
     openEditingModal(note._id);
@@ -67,41 +102,6 @@ const Note = ({ note }) => {
   const isActiveNote = activeNote && activeNote._id === note._id;
 
   const areButtonsVisible = isHovered || isColorPaletteOpen || isTaggingBoxOpen;
-
-  const [{ handlerId }, drop] = useDrop({
-    accept: dragTypes.note,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    drop(item, monitor) {
-      if (!hoverRef.current) {
-        return;
-      }
-
-      const draggedItem = item;
-      const hoveredItem = note;
-
-      if (draggedItem._id === hoveredItem._id) {
-        return;
-      }
-
-      reorderNotes(draggedItem, hoveredItem);
-    },
-  });
-
-  const [{ isDragging }, drag] = useDrag({
-    type: dragTypes.note,
-    item: () => {
-      return note;
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  drag(drop(hoverRef));
 
   const isHidden = isActiveNote || isDragging;
 
@@ -156,6 +156,7 @@ Note.propTypes = {
     content: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
 };
 
 export default Note;

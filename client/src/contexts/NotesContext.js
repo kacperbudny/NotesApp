@@ -74,35 +74,45 @@ export function NotesProvider({ children }) {
     }
   };
 
-  const reorderNotes = (draggedNote, hoveredNote) => {
+  const reorderNotes = async (draggedNote, hoveredNote) => {
+    const notesToUpdate = [];
+
     setNotes((prevNotes) => {
       const newNotes = [...prevNotes];
-      const draggedNoteId = newNotes.findIndex(
+      const isMovingNoteToHigherOrder =
+        hoveredNote.displayOrder > draggedNote.displayOrder;
+
+      let orderToApply = hoveredNote.displayOrder;
+      let idOfNoteToChange = newNotes.findIndex(
         (n) => n._id === draggedNote._id
       );
 
-      const isNewOrderHigher =
-        hoveredNote.displayOrder > draggedNote.displayOrder;
+      while (idOfNoteToChange >= 0) {
+        const id = idOfNoteToChange;
+        const order = orderToApply;
 
-      let newOrder = hoveredNote.displayOrder;
-      let noteToChangeId = draggedNoteId;
-
-      while (noteToChangeId >= 0) {
-        const id = noteToChangeId;
-        noteToChangeId = newNotes.findIndex((n) => n.displayOrder === newOrder);
-        newNotes[id] = { ...newNotes[id], displayOrder: newOrder };
-        if (isNewOrderHigher) {
-          newOrder = newOrder - 1;
+        idOfNoteToChange = newNotes.findIndex((n) => n.displayOrder === order);
+        if (isMovingNoteToHigherOrder) {
+          orderToApply = orderToApply - 1;
         } else {
-          newOrder = newOrder + 1;
+          orderToApply = orderToApply + 1;
         }
-      }
 
-      console.log(prevNotes);
-      console.log(newNotes);
+        const updatedNote = { ...newNotes[id], displayOrder: order };
+        newNotes[id] = updatedNote;
+        notesToUpdate.push(updatedNote);
+      }
 
       return newNotes;
     });
+
+    try {
+      await toastifyRequest(
+        Promise.all(notesToUpdate.map((note) => notesProvider.update(note)))
+      );
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   const openEditingModal = (_id) => {
