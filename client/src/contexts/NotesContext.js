@@ -32,14 +32,20 @@ export function NotesProvider({ children }) {
   const handleError = useHandleError();
 
   const addNote = async (note) => {
-    const _id = ObjectId().toString();
-    const displayOrder =
-      notes.length > 0
-        ? notes.reduce((a, b) => (a.displayOrder > b.displayOrder ? a : b), 1)
-            .displayOrder + 1
-        : 1;
-    const newNote = { _id, ...note, displayOrder };
-    setNotes([...notes, newNote]);
+    let newNote;
+
+    setNotes((prevNotes) => {
+      const _id = ObjectId().toString();
+      const displayOrder =
+        prevNotes.length > 0
+          ? prevNotes.reduce(
+              (a, b) => (a.displayOrder > b.displayOrder ? a : b),
+              1
+            ).displayOrder + 1
+          : 1;
+      newNote = { _id, ...note, displayOrder };
+      return [...prevNotes, newNote];
+    });
 
     try {
       await toastifyRequest(notesProvider.add(newNote));
@@ -49,10 +55,12 @@ export function NotesProvider({ children }) {
   };
 
   const updateNote = async (updatedNote) => {
-    const noteIndex = notes.findIndex((n) => n._id === updatedNote._id);
-    const newNotes = [...notes];
-    newNotes[noteIndex] = updatedNote;
-    setNotes(newNotes);
+    setNotes((prevNotes) => {
+      const noteIndex = prevNotes.findIndex((n) => n._id === updatedNote._id);
+      const newNotes = [...prevNotes];
+      newNotes[noteIndex] = updatedNote;
+      return newNotes;
+    });
 
     try {
       await toastifyRequest(notesProvider.update(updatedNote));
@@ -62,10 +70,12 @@ export function NotesProvider({ children }) {
   };
 
   const deleteNote = async (id) => {
-    const filteredNotes = notes.filter((value) => {
-      return value._id !== id;
+    setNotes((prevNotes) => {
+      const filteredNotes = prevNotes.filter((value) => {
+        return value._id !== id;
+      });
+      return filteredNotes;
     });
-    setNotes(filteredNotes);
 
     try {
       await toastifyRequest(notesProvider.delete(id));
@@ -115,22 +125,6 @@ export function NotesProvider({ children }) {
     }
   };
 
-  const openEditingModal = (_id) => {
-    setNoteToEdit(notes.find((note) => note._id === _id));
-  };
-
-  const closeEditingModal = () => {
-    setNoteToEdit(null);
-  };
-
-  const openDeletingModal = (note) => {
-    setNoteToDelete(note);
-  };
-
-  const closeDeletingModal = () => {
-    setNoteToDelete(null);
-  };
-
   const updateTags = async (oldTag, newTag) => {
     const notesToUpdate = [];
 
@@ -163,6 +157,22 @@ export function NotesProvider({ children }) {
     }
   };
 
+  const openEditingModal = (_id) => {
+    setNoteToEdit(notes.find((note) => note._id === _id));
+  };
+
+  const closeEditingModal = () => {
+    setNoteToEdit(null);
+  };
+
+  const openDeletingModal = (note) => {
+    setNoteToDelete(note);
+  };
+
+  const closeDeletingModal = () => {
+    setNoteToDelete(null);
+  };
+
   return (
     <NotesContext.Provider
       value={{
@@ -173,13 +183,13 @@ export function NotesProvider({ children }) {
         deleteNote,
         updateNote,
         reorderNotes,
+        updateTags,
         noteToEdit,
         noteToDelete,
         openEditingModal,
         closeEditingModal,
         openDeletingModal,
         closeDeletingModal,
-        updateTags,
       }}
     >
       {children}
