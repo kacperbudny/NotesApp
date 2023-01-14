@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuthContext } from "@contexts/AuthContext";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const useHandleError = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const useHandleError = () => {
     async (error) => {
       if (error instanceof RefreshTokenError) {
         await signOut();
-        navigate("/login");
+        navigate(FRONTEND_ROUTES.login);
         return toast.info(
           "Your session expired and we had to log you out. Please log in again."
         );

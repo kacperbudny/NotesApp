@@ -2,12 +2,13 @@ const express = require("express");
 const noteController = require("../controllers/note");
 const isAuth = require("../middleware/isAuth");
 const { body } = require("express-validator");
+const ROUTES = require("../utils/constants/routes");
 
 const router = express.Router();
 
-router.get("/notes", isAuth, noteController.getAllNotes);
+router.get(ROUTES.notes, isAuth, noteController.getAllNotes);
 router.post(
-  "/notes",
+  ROUTES.notes,
   isAuth,
   [
     body("name").trim(),
@@ -21,7 +22,7 @@ router.post(
   noteController.postNote
 );
 router.patch(
-  "/notes/:id",
+  `${ROUTES.notes}/:id`,
   isAuth,
   [
     body("name").trim(),
@@ -34,6 +35,6 @@ router.patch(
   ],
   noteController.updateNote
 );
-router.delete("/notes/:id", isAuth, noteController.deleteNote);
+router.delete(`${ROUTES.notes}/:id`, isAuth, noteController.deleteNote);
 
 module.exports = router;

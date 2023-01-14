@@ -3,21 +3,22 @@ import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import styles from "./Header.module.scss";
 import PropTypes from "prop-types";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@components/common/IconButton";
 import { useParams } from "react-router-dom";
 import SearchBar from "@components/layout/SearchBar";
 import { Link } from "react-router-dom";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const getPageName = (displayAs, tag) => {
   switch (displayAs) {
-    case homePageDisplayModes.home:
-    case homePageDisplayModes.search: {
+    case HOME_PAGE_DISPLAY_MODES.home:
+    case HOME_PAGE_DISPLAY_MODES.search: {
       return "Notes App";
     }
-    case homePageDisplayModes.tags: {
+    case HOME_PAGE_DISPLAY_MODES.tags: {
       return tag || "Tags";
     }
     default: {
@@ -48,9 +49,9 @@ const Header = ({ displayAs }) => {
           iconSize="lg"
         />
         <h1 className={styles.appName}>
-          {displayAs === homePageDisplayModes.home ||
-          displayAs === homePageDisplayModes.search ? (
-            <Link to="/" className={styles.link}>
+          {displayAs === HOME_PAGE_DISPLAY_MODES.home ||
+          displayAs === HOME_PAGE_DISPLAY_MODES.search ? (
+            <Link to={FRONTEND_ROUTES.homePage} className={styles.link}>
               {pageName}
             </Link>
           ) : (
@@ -72,7 +73,7 @@ const Header = ({ displayAs }) => {
 };
 
 Header.propTypes = {
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)).isRequired,
 };
 
 export default Header;

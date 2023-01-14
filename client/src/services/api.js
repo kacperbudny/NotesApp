@@ -1,5 +1,5 @@
 import authProvider from "./authProvider";
-import backendRoutes from "@constants/backendRoutes";
+import BACKEND_ROUTES from "@constants/backendRoutes";
 import tokenProvider from "./tokenProvider";
 import { RefreshTokenError } from "@utils/errors";
 
@@ -38,7 +38,7 @@ const handleRequest = async (request) => {
 };
 
 const refreshToken = async () => {
-  const tokenResponse = await fetch(backendRoutes.refreshTokenRoute, {
+  const tokenResponse = await fetch(BACKEND_ROUTES.refreshTokenRoute, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

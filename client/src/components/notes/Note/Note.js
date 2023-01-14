@@ -7,8 +7,8 @@ import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 import TagsBar from "@components/notes/TagsBar";
 import { useDrag, useDrop } from "react-dnd";
-import { dragTypes } from "@utils/constants/dragTypes";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import { DRAG_TYPES } from "@utils/constants/dragTypes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 
 const Note = ({ note, displayAs }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -24,7 +24,7 @@ const Note = ({ note, displayAs }) => {
   } = useNotesContext();
 
   const [, drop] = useDrop({
-    accept: dragTypes.note,
+    accept: DRAG_TYPES.note,
     drop(item) {
       if (!hoverRef.current) {
         return;
@@ -46,14 +46,14 @@ const Note = ({ note, displayAs }) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: dragTypes.note,
+    type: DRAG_TYPES.note,
     item: () => {
       return note;
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    canDrag: () => displayAs === homePageDisplayModes.home,
+    canDrag: () => displayAs === HOME_PAGE_DISPLAY_MODES.home,
   });
 
   drag(drop(hoverRef));
@@ -63,8 +63,7 @@ const Note = ({ note, displayAs }) => {
   };
 
   const handleChangeColor = (color) => {
-    note.color = color;
-    updateNote(note);
+    updateNote({ ...note, color });
   };
 
   const handleDelete = () => {
@@ -72,29 +71,23 @@ const Note = ({ note, displayAs }) => {
   };
 
   const handleArchive = () => {
-    if (note.pinned) {
-      note.pinned = false;
-    }
-    note.archived = !note.archived;
-    updateNote(note);
+    updateNote({
+      ...note,
+      archived: !note.archived,
+      pinned: false,
+    });
   };
 
   const handlePin = () => {
-    if (note.archived) {
-      note.archived = false;
-    }
-    note.pinned = !note.pinned;
-    updateNote(note);
+    updateNote({ ...note, pinned: !note.pinned, archived: false });
   };
 
   const handleAddTag = (tag) => {
-    note.tags = [...note.tags, tag];
-    updateNote(note);
+    updateNote({ ...note, tags: [...note.tags, tag] });
   };
 
   const handleRemoveTag = (tag) => {
-    note.tags = note.tags.filter((t) => t !== tag);
-    updateNote(note);
+    updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
   };
 
   const activeNote = noteToEdit || noteToDelete;
@@ -156,7 +149,7 @@ Note.propTypes = {
     content: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }).isRequired,
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)).isRequired,
 };
 
 export default Note;

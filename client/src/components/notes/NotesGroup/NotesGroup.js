@@ -3,7 +3,7 @@ import { XBlock, XMasonry } from "react-xmasonry";
 import Note from "@components/notes/Note";
 import PropTypes from "prop-types";
 import styles from "./NotesGroup.module.scss";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 
 const NotesGroup = ({
   label,
@@ -33,7 +33,7 @@ NotesGroup.propTypes = {
   label: PropTypes.string.isRequired,
   displayLabel: PropTypes.bool,
   masonryRef: PropTypes.object.isRequired,
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)).isRequired,
 };
 
 export default NotesGroup;

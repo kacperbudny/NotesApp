@@ -9,14 +9,15 @@ import RegisterPage from "@routes/RegisterPage";
 import RequireNonAuth from "@components/auth/RequireNonAuth";
 import "react-toastify/dist/ReactToastify.css";
 import { NotesProvider } from "@contexts/NotesContext";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 function App() {
   return (
     <>
       <Routes>
         <Route
-          path="/login"
+          path={FRONTEND_ROUTES.login}
           element={
             <RequireNonAuth>
               <LoginPage />
@@ -24,7 +25,7 @@ function App() {
           }
         />
         <Route
-          path="/signup"
+          path={FRONTEND_ROUTES.signup}
           element={
             <RequireNonAuth>
               <RegisterPage />
@@ -32,7 +33,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path={FRONTEND_ROUTES.homePage}
           element={
             <RequireAuth>
               <NotesProvider>
@@ -43,16 +44,16 @@ function App() {
         >
           <Route index element={<HomePage />}></Route>
           <Route
-            path="/archive"
-            element={<HomePage displayAs={homePageDisplayModes.archive} />}
+            path={FRONTEND_ROUTES.archive}
+            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.archive} />}
           />
           <Route
-            path="/tag/:tag"
-            element={<HomePage displayAs={homePageDisplayModes.tags} />}
+            path={`${FRONTEND_ROUTES.tag}/:tag`}
+            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.tags} />}
           />
           <Route
-            path="/search"
-            element={<HomePage displayAs={homePageDisplayModes.search} />}
+            path={FRONTEND_ROUTES.search}
+            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.search} />}
           />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

@@ -1,11 +1,11 @@
-import backendRoutes from "@constants/backendRoutes";
+import BACKEND_ROUTES from "@constants/backendRoutes";
 import tokenProvider from "./tokenProvider";
 import api from "./api";
 
 const authProvider = {
   signUp: async (newUser) => {
     const response = await api.makeRequest(
-      backendRoutes.registerRoute,
+      BACKEND_ROUTES.registerRoute,
       "POST",
       newUser
     );
@@ -16,7 +16,7 @@ const authProvider = {
   },
   signIn: async (credentials) => {
     const response = await api.makeRequest(
-      backendRoutes.loginRoute,
+      BACKEND_ROUTES.loginRoute,
       "POST",
       credentials
     );
@@ -26,7 +26,7 @@ const authProvider = {
     return { user, token };
   },
   signOut: async () => {
-    await api.makeRequest(backendRoutes.logoutRoute, "DELETE", {
+    await api.makeRequest(BACKEND_ROUTES.logoutRoute, "DELETE", {
       refreshToken: tokenProvider.getRefreshToken(),
     });
     tokenProvider.removeToken();

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Notes.module.scss";
 import { useNotesContext } from "@contexts/NotesContext";
 import PropTypes from "prop-types";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import NotesGroup from "@components/notes/NotesGroup";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -10,13 +10,13 @@ import { useParams, useSearchParams } from "react-router-dom";
 const filterNotes = (displayAs, payload) => {
   return (note) => {
     switch (displayAs) {
-      case homePageDisplayModes.home:
+      case HOME_PAGE_DISPLAY_MODES.home:
         return !note.archived;
-      case homePageDisplayModes.archive:
+      case HOME_PAGE_DISPLAY_MODES.archive:
         return note.archived;
-      case homePageDisplayModes.tags:
+      case HOME_PAGE_DISPLAY_MODES.tags:
         return note.tags.includes(payload.tag);
-      case homePageDisplayModes.search:
+      case HOME_PAGE_DISPLAY_MODES.search:
         return (
           note.name.includes(payload.searchQuery) ||
           note.content.includes(payload.searchQuery) ||
@@ -48,10 +48,10 @@ const Notes = ({ displayAs }) => {
   );
 
   const displayOtherLabel = pinnedNotes.length > 0 || archivedNotes.length > 0;
-  const displayArchivedLabel = displayAs !== homePageDisplayModes.archive;
+  const displayArchivedLabel = displayAs !== HOME_PAGE_DISPLAY_MODES.archive;
 
   const areThereAnyNotes = filteredNotes.length > 0;
-  const isOnSearchRoute = displayAs === homePageDisplayModes.search;
+  const isOnSearchRoute = displayAs === HOME_PAGE_DISPLAY_MODES.search;
   const isSearchQueryEmpty = searchQuery.length === 0;
 
   const shouldDisplaySearchPrompt = isOnSearchRoute && isSearchQueryEmpty;
@@ -102,7 +102,7 @@ const Notes = ({ displayAs }) => {
 };
 
 Notes.propTypes = {
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
+  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)).isRequired,
 };
 
 export default Notes;

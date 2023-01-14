@@ -1,4 +1,5 @@
 import { useAuthContext } from "@contexts/AuthContext";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -7,7 +8,9 @@ const RequireAuth = ({ children }) => {
   const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return (
+      <Navigate to={FRONTEND_ROUTES.login} state={{ from: location }} replace />
+    );
   }
 
   return children;

@@ -4,6 +4,7 @@ import ErrorMessage from "@components/common/ErrorMessage";
 import Form from "@components/common/Form";
 import Input from "@components/common/Input";
 import { useAuthContext } from "@contexts/AuthContext";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import { validateEmail, validatePassword } from "@utils/validation";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -83,7 +84,7 @@ const RegisterPage = () => {
 
     try {
       await signUp({ email, password });
-      navigate("/", { replace: true });
+      navigate(FRONTEND_ROUTES.homePage, { replace: true });
     } catch (err) {
       setError(err.message);
     }
@@ -121,7 +122,7 @@ const RegisterPage = () => {
         <ErrorMessage isVisible={!!error.message}>{error.message}</ErrorMessage>
         <Button>Sign up</Button>
       </Form>
-      <Link to="/login">Already have an account? Sign in!</Link>
+      <Link to={FRONTEND_ROUTES.login}>Already have an account? Sign in!</Link>
     </CenteredContainer>
   );
 };

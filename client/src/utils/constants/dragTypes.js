@@ -1,3 +1,3 @@
-export const dragTypes = {
+export const DRAG_TYPES = {
   note: "NOTE",
 };

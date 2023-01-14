@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./SearchBar.module.scss";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +13,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isOnSearchRoute = location.pathname === "/search";
+  const isOnSearchRoute = location.pathname === FRONTEND_ROUTES.search;
 
   useEffect(() => {
     if (isOnSearchRoute) {
@@ -33,12 +34,12 @@ const SearchBar = () => {
   }, [location.pathname]);
 
   const handleSearchButtonClick = () => {
-    navigate("/search");
+    navigate(FRONTEND_ROUTES.search);
     inputRef.current.focus();
   };
 
   const handleInputClick = () => {
-    navigate("/search");
+    navigate(FRONTEND_ROUTES.search);
   };
 
   const handleInputChange = (e) => {
@@ -46,7 +47,7 @@ const SearchBar = () => {
   };
 
   const handleCloseButtonClick = () => {
-    navigate("/");
+    navigate(FRONTEND_ROUTES.homePage);
   };
 
   const handleFocus = () => {

@@ -11,19 +11,20 @@ import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
 import PropTypes from "prop-types";
 import FullHeightContainer from "@components/layout/FullHeightContainer";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 import TagsModal from "@components/notes/TagsModal/TagsModal";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
-function HomePage({ displayAs = homePageDisplayModes.home }) {
+function HomePage({ displayAs = HOME_PAGE_DISPLAY_MODES.home }) {
   const { isLoading, tags } = useNotesContext();
   const { tag: tagFromParams } = useParams();
   const navigate = useNavigate();
 
   const shouldDisplayAddNote =
-    displayAs !== homePageDisplayModes.archive &&
-    displayAs !== homePageDisplayModes.search;
+    displayAs !== HOME_PAGE_DISPLAY_MODES.archive &&
+    displayAs !== HOME_PAGE_DISPLAY_MODES.search;
 
   useEffect(() => {
     if (!tagFromParams) {
@@ -33,7 +34,7 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
     const isTagRouteExisting = tags.includes(tagFromParams);
 
     if (!isLoading && !isTagRouteExisting) {
-      navigate("/");
+      navigate(FRONTEND_ROUTES.homePage);
       toast.warn(`Tag '${tagFromParams}' doesn't exist.`);
     }
   }, [isLoading, tags, tagFromParams, navigate]);
@@ -64,7 +65,7 @@ function HomePage({ displayAs = homePageDisplayModes.home }) {
 }
 
 HomePage.propTypes = {
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)),
+  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)),
 };
 
 export default HomePage;

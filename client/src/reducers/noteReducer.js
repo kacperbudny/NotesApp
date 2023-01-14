@@ -1,4 +1,4 @@
-import colors from "@utils/constants/colors";
+import COLORS from "@utils/constants/colors";
 
 export const actionTypes = {
   SET_NOTE: "SET_NOTE",
@@ -62,7 +62,7 @@ export const noteReducer = (state, action) => {
 export const initialValues = {
   name: "",
   content: "",
-  color: colors.white,
+  color: COLORS.white,
   pinned: false,
   tags: [],
 };

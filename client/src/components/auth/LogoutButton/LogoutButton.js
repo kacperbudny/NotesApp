@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import styles from "./LogoutButton.module.scss";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const LogoutButton = () => {
   const { signOut } = useAuthContext();
@@ -11,7 +12,7 @@ const LogoutButton = () => {
 
   const logout = () => {
     signOut();
-    navigate("/login");
+    navigate(FRONTEND_ROUTES.login);
   };
 
   return (

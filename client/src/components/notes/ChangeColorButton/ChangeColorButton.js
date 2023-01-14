@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ChangeColorButton.module.scss";
 import PropTypes from "prop-types";
-import colors from "@utils/constants/colors";
+import COLORS from "@utils/constants/colors";
 
 const ChangeColorButton = ({ color, changeColor }) => {
   const handleClick = (e) => {
@@ -12,7 +12,7 @@ const ChangeColorButton = ({ color, changeColor }) => {
   return (
     <button
       className={`${styles.colorButton} ${
-        color === colors.white && styles.border
+        color === COLORS.white && styles.border
       }`}
       style={{ background: `${color}` }}
       onClick={handleClick}

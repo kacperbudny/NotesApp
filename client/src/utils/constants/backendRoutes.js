@@ -1,4 +1,4 @@
-const routes = {
+const BACKEND_ROUTES = {
   devUrl: "http://localhost:8080",
   notesRoute: "/notes",
   loginRoute: "/login",
@@ -8,4 +8,4 @@ const routes = {
   refreshTokenRoute: "/refreshtoken",
 };
 
-export default routes;
+export default BACKEND_ROUTES;
