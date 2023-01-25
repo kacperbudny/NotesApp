@@ -7,10 +7,11 @@ import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 import TagsBar from "@components/notes/TagsBar";
 import { useDrag, useDrop } from "react-dnd";
-import { DRAG_TYPES } from "@utils/constants/dragTypes";
-import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
+import DRAG_TYPES from "@utils/constants/dragTypes";
+import usePath from "@hooks/usePath";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
-const Note = ({ note, displayAs }) => {
+const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
@@ -22,6 +23,7 @@ const Note = ({ note, displayAs }) => {
     noteToDelete,
     openDeletingModal,
   } = useNotesContext();
+  const path = usePath();
 
   const [, drop] = useDrop({
     accept: DRAG_TYPES.note,
@@ -53,7 +55,7 @@ const Note = ({ note, displayAs }) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    canDrag: () => displayAs === HOME_PAGE_DISPLAY_MODES.home,
+    canDrag: () => path === FRONTEND_ROUTES.homePage,
   });
 
   drag(drop(hoverRef));
@@ -149,7 +151,6 @@ Note.propTypes = {
     content: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }).isRequired,
-  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)).isRequired,
 };
 
 export default Note;

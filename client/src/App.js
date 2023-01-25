@@ -9,7 +9,6 @@ import RegisterPage from "@routes/RegisterPage";
 import RequireNonAuth from "@components/auth/RequireNonAuth";
 import "react-toastify/dist/ReactToastify.css";
 import { NotesProvider } from "@contexts/NotesContext";
-import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 function App() {
@@ -43,18 +42,9 @@ function App() {
           }
         >
           <Route index element={<HomePage />}></Route>
-          <Route
-            path={FRONTEND_ROUTES.archive}
-            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.archive} />}
-          />
-          <Route
-            path={`${FRONTEND_ROUTES.tag}/:tag`}
-            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.tags} />}
-          />
-          <Route
-            path={FRONTEND_ROUTES.search}
-            element={<HomePage displayAs={HOME_PAGE_DISPLAY_MODES.search} />}
-          />
+          <Route path={FRONTEND_ROUTES.archive} element={<HomePage />} />
+          <Route path={`${FRONTEND_ROUTES.tag}/:tag`} element={<HomePage />} />
+          <Route path={FRONTEND_ROUTES.search} element={<HomePage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

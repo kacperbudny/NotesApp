@@ -9,22 +9,21 @@ import { useNotesContext } from "@contexts/NotesContext";
 import Sidebar from "@components/layout/Sidebar";
 import PageLayoutContainer from "@components/layout/PageLayoutContainer";
 import MainSectionContainer from "@components/layout/MainSectionContainer";
-import PropTypes from "prop-types";
 import FullHeightContainer from "@components/layout/FullHeightContainer";
-import HOME_PAGE_DISPLAY_MODES from "@utils/constants/homePageDisplayModes";
 import TagsModal from "@components/notes/TagsModal/TagsModal";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
+import usePath from "@hooks/usePath";
 
-function HomePage({ displayAs = HOME_PAGE_DISPLAY_MODES.home }) {
+function HomePage() {
   const { isLoading, tags } = useNotesContext();
   const { tag: tagFromParams } = useParams();
   const navigate = useNavigate();
+  const path = usePath();
 
   const shouldDisplayAddNote =
-    displayAs !== HOME_PAGE_DISPLAY_MODES.archive &&
-    displayAs !== HOME_PAGE_DISPLAY_MODES.search;
+    path !== FRONTEND_ROUTES.archive && path !== FRONTEND_ROUTES.search;
 
   useEffect(() => {
     if (!tagFromParams) {
@@ -42,14 +41,14 @@ function HomePage({ displayAs = HOME_PAGE_DISPLAY_MODES.home }) {
   return (
     <>
       <FullHeightContainer>
-        <Header displayAs={displayAs} />
+        <Header />
         <PageLayoutContainer>
           <Sidebar />
           <MainSectionContainer>
             {!isLoading ? (
               <>
                 {shouldDisplayAddNote && <AddNote />}
-                <Notes displayAs={displayAs} />
+                <Notes />
               </>
             ) : (
               <Loading />
@@ -63,9 +62,5 @@ function HomePage({ displayAs = HOME_PAGE_DISPLAY_MODES.home }) {
     </>
   );
 }
-
-HomePage.propTypes = {
-  displayAs: PropTypes.oneOf(Object.values(HOME_PAGE_DISPLAY_MODES)),
-};
 
 export default HomePage;
