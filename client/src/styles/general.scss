@@ -78,3 +78,20 @@ a:visited {
 .xmasonry .xblock {
   transition: left 0.3s ease, top 0.3s ease;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  outline: 1px solid variables.$scrollbar-grey;
+}
+
+::-webkit-scrollbar-track {
+  background: variables.$plain-white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: variables.$scrollbar-grey;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: variables.$scrollbar-hover;
+}
