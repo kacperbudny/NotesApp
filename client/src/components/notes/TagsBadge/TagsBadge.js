@@ -37,6 +37,7 @@ const TagsBadge = ({ tag, onRemoveTag, onBadgeClick }) => {
       <button
         className={`${styles.closeButton} ${isHovered && styles.visible}`}
         onClick={handleRemoveButtonClick}
+        type="button"
       >
         <FontAwesomeIcon icon={faXmark} size="xs" />
       </button>
