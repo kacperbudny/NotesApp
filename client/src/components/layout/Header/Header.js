@@ -22,6 +22,7 @@ const getPageName = (path, tag) => {
     }
     default: {
       return path
+        .slice(1)
         .split("")
         .map((letter, index) =>
           index === 0 ? letter.toUpperCase() : letter.toLowerCase()
