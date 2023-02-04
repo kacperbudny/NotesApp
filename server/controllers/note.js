@@ -24,8 +24,10 @@ exports.postNote = async (req, res, next) => {
 
     const note = new Note({
       _id: req.body._id,
+      type: req.body.type,
       name: req.body.name,
       content: req.body.content,
+      checklistItems: req.body.checklistItems,
       displayOrder: req.body.displayOrder,
       color: req.body.color,
       archived: req.body.archived,
