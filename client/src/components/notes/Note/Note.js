@@ -25,6 +25,8 @@ const Note = ({ note }) => {
   } = useNotesContext();
   const path = usePath();
 
+  const areFloatingBoxesOpen = isColorPaletteOpen || isTaggingBoxOpen;
+
   const [, drop] = useDrop({
     accept: DRAG_TYPES.note,
     drop(item) {
@@ -55,7 +57,7 @@ const Note = ({ note }) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    canDrag: () => path === FRONTEND_ROUTES.homePage,
+    canDrag: () => path === FRONTEND_ROUTES.homePage && !areFloatingBoxesOpen,
   });
 
   drag(drop(hoverRef));
@@ -96,7 +98,7 @@ const Note = ({ note }) => {
 
   const isActiveNote = activeNote && activeNote._id === note._id;
 
-  const areButtonsVisible = isHovered || isColorPaletteOpen || isTaggingBoxOpen;
+  const areButtonsVisible = isHovered || areFloatingBoxesOpen;
 
   const isHidden = isActiveNote || isDragging;
 
