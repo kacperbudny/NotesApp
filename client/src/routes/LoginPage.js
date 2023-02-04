@@ -4,6 +4,7 @@ import ErrorMessage from "@components/common/ErrorMessage";
 import Form from "@components/common/Form";
 import Input from "@components/common/Input";
 import { useAuthContext } from "@contexts/AuthContext";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import { validateEmail, validatePassword } from "@utils/validation";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -22,7 +23,7 @@ const LoginPage = () => {
   const location = useLocation();
   const { signIn } = useAuthContext();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || FRONTEND_ROUTES.homePage;
 
   const areInputsEmpty =
     email.trim().length === 0 || password.trim().length === 0;
@@ -98,7 +99,9 @@ const LoginPage = () => {
         <ErrorMessage isVisible={!!error.message}>{error.message}</ErrorMessage>
         <Button>Login</Button>
       </Form>
-      <Link to="/signup">Don't have an account? Create one!</Link>
+      <Link to={FRONTEND_ROUTES.signup}>
+        Don't have an account? Create one!
+      </Link>
     </CenteredContainer>
   );
 };

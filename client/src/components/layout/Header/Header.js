@@ -2,26 +2,27 @@ import LogoutButton from "@components/auth/LogoutButton";
 import { useAuthContext } from "@contexts/AuthContext";
 import React from "react";
 import styles from "./Header.module.scss";
-import PropTypes from "prop-types";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "@components/common/IconButton";
 import { useParams } from "react-router-dom";
 import SearchBar from "@components/layout/SearchBar";
 import { Link } from "react-router-dom";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
+import usePath from "@hooks/usePath";
 
-const getPageName = (displayAs, tag) => {
-  switch (displayAs) {
-    case homePageDisplayModes.home:
-    case homePageDisplayModes.search: {
+const getPageName = (path, tag) => {
+  switch (path) {
+    case FRONTEND_ROUTES.homePage:
+    case FRONTEND_ROUTES.search: {
       return "Notes App";
     }
-    case homePageDisplayModes.tags: {
+    case FRONTEND_ROUTES.tag: {
       return tag || "Tags";
     }
     default: {
-      return displayAs
+      return path
+        .slice(1)
         .split("")
         .map((letter, index) =>
           index === 0 ? letter.toUpperCase() : letter.toLowerCase()
@@ -31,12 +32,13 @@ const getPageName = (displayAs, tag) => {
   }
 };
 
-const Header = ({ displayAs }) => {
+const Header = () => {
   const { user } = useAuthContext();
   const { toggleSidebarOpen } = useLayoutContext();
   const { tag } = useParams();
+  const path = usePath();
 
-  const pageName = getPageName(displayAs, tag);
+  const pageName = getPageName(path, tag);
 
   return (
     <header className={styles.header}>
@@ -48,9 +50,9 @@ const Header = ({ displayAs }) => {
           iconSize="lg"
         />
         <h1 className={styles.appName}>
-          {displayAs === homePageDisplayModes.home ||
-          displayAs === homePageDisplayModes.search ? (
-            <Link to="/" className={styles.link}>
+          {path === FRONTEND_ROUTES.homePage ||
+          path === FRONTEND_ROUTES.search ? (
+            <Link to={FRONTEND_ROUTES.homePage} className={styles.link}>
               {pageName}
             </Link>
           ) : (
@@ -69,10 +71,6 @@ const Header = ({ displayAs }) => {
       </div>
     </header>
   );
-};
-
-Header.propTypes = {
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
 };
 
 export default Header;

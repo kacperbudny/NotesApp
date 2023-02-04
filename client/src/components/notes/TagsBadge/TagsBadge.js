@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import styles from "./TagsBadge.module.scss";
 import { useNavigate } from "react-router-dom";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const TagsBadge = ({ tag, onRemoveTag, onBadgeClick }) => {
   const [hoverRef, isHovered] = useHover();
@@ -16,7 +17,7 @@ const TagsBadge = ({ tag, onRemoveTag, onBadgeClick }) => {
     if (onBadgeClick) {
       onBadgeClick(tag);
     }
-    navigate(`/tag/${encodeURIComponent(tag)}`);
+    navigate(`${FRONTEND_ROUTES.tag}/${encodeURIComponent(tag)}`);
   };
 
   const handleRemoveButtonClick = (e) => {
@@ -36,6 +37,7 @@ const TagsBadge = ({ tag, onRemoveTag, onBadgeClick }) => {
       <button
         className={`${styles.closeButton} ${isHovered && styles.visible}`}
         onClick={handleRemoveButtonClick}
+        type="button"
       >
         <FontAwesomeIcon icon={faXmark} size="xs" />
       </button>

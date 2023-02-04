@@ -7,10 +7,11 @@ import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 import TagsBar from "@components/notes/TagsBar";
 import { useDrag, useDrop } from "react-dnd";
-import { dragTypes } from "@utils/constants/dragTypes";
-import homePageDisplayModes from "@utils/constants/homePageDisplayModes";
+import DRAG_TYPES from "@utils/constants/dragTypes";
+import usePath from "@hooks/usePath";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
-const Note = ({ note, displayAs }) => {
+const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
   const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const [hoverRef, isHovered] = useHover();
@@ -22,9 +23,12 @@ const Note = ({ note, displayAs }) => {
     noteToDelete,
     openDeletingModal,
   } = useNotesContext();
+  const path = usePath();
+
+  const areFloatingBoxesOpen = isColorPaletteOpen || isTaggingBoxOpen;
 
   const [, drop] = useDrop({
-    accept: dragTypes.note,
+    accept: DRAG_TYPES.note,
     drop(item) {
       if (!hoverRef.current) {
         return;
@@ -46,14 +50,14 @@ const Note = ({ note, displayAs }) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: dragTypes.note,
+    type: DRAG_TYPES.note,
     item: () => {
       return note;
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    canDrag: () => displayAs === homePageDisplayModes.home,
+    canDrag: () => path === FRONTEND_ROUTES.homePage && !areFloatingBoxesOpen,
   });
 
   drag(drop(hoverRef));
@@ -63,8 +67,7 @@ const Note = ({ note, displayAs }) => {
   };
 
   const handleChangeColor = (color) => {
-    note.color = color;
-    updateNote(note);
+    updateNote({ ...note, color });
   };
 
   const handleDelete = () => {
@@ -72,36 +75,30 @@ const Note = ({ note, displayAs }) => {
   };
 
   const handleArchive = () => {
-    if (note.pinned) {
-      note.pinned = false;
-    }
-    note.archived = !note.archived;
-    updateNote(note);
+    updateNote({
+      ...note,
+      archived: !note.archived,
+      pinned: false,
+    });
   };
 
   const handlePin = () => {
-    if (note.archived) {
-      note.archived = false;
-    }
-    note.pinned = !note.pinned;
-    updateNote(note);
+    updateNote({ ...note, pinned: !note.pinned, archived: false });
   };
 
   const handleAddTag = (tag) => {
-    note.tags = [...note.tags, tag];
-    updateNote(note);
+    updateNote({ ...note, tags: [...note.tags, tag] });
   };
 
   const handleRemoveTag = (tag) => {
-    note.tags = note.tags.filter((t) => t !== tag);
-    updateNote(note);
+    updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
   };
 
   const activeNote = noteToEdit || noteToDelete;
 
   const isActiveNote = activeNote && activeNote._id === note._id;
 
-  const areButtonsVisible = isHovered || isColorPaletteOpen || isTaggingBoxOpen;
+  const areButtonsVisible = isHovered || areFloatingBoxesOpen;
 
   const isHidden = isActiveNote || isDragging;
 
@@ -156,7 +153,6 @@ Note.propTypes = {
     content: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }).isRequired,
-  displayAs: PropTypes.oneOf(Object.values(homePageDisplayModes)).isRequired,
 };
 
 export default Note;

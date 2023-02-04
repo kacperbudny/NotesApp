@@ -2,11 +2,12 @@ const express = require("express");
 const authController = require("../controllers/auth");
 const { body } = require("express-validator");
 const User = require("../models/user");
+const ROUTES = require("../utils/constants/routes");
 
 const router = express.Router();
 
 router.post(
-  "/register",
+  ROUTES.register,
   [
     body("email")
       .isEmail()
@@ -23,8 +24,8 @@ router.post(
   ],
   authController.postRegister
 );
-router.post("/login", authController.postLogin);
-router.delete("/logout", authController.logout);
-router.post("/refreshtoken", authController.postRefreshToken);
+router.post(ROUTES.login, authController.postLogin);
+router.delete(ROUTES.logout, authController.logout);
+router.post(ROUTES.refreshToken, authController.postRefreshToken);
 
 module.exports = router;

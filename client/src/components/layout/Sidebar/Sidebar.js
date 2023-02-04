@@ -6,6 +6,7 @@ import { faInbox, faTag, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useLayoutContext } from "@contexts/LayoutContext";
 import { useNotesContext } from "@contexts/NotesContext";
 import SidebarButton from "@components/layout/SidebarButton";
+import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 
 const Sidebar = () => {
   const { isSidebarOpen, setIsTagsModalOpen } = useLayoutContext();
@@ -19,14 +20,17 @@ const Sidebar = () => {
     <nav className={`${styles.container} ${isSidebarOpen && styles.expanded}`}>
       <ul>
         <li>
-          <SidebarLink icon={faNoteSticky} to="/">
+          <SidebarLink icon={faNoteSticky} to={FRONTEND_ROUTES.homePage}>
             Notes
           </SidebarLink>
         </li>
         {tags.length > 0 &&
           tags.map((tag) => (
             <li key={tag}>
-              <SidebarLink icon={faTag} to={`/tag/${encodeURIComponent(tag)}`}>
+              <SidebarLink
+                icon={faTag}
+                to={`${FRONTEND_ROUTES.tag}/${encodeURIComponent(tag)}`}
+              >
                 {tag}
               </SidebarLink>
             </li>
@@ -37,7 +41,7 @@ const Sidebar = () => {
           </SidebarButton>
         </li>
         <li>
-          <SidebarLink icon={faInbox} to="/archive">
+          <SidebarLink icon={faInbox} to={FRONTEND_ROUTES.archive}>
             Archive
           </SidebarLink>
         </li>

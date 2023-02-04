@@ -6,6 +6,7 @@ const seed = require("./utils/seed/seed");
 const noteRoutes = require("./routes/note");
 const authRoutes = require("./routes/auth");
 const cleanupDb = require("./utils/seed/cleanupDb");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 const MONGODB_CONNECTION_STRING =
@@ -20,7 +21,9 @@ app.use(noteRoutes);
 app.use(authRoutes);
 
 app.use((error, req, res, _) => {
-  console.error(error);
+  if (!(error instanceof jwt.TokenExpiredError)) {
+    console.error(error);
+  }
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
