@@ -12,6 +12,12 @@
   border-radius: 2px;
   display: grid;
   place-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.checkbox:hover {
+  opacity: 1;
 }
 
 .checkbox:active,

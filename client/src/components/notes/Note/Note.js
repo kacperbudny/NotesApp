@@ -102,6 +102,19 @@ const Note = ({ note }) => {
     updateNote(newNote);
   };
 
+  const handleCheckboxClick = (checklistItem) => {
+    const newChecklistItems = [...note.checklistItems];
+    const itemToEditIndex = newChecklistItems.findIndex(
+      (item) => item.id === checklistItem.id
+    );
+    newChecklistItems[itemToEditIndex] = checklistItem;
+
+    updateNote({
+      ...note,
+      checklistItems: newChecklistItems,
+    });
+  };
+
   const activeNote = noteToEdit || noteToDelete;
 
   const isActiveNote = activeNote && activeNote._id === note._id;
@@ -131,7 +144,10 @@ const Note = ({ note }) => {
             {note.type === NOTE_TYPES.text ? (
               <p>{note.content}</p>
             ) : (
-              <NoteChecklist checklistItems={note.checklistItems} />
+              <NoteChecklist
+                checklistItems={note.checklistItems}
+                onCheckboxClick={handleCheckboxClick}
+              />
             )}
 
             <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
