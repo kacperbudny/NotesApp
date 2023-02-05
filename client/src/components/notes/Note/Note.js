@@ -127,6 +127,7 @@ const Note = ({ note }) => {
         {note.name || note.content || note.checklistItems.length ? (
           <div>
             <h3>{note.name}</h3>
+
             {note.type === NOTE_TYPES.text ? (
               <p>{note.content}</p>
             ) : (
