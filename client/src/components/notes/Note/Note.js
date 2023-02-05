@@ -10,6 +10,9 @@ import { useDrag, useDrop } from "react-dnd";
 import DRAG_TYPES from "@utils/constants/dragTypes";
 import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
+import NOTE_TYPES from "@utils/constants/noteTypes";
+import NoteChecklist from "@components/notes/NoteChecklist";
+import { swapChecklistMode } from "@utils/noteUtils";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -94,6 +97,11 @@ const Note = ({ note }) => {
     updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
   };
 
+  const handleChecklist = () => {
+    const newNote = swapChecklistMode(note);
+    updateNote(newNote);
+  };
+
   const activeNote = noteToEdit || noteToDelete;
 
   const isActiveNote = activeNote && activeNote._id === note._id;
@@ -116,10 +124,15 @@ const Note = ({ note }) => {
           note={note}
           onClick={handlePin}
         />
-        {note.name || note.content ? (
+        {note.name || note.content || note.checklistItems.length ? (
           <div>
             <h3>{note.name}</h3>
-            <p>{note.content}</p>
+            {note.type === NOTE_TYPES.text ? (
+              <p>{note.content}</p>
+            ) : (
+              <NoteChecklist checklistItems={note.checklistItems} />
+            )}
+
             <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
           </div>
         ) : (
@@ -141,6 +154,7 @@ const Note = ({ note }) => {
           onRemoveTag={handleRemoveTag}
           tags={note.tags}
         />
+        <ButtonsBar.ChecklistButton onChecklist={handleChecklist} />
       </ButtonsBar>
     </div>
   );
