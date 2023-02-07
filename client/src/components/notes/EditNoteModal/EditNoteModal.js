@@ -7,6 +7,8 @@ import { useNotesContext } from "@contexts/NotesContext";
 import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 import TagsBar from "@components/notes/TagsBar";
+import NOTE_TYPES from "@utils/constants/noteTypes";
+import EditableChecklist from "../EditableChecklist/EditableChecklist";
 
 const EditNoteModal = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -51,6 +53,9 @@ const EditNoteModal = () => {
 
   const handleAfterOpen = () => {
     const textarea = contentRef.current;
+    if (!textarea) {
+      return;
+    }
     const end = textarea.value.length;
     textarea.setSelectionRange(end, end);
     textarea.focus();
@@ -89,6 +94,12 @@ const EditNoteModal = () => {
     handleClose();
   };
 
+  const handleChecklist = () => {
+    dispatchNote({ type: actionTypes.SWAP_MODE });
+  };
+
+  const handleCheckboxClick = () => {};
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -114,13 +125,17 @@ const EditNoteModal = () => {
           className={styles.title}
         />
         <PinButton note={note} onClick={handlePin} isVisible={true} />
-        <TextareaAutosize
-          placeholder="New note..."
-          value={note.content}
-          onChange={handleChangeContent}
-          className={styles.text}
-          ref={contentRef}
-        />
+        {note.type === NOTE_TYPES.text ? (
+          <TextareaAutosize
+            placeholder="New note..."
+            value={note.content}
+            onChange={handleChangeContent}
+            className={styles.text}
+            ref={contentRef}
+          />
+        ) : (
+          <EditableChecklist checklistItems={note.checklistItems} />
+        )}
         <div className={styles.tagsBarContainer}>
           <TagsBar
             tags={note.tags}
@@ -144,6 +159,7 @@ const EditNoteModal = () => {
               onRemoveTag={handleRemoveTag}
               tags={note.tags}
             />
+            <ButtonsBar.ChecklistButton onChecklist={handleChecklist} />
           </ButtonsBar>
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close
