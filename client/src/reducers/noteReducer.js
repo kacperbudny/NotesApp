@@ -65,4 +65,5 @@ export const initialValues = {
   color: COLORS.white,
   pinned: false,
   tags: [],
+  type: "TEXT",
 };

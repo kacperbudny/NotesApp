@@ -18,3 +18,8 @@
   border-bottom: none;
   opacity: 0.6;
 }
+
+.crossed {
+  text-decoration: line-through;
+  color: variables.$grey;
+}

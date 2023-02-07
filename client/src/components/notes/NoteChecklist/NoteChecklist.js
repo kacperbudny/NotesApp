@@ -14,36 +14,26 @@ const NoteChecklist = ({ checklistItems, onCheckboxClick }) => {
 
   const uncheckedItems = checklistItems.filter((item) => !item.isChecked);
   const checkedItems = checklistItems.filter((item) => item.isChecked);
+  const checkedLength = 9 - uncheckedItems.length;
 
   return (
     <div>
-      <ul className={styles.list}>
-        {uncheckedItems.map((item) => (
-          <li key={item.id} className={styles.listItem}>
-            <Checkbox
-              name={item.id}
-              isChecked={item.isChecked}
-              onCheck={() => onCheck(item)}
-              onUncheck={() => onUncheck(item)}
-            />
-            <span>{item.content}</span>
-          </li>
-        ))}
-      </ul>
-      <hr className={styles.line} />
-      <ul className={styles.list}>
-        {checkedItems.map((item) => (
-          <li key={item.id} className={styles.listItem}>
-            <Checkbox
-              name={item.id}
-              isChecked={item.isChecked}
-              onCheck={() => onCheck(item)}
-              onUncheck={() => onUncheck(item)}
-            />
-            <span>{item.content}</span>
-          </li>
-        ))}
-      </ul>
+      <Checklist
+        items={uncheckedItems}
+        onCheck={onCheck}
+        onUncheck={onUncheck}
+      />
+      {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
+        <hr className={styles.line} />
+      ) : null}
+      <Checklist
+        items={checkedItems}
+        onCheck={onCheck}
+        onUncheck={onUncheck}
+        variant={"checked"}
+        maxLength={checkedLength >= 0 ? checkedLength : 0}
+      />
+      {checklistItems.length > 9 ? <span>...</span> : null}
     </div>
   );
 };
@@ -54,3 +44,37 @@ NoteChecklist.propTypes = {
 };
 
 export default NoteChecklist;
+
+const Checklist = ({
+  items,
+  onCheck,
+  onUncheck,
+  variant = "unchecked",
+  maxLength = 9,
+}) => {
+  return (
+    <ul className={styles.list}>
+      {items.slice(0, maxLength).map((item) => (
+        <li key={item.id} className={styles.listItem}>
+          <Checkbox
+            name={item.id}
+            isChecked={item.isChecked}
+            onCheck={() => onCheck(item)}
+            onUncheck={() => onUncheck(item)}
+          />
+          <span className={variant === "checked" ? styles.crossed : ""}>
+            {item.content}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+Checklist.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  onCheck: PropTypes.func.isRequired,
+  onUncheck: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(["unchecked", "checked"]),
+  maxLength: PropTypes.number,
+};
