@@ -98,7 +98,12 @@ const EditNoteModal = () => {
     dispatchNote({ type: actionTypes.SWAP_MODE });
   };
 
-  const handleCheckboxClick = () => {};
+  const handleUpdateChecklistItem = (checklistItem) => {
+    dispatchNote({
+      type: actionTypes.UPDATE_CHECKLIST_ITEM,
+      payload: checklistItem,
+    });
+  };
 
   return (
     <Modal
@@ -134,7 +139,10 @@ const EditNoteModal = () => {
             ref={contentRef}
           />
         ) : (
-          <EditableChecklist checklistItems={note.checklistItems} />
+          <EditableChecklist
+            checklistItems={note.checklistItems}
+            onChecklistItemUpdate={handleUpdateChecklistItem}
+          />
         )}
         <div className={styles.tagsBarContainer}>
           <TagsBar

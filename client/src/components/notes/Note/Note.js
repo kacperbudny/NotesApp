@@ -12,7 +12,7 @@ import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import NoteChecklist from "@components/notes/NoteChecklist";
-import { swapChecklistMode } from "@utils/noteUtils";
+import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -103,24 +103,13 @@ const Note = ({ note }) => {
   };
 
   const handleCheckboxClick = (checklistItem) => {
-    const newChecklistItems = [...note.checklistItems];
-    const itemToEditIndex = newChecklistItems.findIndex(
-      (item) => item.id === checklistItem.id
-    );
-    newChecklistItems[itemToEditIndex] = checklistItem;
-
-    updateNote({
-      ...note,
-      checklistItems: newChecklistItems,
-    });
+    const updatedNote = updateChecklistItem(note, checklistItem);
+    updateNote(updatedNote);
   };
 
   const activeNote = noteToEdit || noteToDelete;
-
   const isActiveNote = activeNote && activeNote._id === note._id;
-
   const areButtonsVisible = isHovered || areFloatingBoxesOpen;
-
   const isHidden = isActiveNote || isDragging;
 
   return (

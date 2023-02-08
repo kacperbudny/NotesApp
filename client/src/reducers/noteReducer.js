@@ -1,5 +1,5 @@
 import COLORS from "@utils/constants/colors";
-import { swapChecklistMode } from "@utils/noteUtils";
+import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
 
 export const actionTypes = {
   SET_NOTE: "SET_NOTE",
@@ -10,6 +10,7 @@ export const actionTypes = {
   ADD_TAG: "ADD_TAG",
   REMOVE_TAG: "REMOVE_TAG",
   SWAP_MODE: "SWAP_MODE",
+  UPDATE_CHECKLIST_ITEM: "UPDATE_CHECKLIST_ITEM",
 };
 
 export const noteReducer = (state, action) => {
@@ -57,6 +58,9 @@ export const noteReducer = (state, action) => {
     }
     case actionTypes.SWAP_MODE: {
       return swapChecklistMode(state);
+    }
+    case actionTypes.UPDATE_CHECKLIST_ITEM: {
+      return updateChecklistItem(state, action.payload);
     }
     default: {
       throw Error("Unknown action: " + action.type);

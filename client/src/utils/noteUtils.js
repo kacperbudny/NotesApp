@@ -43,3 +43,16 @@ const convertToText = (note) => {
 
   return convertedNote;
 };
+
+export const updateChecklistItem = (note, updatedChecklistItem) => {
+  const newChecklistItems = [...note.checklistItems];
+  const itemToEditIndex = newChecklistItems.findIndex(
+    (item) => item.id === updatedChecklistItem.id
+  );
+  newChecklistItems[itemToEditIndex] = updatedChecklistItem;
+
+  return {
+    ...note,
+    checklistItems: newChecklistItems,
+  };
+};
