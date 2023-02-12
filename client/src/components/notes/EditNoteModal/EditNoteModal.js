@@ -94,7 +94,7 @@ const EditNoteModal = () => {
     handleClose();
   };
 
-  const handleChecklist = () => {
+  const handleChecklistClick = () => {
     dispatchNote({ type: actionTypes.SWAP_MODE });
   };
 
@@ -102,6 +102,13 @@ const EditNoteModal = () => {
     dispatchNote({
       type: actionTypes.UPDATE_CHECKLIST_ITEM,
       payload: checklistItem,
+    });
+  };
+
+  const handleAddNewChecklistItem = (newChecklistItemContent) => {
+    dispatchNote({
+      type: actionTypes.ADD_CHECKLIST_ITEM,
+      payload: newChecklistItemContent,
     });
   };
 
@@ -142,6 +149,7 @@ const EditNoteModal = () => {
           <EditableChecklist
             checklistItems={note.checklistItems}
             onChecklistItemUpdate={handleUpdateChecklistItem}
+            onAddChecklistItem={handleAddNewChecklistItem}
           />
         )}
         <div className={styles.tagsBarContainer}>
@@ -167,7 +175,7 @@ const EditNoteModal = () => {
               onRemoveTag={handleRemoveTag}
               tags={note.tags}
             />
-            <ButtonsBar.ChecklistButton onChecklist={handleChecklist} />
+            <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
           </ButtonsBar>
           <button type="button" className={styles.btn} onClick={handleClose}>
             Close

@@ -56,3 +56,17 @@ export const updateChecklistItem = (note, updatedChecklistItem) => {
     checklistItems: newChecklistItems,
   };
 };
+
+export const addChecklistItem = (note, newChecklistItemContent) => {
+  return {
+    ...note,
+    checklistItems: [
+      ...note.checklistItems,
+      {
+        isChecked: false,
+        content: newChecklistItemContent,
+        id: crypto.randomUUID(),
+      },
+    ],
+  };
+};

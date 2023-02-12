@@ -3,13 +3,20 @@ import React from "react";
 import styles from "./EditableChecklist.module.scss";
 import PropTypes from "prop-types";
 
-const EditableChecklist = ({ checklistItems, onChecklistItemUpdate }) => {
+const EditableChecklist = ({
+  checklistItems,
+  onChecklistItemUpdate,
+  onAddChecklistItem,
+}) => {
+  const handleNewItem = (e) => {};
+
   const uncheckedItems = checklistItems.filter((item) => !item.isChecked);
   const checkedItems = checklistItems.filter((item) => item.isChecked);
 
   return (
     <div className={styles.container}>
       <Checklist items={uncheckedItems} onUpdate={onChecklistItemUpdate} />
+      <input onKeyDown={handleNewItem} />
       {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
         <hr className={styles.line} />
       ) : null}
@@ -25,6 +32,7 @@ const EditableChecklist = ({ checklistItems, onChecklistItemUpdate }) => {
 EditableChecklist.propTypes = {
   checklistItems: PropTypes.arrayOf(PropTypes.object),
   onChecklistItemUpdate: PropTypes.func.isRequired,
+  onAddChecklistItem: PropTypes.func.isRequired,
 };
 
 export default EditableChecklist;
