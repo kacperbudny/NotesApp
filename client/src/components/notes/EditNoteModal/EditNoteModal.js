@@ -106,10 +106,12 @@ const EditNoteModal = () => {
   };
 
   const handleAddNewChecklistItem = (newChecklistItemContent) => {
+    const id = crypto.randomUUID();
     dispatchNote({
       type: actionTypes.ADD_CHECKLIST_ITEM,
-      payload: newChecklistItemContent,
+      payload: { content: newChecklistItemContent, id },
     });
+    return id;
   };
 
   return (

@@ -27,6 +27,8 @@
 
 .container {
   padding-inline: 24px;
+  overflow-y: scroll;
+  max-height: 50vh;
 }
 
 .input {

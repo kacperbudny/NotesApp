@@ -1,5 +1,5 @@
 import Checkbox from "@components/common/Checkbox";
-import React from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import styles from "./EditableChecklist.module.scss";
 import PropTypes from "prop-types";
 
@@ -8,14 +8,50 @@ const EditableChecklist = ({
   onChecklistItemUpdate,
   onAddChecklistItem,
 }) => {
-  const handleNewItem = (e) => {};
+  const inputElements = useRef({});
+  const itemIdToFocus = useRef(null);
+
+  useEffect(() => {
+    if (itemIdToFocus.current) {
+      const element = inputElements.current[itemIdToFocus.current];
+      element.focus();
+      itemIdToFocus.current = null;
+    }
+  }, [checklistItems]);
+
+  const handleNewItem = (e) => {
+    e.preventDefault();
+
+    let newItemId;
+
+    if (itemIdToFocus.current) {
+      return;
+    }
+
+    if (
+      e.key.length === 1 ||
+      (e.key.length > 1 && /[^a-zA-Z0-9]/.test(e.key))
+    ) {
+      newItemId = onAddChecklistItem(e.key);
+    } else if (e.key === "Spacebar") {
+      newItemId = onAddChecklistItem(" ");
+    } else {
+      return;
+    }
+
+    itemIdToFocus.current = newItemId;
+  };
 
   const uncheckedItems = checklistItems.filter((item) => !item.isChecked);
   const checkedItems = checklistItems.filter((item) => item.isChecked);
 
   return (
     <div className={styles.container}>
-      <Checklist items={uncheckedItems} onUpdate={onChecklistItemUpdate} />
+      <Checklist
+        items={uncheckedItems}
+        onUpdate={onChecklistItemUpdate}
+        ref={inputElements}
+      />
       <input onKeyDown={handleNewItem} />
       {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
         <hr className={styles.line} />
@@ -37,41 +73,48 @@ EditableChecklist.propTypes = {
 
 export default EditableChecklist;
 
-const Checklist = ({ items, onUpdate, variant = "unchecked" }) => {
-  const handleCheck = (item) => {
-    onUpdate({ ...item, isChecked: true });
-  };
+const Checklist = forwardRef(
+  ({ items, onUpdate, variant = "unchecked" }, ref) => {
+    const handleCheck = (item) => {
+      onUpdate({ ...item, isChecked: true });
+    };
 
-  const handleUncheck = (item) => {
-    onUpdate({ ...item, isChecked: false });
-  };
+    const handleUncheck = (item) => {
+      onUpdate({ ...item, isChecked: false });
+    };
 
-  const handleChange = (item, newValue) => {
-    onUpdate({ ...item, content: newValue });
-  };
+    const handleChange = (item, newValue) => {
+      onUpdate({ ...item, content: newValue });
+    };
 
-  return (
-    <ul className={styles.list}>
-      {items.map((item) => (
-        <li key={item.id} className={styles.listItem}>
-          <Checkbox
-            name={item.id}
-            isChecked={item.isChecked}
-            onCheck={() => handleCheck(item)}
-            onUncheck={() => handleUncheck(item)}
-          />
-          <input
-            className={`${styles.input} ${
-              variant === "checked" ? styles.crossed : ""
-            }`}
-            value={item.content}
-            onChange={(e) => handleChange(item, e.currentTarget.value)}
-          />
-        </li>
-      ))}
-    </ul>
-  );
-};
+    return (
+      <ul className={styles.list}>
+        {items.map((item) => (
+          <li key={item.id} className={styles.listItem}>
+            <Checkbox
+              name={item.id}
+              isChecked={item.isChecked}
+              onCheck={() => handleCheck(item)}
+              onUncheck={() => handleUncheck(item)}
+            />
+            <input
+              className={`${styles.input} ${
+                variant === "checked" ? styles.crossed : ""
+              }`}
+              value={item.content}
+              onChange={(e) => handleChange(item, e.currentTarget.value)}
+              ref={(element) => {
+                if (ref) {
+                  ref.current[item.id] = element;
+                }
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+);
 
 Checklist.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
