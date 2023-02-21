@@ -10,6 +10,7 @@
   gap: 16px;
   align-items: center;
   margin-block: 12px;
+  justify-content: center;
 }
 
 .line {
@@ -37,4 +38,17 @@
   border: none;
   width: 100%;
   font-size: 16px;
+}
+
+.plusIcon {
+  color: variables.$grey;
+  font-size: 12px;
+}
+
+.newItemInput {
+  @extend .input;
+  @include mixins.headerFont;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-block: 4px;
 }

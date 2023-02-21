@@ -2,6 +2,10 @@ import Checkbox from "@components/common/Checkbox";
 import React, { forwardRef, useEffect, useRef } from "react";
 import styles from "./EditableChecklist.module.scss";
 import PropTypes from "prop-types";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import IconButton from "@components/common/IconButton/IconButton";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const EditableChecklist = ({
   checklistItems,
@@ -52,7 +56,14 @@ const EditableChecklist = ({
         onUpdate={onChecklistItemUpdate}
         ref={inputElements}
       />
-      <input onKeyDown={handleNewItem} />
+      <div className={styles.listItem}>
+        <FontAwesomeIcon icon={faPlus} className={styles.plusIcon} />
+        <input
+          onKeyDown={handleNewItem}
+          className={styles.newItemInput}
+          placeholder="List element"
+        />
+      </div>
       {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
         <hr className={styles.line} />
       ) : null}
@@ -75,6 +86,30 @@ export default EditableChecklist;
 
 const Checklist = forwardRef(
   ({ items, onUpdate, variant = "unchecked" }, ref) => {
+    return (
+      <ul className={styles.list}>
+        {items.map((item) => (
+          <ChecklistItem
+            key={item.id}
+            item={item}
+            onUpdate={onUpdate}
+            variant={variant}
+            ref={ref}
+          />
+        ))}
+      </ul>
+    );
+  }
+);
+
+Checklist.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  onUpdate: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(["unchecked", "checked"]),
+};
+
+const ChecklistItem = forwardRef(
+  ({ item, onUpdate, variant = "unchecked" }, ref) => {
     const handleCheck = (item) => {
       onUpdate({ ...item, isChecked: true });
     };
@@ -88,36 +123,38 @@ const Checklist = forwardRef(
     };
 
     return (
-      <ul className={styles.list}>
-        {items.map((item) => (
-          <li key={item.id} className={styles.listItem}>
-            <Checkbox
-              name={item.id}
-              isChecked={item.isChecked}
-              onCheck={() => handleCheck(item)}
-              onUncheck={() => handleUncheck(item)}
-            />
-            <input
-              className={`${styles.input} ${
-                variant === "checked" ? styles.crossed : ""
-              }`}
-              value={item.content}
-              onChange={(e) => handleChange(item, e.currentTarget.value)}
-              ref={(element) => {
-                if (ref) {
-                  ref.current[item.id] = element;
-                }
-              }}
-            />
-          </li>
-        ))}
-      </ul>
+      <li className={styles.listItem}>
+        <Checkbox
+          name={item.id}
+          isChecked={item.isChecked}
+          onCheck={() => handleCheck(item)}
+          onUncheck={() => handleUncheck(item)}
+        />
+        <input
+          className={`${styles.input} ${
+            variant === "checked" ? styles.crossed : ""
+          }`}
+          value={item.content}
+          onChange={(e) => handleChange(item, e.currentTarget.value)}
+          ref={(element) => {
+            if (ref) {
+              ref.current[item.id] = element;
+            }
+          }}
+        />
+        <IconButton
+          icon={faXmark}
+          onClick={() => {}}
+          size={19}
+          variant="grey"
+        />
+      </li>
     );
   }
 );
 
-Checklist.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
+ChecklistItem.propTypes = {
+  items: PropTypes.object,
   onUpdate: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(["unchecked", "checked"]),
 };
