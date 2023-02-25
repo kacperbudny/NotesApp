@@ -15,11 +15,13 @@ export const swapChecklistMode = (note) => {
 };
 
 const convertToChecklist = (note) => {
-  const checklistItems = note.content.split(/\r?\n/).map((line) => ({
-    isChecked: false,
-    content: line,
-    id: crypto.randomUUID(),
-  }));
+  const checklistItems = note.content.length
+    ? note.content.split(/\r?\n/).map((line) => ({
+        isChecked: false,
+        content: line,
+        id: crypto.randomUUID(),
+      }))
+    : [];
 
   const convertedNote = {
     ...note,

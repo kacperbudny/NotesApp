@@ -11,6 +11,8 @@ import TagsBar from "@components/notes/TagsBar";
 import { useParams } from "react-router-dom";
 import EditableChecklist from "@components/notes/EditableChecklist";
 import NOTE_TYPES from "@utils/constants/noteTypes";
+import IconButton from "@components/common/IconButton/IconButton";
+import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
 
 const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -207,6 +209,17 @@ const AddNote = () => {
                 <input type="submit" value="Close" className={styles.btn} />
               </div>
             </>
+          )}
+          {!isEditing && (
+            <div className={styles.checklistButton}>
+              <IconButton
+                onClick={() => {}}
+                icon={faSquareCheck}
+                iconSize={"lg"}
+                size={40}
+                variant="grey"
+              />
+            </div>
           )}
         </form>
       </OutsideClickHandler>
