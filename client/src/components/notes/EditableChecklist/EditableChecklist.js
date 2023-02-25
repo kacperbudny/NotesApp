@@ -13,9 +13,17 @@ const EditableChecklist = ({
   onChecklistItemUpdate,
   onAddChecklistItem,
   onRemoveChecklistItem,
+  shouldFocusOnRender = false,
 }) => {
   const inputElements = useRef({});
   const itemIdToFocus = useRef(null);
+  const newItemInputRef = useRef(null);
+
+  useEffect(() => {
+    if (shouldFocusOnRender) {
+      newItemInputRef.current.focus();
+    }
+  }, [shouldFocusOnRender]);
 
   useEffect(() => {
     if (itemIdToFocus.current) {
@@ -65,6 +73,7 @@ const EditableChecklist = ({
           onKeyDown={handleNewItem}
           className={styles.newItemInput}
           placeholder="List element"
+          ref={newItemInputRef}
         />
       </div>
       {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
@@ -85,6 +94,7 @@ EditableChecklist.propTypes = {
   onChecklistItemUpdate: PropTypes.func.isRequired,
   onAddChecklistItem: PropTypes.func.isRequired,
   onRemoveChecklistItem: PropTypes.func.isRequired,
+  shouldFocusOnRender: PropTypes.bool,
 };
 
 export default EditableChecklist;

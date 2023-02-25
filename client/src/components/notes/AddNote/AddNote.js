@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./AddNote.module.scss";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -21,6 +21,7 @@ const AddNote = () => {
   const [isTaggingBoxOpen, setIsTaggingBoxOpen] = useState(false);
   const { addNote } = useNotesContext();
   const { tag: tagFromParams } = useParams();
+  const formRef = useRef(null);
 
   const initialValuesWithTagFromParams = useMemo(
     () => ({
@@ -142,13 +143,19 @@ const AddNote = () => {
     });
   };
 
+  const handleOpenChecklistButtonClick = () => {
+    handleChecklistClick();
+    setIsEditing(true);
+  };
+
   return (
-    <div onFocus={handleFocus} className={styles.centeringContainer}>
+    <div className={styles.centeringContainer}>
       <OutsideClickHandler onOutsideClick={handleClickOutside}>
         <form
           className={styles.form}
           onSubmit={handleSubmit}
           style={{ background: note.color }}
+          ref={formRef}
         >
           {isEditing && (
             <>
@@ -169,6 +176,7 @@ const AddNote = () => {
               onChange={handleChangeContent}
               className={styles.text}
               rows="1"
+              onFocus={handleFocus}
             />
           ) : (
             <EditableChecklist
@@ -176,6 +184,7 @@ const AddNote = () => {
               onChecklistItemUpdate={handleUpdateChecklistItem}
               onAddChecklistItem={handleAddNewChecklistItem}
               onRemoveChecklistItem={handleRemoveChecklistItem}
+              shouldFocusOnRender={true}
             />
           )}
           {isEditing && (
@@ -213,7 +222,7 @@ const AddNote = () => {
           {!isEditing && (
             <div className={styles.checklistButton}>
               <IconButton
-                onClick={() => {}}
+                onClick={handleOpenChecklistButtonClick}
                 icon={faSquareCheck}
                 iconSize={"lg"}
                 size={40}
