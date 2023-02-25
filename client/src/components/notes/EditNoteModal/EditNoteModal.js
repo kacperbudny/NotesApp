@@ -114,6 +114,13 @@ const EditNoteModal = () => {
     return id;
   };
 
+  const handleRemoveChecklistItem = (itemIdToRemove) => {
+    dispatchNote({
+      type: actionTypes.REMOVE_CHECKLIST_ITEM,
+      payload: itemIdToRemove,
+    });
+  };
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -152,6 +159,7 @@ const EditNoteModal = () => {
             checklistItems={note.checklistItems}
             onChecklistItemUpdate={handleUpdateChecklistItem}
             onAddChecklistItem={handleAddNewChecklistItem}
+            onRemoveChecklistItem={handleRemoveChecklistItem}
           />
         )}
         <div className={styles.tagsBarContainer}>

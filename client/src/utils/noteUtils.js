@@ -69,3 +69,12 @@ export const addChecklistItem = (note, newChecklistItem) => {
     ],
   };
 };
+
+export const removeChecklistItem = (note, itemIdToRemove) => {
+  return {
+    ...note,
+    checklistItems: note.checklistItems.filter(
+      (item) => item.id !== itemIdToRemove
+    ),
+  };
+};

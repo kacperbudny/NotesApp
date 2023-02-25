@@ -6,11 +6,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from "@components/common/IconButton/IconButton";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import useHover from "@hooks/useHover";
 
 const EditableChecklist = ({
   checklistItems,
   onChecklistItemUpdate,
   onAddChecklistItem,
+  onRemoveChecklistItem,
 }) => {
   const inputElements = useRef({});
   const itemIdToFocus = useRef(null);
@@ -54,6 +56,7 @@ const EditableChecklist = ({
       <Checklist
         items={uncheckedItems}
         onUpdate={onChecklistItemUpdate}
+        onRemove={onRemoveChecklistItem}
         ref={inputElements}
       />
       <div className={styles.listItem}>
@@ -70,6 +73,7 @@ const EditableChecklist = ({
       <Checklist
         items={checkedItems}
         onUpdate={onChecklistItemUpdate}
+        onRemove={onRemoveChecklistItem}
         variant={"checked"}
       />
     </div>
@@ -80,12 +84,13 @@ EditableChecklist.propTypes = {
   checklistItems: PropTypes.arrayOf(PropTypes.object),
   onChecklistItemUpdate: PropTypes.func.isRequired,
   onAddChecklistItem: PropTypes.func.isRequired,
+  onRemoveChecklistItem: PropTypes.func.isRequired,
 };
 
 export default EditableChecklist;
 
 const Checklist = forwardRef(
-  ({ items, onUpdate, variant = "unchecked" }, ref) => {
+  ({ items, onUpdate, variant = "unchecked", onRemove }, ref) => {
     return (
       <ul className={styles.list}>
         {items.map((item) => (
@@ -95,6 +100,7 @@ const Checklist = forwardRef(
             onUpdate={onUpdate}
             variant={variant}
             ref={ref}
+            onRemove={onRemove}
           />
         ))}
       </ul>
@@ -105,49 +111,58 @@ const Checklist = forwardRef(
 Checklist.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   onUpdate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(["unchecked", "checked"]),
 };
 
 const ChecklistItem = forwardRef(
-  ({ item, onUpdate, variant = "unchecked" }, ref) => {
-    const handleCheck = (item) => {
+  ({ item, onUpdate, onRemove, variant = "unchecked" }, ref) => {
+    const [hoverRef, isHovered] = useHover();
+
+    const handleCheck = () => {
       onUpdate({ ...item, isChecked: true });
     };
 
-    const handleUncheck = (item) => {
+    const handleUncheck = () => {
       onUpdate({ ...item, isChecked: false });
     };
 
-    const handleChange = (item, newValue) => {
-      onUpdate({ ...item, content: newValue });
+    const handleChange = (e) => {
+      onUpdate({ ...item, content: e.currentTarget.value });
+    };
+
+    const handleRemove = () => {
+      onRemove(item.id);
     };
 
     return (
-      <li className={styles.listItem}>
+      <li className={styles.listItem} ref={hoverRef}>
         <Checkbox
           name={item.id}
           isChecked={item.isChecked}
-          onCheck={() => handleCheck(item)}
-          onUncheck={() => handleUncheck(item)}
+          onCheck={handleCheck}
+          onUncheck={handleUncheck}
         />
         <input
           className={`${styles.input} ${
             variant === "checked" ? styles.crossed : ""
           }`}
           value={item.content}
-          onChange={(e) => handleChange(item, e.currentTarget.value)}
+          onChange={handleChange}
           ref={(element) => {
             if (ref) {
               ref.current[item.id] = element;
             }
           }}
         />
-        <IconButton
-          icon={faXmark}
-          onClick={() => {}}
-          size={19}
-          variant="grey"
-        />
+        <div className={`${!isHovered && styles.hidden}`}>
+          <IconButton
+            icon={faXmark}
+            onClick={handleRemove}
+            size={19}
+            variant="grey"
+          />
+        </div>
       </li>
     );
   }
@@ -156,5 +171,6 @@ const ChecklistItem = forwardRef(
 ChecklistItem.propTypes = {
   items: PropTypes.object,
   onUpdate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(["unchecked", "checked"]),
 };
