@@ -7,8 +7,10 @@ import { useNotesContext } from "@contexts/NotesContext";
 import { toast } from "react-toastify";
 import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
-import TagsBar from "../TagsBar/TagsBar";
+import TagsBar from "@components/notes/TagsBar";
 import { useParams } from "react-router-dom";
+import EditableChecklist from "@components/notes/EditableChecklist";
+import NOTE_TYPES from "@utils/constants/noteTypes";
 
 const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -45,9 +47,15 @@ const AddNote = () => {
   };
 
   const handleAddNote = () => {
-    if (!note.content && !note.name) {
+    const isEmptyChecklist =
+      !note.checklistItems ||
+      note.checklistItems.length === 0 ||
+      note.checklistItems[0].content.length === 0;
+
+    if (!note.content && !note.name && isEmptyChecklist) {
       return resetForm();
     }
+
     resetForm();
     addNote({ ...note, archived: false });
   };
@@ -105,6 +113,33 @@ const AddNote = () => {
     handleAddNote();
   };
 
+  const handleChecklistClick = () => {
+    dispatchNote({ type: actionTypes.SWAP_MODE });
+  };
+
+  const handleUpdateChecklistItem = (checklistItem) => {
+    dispatchNote({
+      type: actionTypes.UPDATE_CHECKLIST_ITEM,
+      payload: checklistItem,
+    });
+  };
+
+  const handleAddNewChecklistItem = (newChecklistItemContent) => {
+    const id = crypto.randomUUID();
+    dispatchNote({
+      type: actionTypes.ADD_CHECKLIST_ITEM,
+      payload: { content: newChecklistItemContent, id },
+    });
+    return id;
+  };
+
+  const handleRemoveChecklistItem = (itemIdToRemove) => {
+    dispatchNote({
+      type: actionTypes.REMOVE_CHECKLIST_ITEM,
+      payload: itemIdToRemove,
+    });
+  };
+
   return (
     <div onFocus={handleFocus} className={styles.centeringContainer}>
       <OutsideClickHandler onOutsideClick={handleClickOutside}>
@@ -125,13 +160,22 @@ const AddNote = () => {
               <PinButton note={note} onClick={handlePin} isVisible={true} />
             </>
           )}
-          <TextareaAutosize
-            placeholder="New note..."
-            value={note.content}
-            onChange={handleChangeContent}
-            className={styles.text}
-            rows="1"
-          />
+          {note.type === NOTE_TYPES.text ? (
+            <TextareaAutosize
+              placeholder="New note..."
+              value={note.content}
+              onChange={handleChangeContent}
+              className={styles.text}
+              rows="1"
+            />
+          ) : (
+            <EditableChecklist
+              checklistItems={note.checklistItems}
+              onChecklistItemUpdate={handleUpdateChecklistItem}
+              onAddChecklistItem={handleAddNewChecklistItem}
+              onRemoveChecklistItem={handleRemoveChecklistItem}
+            />
+          )}
           {isEditing && (
             <>
               <div className={styles.tagsBarContainer}>
@@ -155,6 +199,9 @@ const AddNote = () => {
                     onAddTag={handleAddTag}
                     onRemoveTag={handleRemoveTag}
                     tags={note.tags}
+                  />
+                  <ButtonsBar.ChecklistButton
+                    onChecklist={handleChecklistClick}
                   />
                 </ButtonsBar>
                 <input type="submit" value="Close" className={styles.btn} />

@@ -25,7 +25,7 @@ const DeleteNoteModal = () => {
   return (
     <Modal
       isOpen={isDeletingModalOpen}
-      contentLabel={`Deleting ${note ? note.name : "note"}`}
+      contentLabel={`Deleting ${note && note.name ? note.name : "note"}`}
       shouldFocusAfterRender={true}
       className={styles.modalWindow}
       overlayClassName={styles.modalOverlay}
@@ -34,7 +34,7 @@ const DeleteNoteModal = () => {
     >
       <p>
         Are you sure you want to delete{" "}
-        {note ? (
+        {note && note.name ? (
           <strong className={styles.noteName}>{note.name}</strong>
         ) : (
           "this note"
