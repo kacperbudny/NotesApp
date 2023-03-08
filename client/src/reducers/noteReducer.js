@@ -2,7 +2,8 @@ import COLORS from "@utils/constants/colors";
 import {
   addChecklistItem,
   removeChecklistItem,
-  swapChecklistMode,
+  reorderChecklistItems,
+  reorderChecklistMode,
   updateChecklistItem,
 } from "@utils/noteUtils";
 
@@ -18,6 +19,7 @@ export const actionTypes = {
   UPDATE_CHECKLIST_ITEM: "UPDATE_CHECKLIST_ITEM",
   ADD_CHECKLIST_ITEM: "ADD_CHECKLIST_ITEM",
   REMOVE_CHECKLIST_ITEM: "REMOVE_CHECKLIST_ITEM",
+  SWAP_CHECKLIST_ITEMS: "SWAP_CHECKLIST_ITEMS",
 };
 
 export const noteReducer = (state, action) => {
@@ -64,7 +66,7 @@ export const noteReducer = (state, action) => {
       };
     }
     case actionTypes.SWAP_MODE: {
-      return swapChecklistMode(state);
+      return reorderChecklistMode(state);
     }
     case actionTypes.UPDATE_CHECKLIST_ITEM: {
       return updateChecklistItem(state, action.payload);
@@ -74,6 +76,13 @@ export const noteReducer = (state, action) => {
     }
     case actionTypes.REMOVE_CHECKLIST_ITEM: {
       return removeChecklistItem(state, action.payload);
+    }
+    case actionTypes.SWAP_CHECKLIST_ITEMS: {
+      return reorderChecklistItems(
+        state,
+        action.payload.sourceItemId,
+        action.payload.targetItemId
+      );
     }
     default: {
       throw Error("Unknown action: " + action.type);

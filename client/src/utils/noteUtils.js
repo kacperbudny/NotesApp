@@ -1,6 +1,6 @@
 import NOTE_TYPES from "@constants/noteTypes";
 
-export const swapChecklistMode = (note) => {
+export const reorderChecklistMode = (note) => {
   switch (note.type) {
     case NOTE_TYPES.text: {
       return convertToChecklist(note);
@@ -78,5 +78,26 @@ export const removeChecklistItem = (note, itemIdToRemove) => {
     checklistItems: note.checklistItems.filter(
       (item) => item.id !== itemIdToRemove
     ),
+  };
+};
+
+export const reorderChecklistItems = (note, sourceItemId, targetItemId) => {
+  const newChecklistItems = [...note.checklistItems];
+  const sourceItemIndex = newChecklistItems.findIndex(
+    (item) => item.id === sourceItemId
+  );
+  const targetItemIndex = newChecklistItems.findIndex(
+    (item) => item.id === targetItemId
+  );
+  const sourceItemCopy = newChecklistItems[sourceItemId];
+  newChecklistItems
+    .splice(sourceItemIndex, 1)
+    .splice(targetItemIndex - 1, 0, sourceItemCopy);
+
+  console.log(newChecklistItems);
+
+  return {
+    ...note,
+    // checklistItems: newChecklistItems,
   };
 };

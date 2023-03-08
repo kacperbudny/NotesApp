@@ -27,7 +27,7 @@
 }
 
 .container {
-  padding-inline: 24px;
+  padding-inline: 8px;
   overflow-y: scroll;
   max-height: 50vh;
 }
@@ -55,4 +55,11 @@
 
 .hidden {
   visibility: hidden;
+}
+
+.dragGrip {
+  opacity: 0.5;
+  display: flex;
+  cursor: move;
+  margin-right: -8px;
 }

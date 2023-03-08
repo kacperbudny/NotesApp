@@ -12,7 +12,7 @@ import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import NoteChecklist from "@components/notes/NoteChecklist";
-import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
+import { reorderChecklistMode, updateChecklistItem } from "@utils/noteUtils";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -98,7 +98,7 @@ const Note = ({ note }) => {
   };
 
   const handleChecklist = () => {
-    const newNote = swapChecklistMode(note);
+    const newNote = reorderChecklistMode(note);
     updateNote(newNote);
   };
 

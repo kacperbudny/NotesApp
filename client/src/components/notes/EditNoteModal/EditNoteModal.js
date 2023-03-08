@@ -121,6 +121,13 @@ const EditNoteModal = () => {
     });
   };
 
+  const handleReorderChecklistItems = (sourceItemId, targetItemId) => {
+    dispatchNote({
+      type: actionTypes.SWAP_CHECKLIST_ITEMS,
+      payload: { sourceItemId, targetItemId },
+    });
+  };
+
   return (
     <Modal
       isOpen={isEditingModalOpen}
@@ -160,6 +167,7 @@ const EditNoteModal = () => {
             onChecklistItemUpdate={handleUpdateChecklistItem}
             onAddChecklistItem={handleAddNewChecklistItem}
             onRemoveChecklistItem={handleRemoveChecklistItem}
+            onReorderChecklistItems={handleReorderChecklistItems}
           />
         )}
         <div className={styles.tagsBarContainer}>
