@@ -83,21 +83,22 @@ export const removeChecklistItem = (note, itemIdToRemove) => {
 
 export const reorderChecklistItems = (note, sourceItemId, targetItemId) => {
   const newChecklistItems = [...note.checklistItems];
+
   const sourceItemIndex = newChecklistItems.findIndex(
     (item) => item.id === sourceItemId
   );
   const targetItemIndex = newChecklistItems.findIndex(
     (item) => item.id === targetItemId
   );
-  const sourceItemCopy = newChecklistItems[sourceItemId];
-  newChecklistItems
-    .splice(sourceItemIndex, 1)
-    .splice(targetItemIndex - 1, 0, sourceItemCopy);
 
-  console.log(newChecklistItems);
+  newChecklistItems.splice(
+    targetItemIndex,
+    0,
+    newChecklistItems.splice(sourceItemIndex, 1)[0]
+  );
 
   return {
     ...note,
-    // checklistItems: newChecklistItems,
+    checklistItems: newChecklistItems,
   };
 };

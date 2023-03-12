@@ -163,6 +163,7 @@ const EditNoteModal = () => {
           />
         ) : (
           <EditableChecklist
+            noteColor={note.color}
             checklistItems={note.checklistItems}
             onChecklistItemUpdate={handleUpdateChecklistItem}
             onAddChecklistItem={handleAddNewChecklistItem}

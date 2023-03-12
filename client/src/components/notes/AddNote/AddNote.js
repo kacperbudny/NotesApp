@@ -148,6 +148,13 @@ const AddNote = () => {
     setIsEditing(true);
   };
 
+  const handleReorderChecklistItems = (sourceItemId, targetItemId) => {
+    dispatchNote({
+      type: actionTypes.SWAP_CHECKLIST_ITEMS,
+      payload: { sourceItemId, targetItemId },
+    });
+  };
+
   return (
     <div className={styles.centeringContainer}>
       <OutsideClickHandler onOutsideClick={handleClickOutside}>
@@ -181,6 +188,7 @@ const AddNote = () => {
           ) : (
             <EditableChecklist
               checklistItems={note.checklistItems}
+              onReorderChecklistItems={handleReorderChecklistItems}
               onChecklistItemUpdate={handleUpdateChecklistItem}
               onAddChecklistItem={handleAddNewChecklistItem}
               onRemoveChecklistItem={handleRemoveChecklistItem}

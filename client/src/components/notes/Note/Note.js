@@ -55,7 +55,7 @@ const Note = ({ note }) => {
   const [{ isDragging }, drag] = useDrag({
     type: DRAG_TYPES.note,
     item: () => {
-      return note;
+      return { ...note, width: hoverRef.current.offsetWidth };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -176,3 +176,40 @@ Note.propTypes = {
 };
 
 export default Note;
+
+export const DragPreviewNote = ({ note }) => {
+  return (
+    <div
+      className={`${styles.note}`}
+      style={{
+        background: `${note.color}`,
+        width: `${note.width}px`,
+      }}
+    >
+      <div className={styles.noteContent}>
+        {note.name || note.content || note.checklistItems.length ? (
+          <div>
+            <h3>{note.name}</h3>
+
+            {note.type === NOTE_TYPES.text ? (
+              <p>{note.content}</p>
+            ) : (
+              <NoteChecklist
+                checklistItems={note.checklistItems}
+                onCheckboxClick={() => {}}
+              />
+            )}
+
+            <TagsBar tags={note.tags} onRemoveTag={() => {}} />
+          </div>
+        ) : (
+          <p className={styles.emptyNote}>Empty note</p>
+        )}
+      </div>
+      <ButtonsBar isVisible={false}>
+        {" "}
+        <ButtonsBar.ArchiveButton onArchive={() => {}} />
+      </ButtonsBar>
+    </div>
+  );
+};

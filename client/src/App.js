@@ -10,6 +10,7 @@ import RequireNonAuth from "@components/auth/RequireNonAuth";
 import "react-toastify/dist/ReactToastify.css";
 import { NotesProvider } from "@contexts/NotesContext";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
+import CustomDragLayer from "@components/layout/CustomDragLayer/CustomDragLayer";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <CustomDragLayer />
       <ToastContainer {...toastConfig} />
     </>
   );

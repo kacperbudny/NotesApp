@@ -5,12 +5,21 @@
   list-style-type: none;
 }
 
-.listItem {
+.baseListItem {
   display: flex;
   gap: 16px;
   align-items: center;
-  margin-block: 12px;
   justify-content: center;
+}
+
+.listItem {
+  @extend .baseListItem;
+  margin-block: 12px;
+}
+
+.previewListItem {
+  @extend .baseListItem;
+  width: 475px;
 }
 
 .line {
@@ -32,17 +41,27 @@
   max-height: 50vh;
 }
 
-.input {
+.baseInput {
   @include mixins.fonts;
   background: none;
   border: none;
-  width: 100%;
   font-size: 16px;
+}
+
+.input {
+  @extend .baseInput;
+  width: 100%;
+}
+
+.previewInput {
+  @extend .baseInput;
+  width: 500px;
 }
 
 .plusIcon {
   color: variables.$grey;
   font-size: 12px;
+  margin-left: 20px;
 }
 
 .newItemInput {
@@ -51,6 +70,7 @@
   font-size: 0.8rem;
   font-weight: bold;
   margin-block: 4px;
+  width: 100%;
 }
 
 .hidden {
@@ -62,4 +82,9 @@
   display: flex;
   cursor: move;
   margin-right: -8px;
+}
+
+.draggedItem {
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.7) inset;
 }

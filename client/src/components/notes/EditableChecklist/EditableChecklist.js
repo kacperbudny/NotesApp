@@ -11,6 +11,7 @@ import { useDrag, useDrop } from "react-dnd";
 import DRAG_TYPES from "@utils/constants/dragTypes";
 
 const EditableChecklist = ({
+  noteColor,
   checklistItems,
   onChecklistItemUpdate,
   onAddChecklistItem,
@@ -64,13 +65,19 @@ const EditableChecklist = ({
 
   return (
     <div className={styles.container}>
-      <Checklist
-        items={uncheckedItems}
-        onUpdate={onChecklistItemUpdate}
-        onRemove={onRemoveChecklistItem}
-        onReorder={onReorderChecklistItems}
-        ref={inputElements}
-      />
+      <ul className={styles.list}>
+        {uncheckedItems.map((item) => (
+          <ChecklistItem
+            key={item.id}
+            noteColor={noteColor}
+            item={item}
+            onUpdate={onChecklistItemUpdate}
+            ref={inputElements}
+            onRemove={onRemoveChecklistItem}
+            onReorder={onReorderChecklistItems}
+          />
+        ))}
+      </ul>
       <div className={styles.listItem}>
         <FontAwesomeIcon icon={faPlus} className={styles.plusIcon} />
         <input
@@ -83,18 +90,25 @@ const EditableChecklist = ({
       {checkedItems.length > 0 && uncheckedItems.length > 0 ? (
         <hr className={styles.line} />
       ) : null}
-      <Checklist
-        items={checkedItems}
-        onUpdate={onChecklistItemUpdate}
-        onRemove={onRemoveChecklistItem}
-        onReorder={onReorderChecklistItems}
-        variant={"checked"}
-      />
+      <ul className={styles.list}>
+        {checkedItems.map((item) => (
+          <ChecklistItem
+            key={item.id}
+            noteColor={noteColor}
+            item={item}
+            onUpdate={onChecklistItemUpdate}
+            ref={inputElements}
+            onRemove={onRemoveChecklistItem}
+            onReorder={onReorderChecklistItems}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
 
 EditableChecklist.propTypes = {
+  noteColor: PropTypes.string,
   checklistItems: PropTypes.arrayOf(PropTypes.object),
   onChecklistItemUpdate: PropTypes.func.isRequired,
   onAddChecklistItem: PropTypes.func.isRequired,
@@ -105,36 +119,8 @@ EditableChecklist.propTypes = {
 
 export default EditableChecklist;
 
-const Checklist = forwardRef(
-  ({ items, onUpdate, variant = "unchecked", onRemove, onReorder }, ref) => {
-    return (
-      <ul className={styles.list}>
-        {items.map((item) => (
-          <ChecklistItem
-            key={item.id}
-            item={item}
-            onUpdate={onUpdate}
-            variant={variant}
-            ref={ref}
-            onRemove={onRemove}
-            onReorder={onReorder}
-          />
-        ))}
-      </ul>
-    );
-  }
-);
-
-Checklist.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  onUpdate: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  onReorder: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(["unchecked", "checked"]),
-};
-
 const ChecklistItem = forwardRef(
-  ({ item, onUpdate, onRemove, onReorder, variant = "unchecked" }, ref) => {
+  ({ noteColor, item, onUpdate, onRemove, onReorder }, ref) => {
     const [hoverRef, isHovered] = useHover();
 
     const handleCheck = () => {
@@ -153,96 +139,84 @@ const ChecklistItem = forwardRef(
       onRemove(item.id);
     };
 
-    const [{ handlerId }, drop] = useDrop({
+    const [, drop] = useDrop({
       accept: DRAG_TYPES.checklist,
-      collect(monitor) {
-        return {
-          handlerId: monitor.getHandlerId(),
-        };
-      },
-      hover(dragItem, monitor) {
-        if (!ref.current) {
+      hover(dragItem) {
+        if (item.isChecked) {
           return;
         }
+
+        if (!hoverRef.current) {
+          return;
+        }
+
         const dragIndex = dragItem.id;
         const hoverIndex = item.id;
-        // Don't replace items with themselves
+
         if (dragIndex === hoverIndex) {
           return;
         }
-        // // Determine rectangle on screen
-        // const hoverBoundingRect = ref.current?.getBoundingClientRect();
-        // // Get vertical middle
-        // const hoverMiddleY =
-        //   (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-        // // Determine mouse position
-        // const clientOffset = monitor.getClientOffset();
-        // // Get pixels to the top
-        // const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-        // // Only perform the move when the mouse has crossed half of the items height
-        // // When dragging downwards, only move when the cursor is below 50%
-        // // When dragging upwards, only move when the cursor is above 50%
-        // // Dragging downwards
-        // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        //   return;
-        // }
-        // // Dragging upwards
-        // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        //   return;
-        // }
-        // Time to actually perform the action
+
         onReorder(dragIndex, hoverIndex);
-        // Note: we're mutating the monitor item here!
-        // Generally it's better to avoid mutations,
-        // but it's good here for the sake of performance
-        // to avoid expensive index searches.
-        dragItem.index = hoverIndex;
+      },
+      canDrop: () => {
+        return !item.isChecked;
       },
     });
 
     const [{ isDragging }, drag, preview] = useDrag(() => ({
       type: DRAG_TYPES.checklist,
       item: () => {
-        return item;
+        return { ...item, noteColor };
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
+      canDrag: () => {
+        return !item.isChecked;
+      },
     }));
 
     return (
-      <li className={styles.listItem} ref={preview(drop(hoverRef))}>
-        <div
-          ref={drag}
-          className={`${styles.dragGrip} ${!isHovered && styles.hidden}`}
-        >
-          <FontAwesomeIcon icon={faGripVertical} />
-        </div>
-        <Checkbox
-          name={item.id}
-          isChecked={item.isChecked}
-          onCheck={handleCheck}
-          onUncheck={handleUncheck}
-        />
-        <input
-          className={`${styles.input} ${
-            variant === "checked" ? styles.crossed : ""
-          }`}
-          value={item.content}
-          onChange={handleChange}
-          ref={(element) => {
-            if (ref) {
-              ref.current[item.id] = element;
-            }
-          }}
-        />
-        <div className={`${!isHovered && styles.hidden}`}>
-          <IconButton
-            icon={faXmark}
-            onClick={handleRemove}
-            size={19}
-            variant="grey"
+      <li
+        className={`${isDragging && styles.draggedItem}`}
+        ref={drop(preview(hoverRef))}
+      >
+        <div className={`${styles.listItem} ${isDragging && styles.hidden}`}>
+          <div
+            ref={drag}
+            className={`${styles.dragGrip} ${
+              (!isHovered || item.isChecked) && styles.hidden
+            }`}
+          >
+            <FontAwesomeIcon icon={faGripVertical} />
+          </div>
+          <Checkbox
+            name={item.id}
+            isChecked={item.isChecked}
+            onCheck={handleCheck}
+            onUncheck={handleUncheck}
           />
+          <input
+            className={`${styles.input} ${
+              item.isChecked ? styles.crossed : ""
+            }`}
+            value={item.content}
+            onChange={handleChange}
+            ref={(element) => {
+              if (ref) {
+                ref.current[item.id] = element;
+              }
+            }}
+          />
+          <div className={`${!isHovered && styles.hidden}`}>
+            <IconButton
+              icon={faXmark}
+              onClick={handleRemove}
+              size={19}
+              variant="grey"
+            />
+          </div>
         </div>
       </li>
     );
@@ -250,9 +224,34 @@ const ChecklistItem = forwardRef(
 );
 
 ChecklistItem.propTypes = {
+  noteColor: PropTypes.string,
   items: PropTypes.object,
   onUpdate: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   onReorder: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(["unchecked", "checked"]),
+};
+
+export const DragPreviewChecklistItem = ({ item }) => {
+  return (
+    <div
+      className={`${styles.previewListItem}`}
+      style={{ backgroundColor: item.noteColor }}
+    >
+      <div className={`${styles.dragGrip}`}>
+        <FontAwesomeIcon icon={faGripVertical} />
+      </div>
+      <Checkbox
+        name={item.id}
+        isChecked={item.isChecked}
+        onCheck={() => {}}
+        onUncheck={() => {}}
+      />
+      <input
+        className={`${styles.input}`}
+        value={item.content}
+        onChange={() => {}}
+      />
+      <IconButton icon={faXmark} size={19} variant="grey" onClick={() => {}} />
+    </div>
+  );
 };
