@@ -3,7 +3,7 @@ import {
   addChecklistItem,
   removeChecklistItem,
   reorderChecklistItems,
-  reorderChecklistMode,
+  swapChecklistMode,
   updateChecklistItem,
 } from "@utils/noteUtils";
 
@@ -66,7 +66,7 @@ export const noteReducer = (state, action) => {
       };
     }
     case actionTypes.SWAP_MODE: {
-      return reorderChecklistMode(state);
+      return swapChecklistMode(state);
     }
     case actionTypes.UPDATE_CHECKLIST_ITEM: {
       return updateChecklistItem(state, action.payload);

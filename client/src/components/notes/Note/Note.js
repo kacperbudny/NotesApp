@@ -12,7 +12,7 @@ import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import NoteChecklist from "@components/notes/NoteChecklist";
-import { reorderChecklistMode, updateChecklistItem } from "@utils/noteUtils";
+import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -97,8 +97,8 @@ const Note = ({ note }) => {
     updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
   };
 
-  const handleChecklist = () => {
-    const newNote = reorderChecklistMode(note);
+  const handleChecklistClick = () => {
+    const newNote = swapChecklistMode(note);
     updateNote(newNote);
   };
 
@@ -160,7 +160,7 @@ const Note = ({ note }) => {
           onRemoveTag={handleRemoveTag}
           tags={note.tags}
         />
-        <ButtonsBar.ChecklistButton onChecklist={handleChecklist} />
+        <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
       </ButtonsBar>
     </div>
   );
@@ -207,7 +207,6 @@ export const DragPreviewNote = ({ note }) => {
         )}
       </div>
       <ButtonsBar isVisible={false}>
-        {" "}
         <ButtonsBar.ArchiveButton onArchive={() => {}} />
       </ButtonsBar>
     </div>

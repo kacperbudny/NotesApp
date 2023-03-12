@@ -8,7 +8,7 @@ import PinButton from "@components/notes/PinButton";
 import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 import TagsBar from "@components/notes/TagsBar";
 import NOTE_TYPES from "@utils/constants/noteTypes";
-import EditableChecklist from "../EditableChecklist/EditableChecklist";
+import EditableChecklist from "@components/notes/EditableChecklist";
 
 const EditNoteModal = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);

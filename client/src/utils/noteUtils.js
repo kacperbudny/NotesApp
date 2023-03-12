@@ -1,6 +1,6 @@
 import NOTE_TYPES from "@constants/noteTypes";
 
-export const reorderChecklistMode = (note) => {
+export const swapChecklistMode = (note) => {
   switch (note.type) {
     case NOTE_TYPES.text: {
       return convertToChecklist(note);
