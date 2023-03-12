@@ -1,0 +1,90 @@
+@use "../../../styles/variables.scss";
+@use "../../../styles/mixins.scss";
+
+.list {
+  list-style-type: none;
+}
+
+.baseListItem {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.listItem {
+  @extend .baseListItem;
+  margin-block: 12px;
+}
+
+.previewListItem {
+  @extend .baseListItem;
+  width: 475px;
+}
+
+.line {
+  border-top: 1px solid variables.$scrollbar-grey;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  opacity: 0.6;
+}
+
+.crossed {
+  text-decoration: line-through;
+  color: variables.$grey;
+}
+
+.container {
+  padding-inline: 8px;
+  overflow-y: scroll;
+  max-height: 50vh;
+}
+
+.baseInput {
+  @include mixins.fonts;
+  background: none;
+  border: none;
+  font-size: 16px;
+}
+
+.input {
+  @extend .baseInput;
+  width: 100%;
+}
+
+.previewInput {
+  @extend .baseInput;
+  width: 500px;
+}
+
+.plusIcon {
+  color: variables.$grey;
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+.newItemInput {
+  @extend .input;
+  @include mixins.headerFont;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-block: 4px;
+  width: 100%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.dragGrip {
+  opacity: 0.5;
+  display: flex;
+  cursor: move;
+  margin-right: -8px;
+}
+
+.draggedItem {
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.7) inset;
+}

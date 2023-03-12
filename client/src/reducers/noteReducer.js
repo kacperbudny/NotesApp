@@ -1,4 +1,11 @@
 import COLORS from "@utils/constants/colors";
+import {
+  addChecklistItem,
+  removeChecklistItem,
+  reorderChecklistItems,
+  swapChecklistMode,
+  updateChecklistItem,
+} from "@utils/noteUtils";
 
 export const actionTypes = {
   SET_NOTE: "SET_NOTE",
@@ -8,6 +15,11 @@ export const actionTypes = {
   SET_CONTENT: "SET_CONTENT",
   ADD_TAG: "ADD_TAG",
   REMOVE_TAG: "REMOVE_TAG",
+  SWAP_MODE: "SWAP_MODE",
+  UPDATE_CHECKLIST_ITEM: "UPDATE_CHECKLIST_ITEM",
+  ADD_CHECKLIST_ITEM: "ADD_CHECKLIST_ITEM",
+  REMOVE_CHECKLIST_ITEM: "REMOVE_CHECKLIST_ITEM",
+  SWAP_CHECKLIST_ITEMS: "SWAP_CHECKLIST_ITEMS",
 };
 
 export const noteReducer = (state, action) => {
@@ -53,6 +65,25 @@ export const noteReducer = (state, action) => {
         tags: state.tags.filter((tag) => tag !== action.payload),
       };
     }
+    case actionTypes.SWAP_MODE: {
+      return swapChecklistMode(state);
+    }
+    case actionTypes.UPDATE_CHECKLIST_ITEM: {
+      return updateChecklistItem(state, action.payload);
+    }
+    case actionTypes.ADD_CHECKLIST_ITEM: {
+      return addChecklistItem(state, action.payload);
+    }
+    case actionTypes.REMOVE_CHECKLIST_ITEM: {
+      return removeChecklistItem(state, action.payload);
+    }
+    case actionTypes.SWAP_CHECKLIST_ITEMS: {
+      return reorderChecklistItems(
+        state,
+        action.payload.sourceItemId,
+        action.payload.targetItemId
+      );
+    }
     default: {
       throw Error("Unknown action: " + action.type);
     }
@@ -65,4 +96,5 @@ export const initialValues = {
   color: COLORS.white,
   pinned: false,
   tags: [],
+  type: "TEXT",
 };

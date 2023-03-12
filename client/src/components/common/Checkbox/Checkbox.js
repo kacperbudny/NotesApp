@@ -11,6 +11,10 @@ const Checkbox = ({ name, isChecked = false, onCheck, onUncheck }) => {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <input
       type="checkbox"
@@ -18,6 +22,7 @@ const Checkbox = ({ name, isChecked = false, onCheck, onUncheck }) => {
       className={styles.checkbox}
       checked={isChecked}
       onChange={handleChange}
+      onClick={handleClick}
     />
   );
 };

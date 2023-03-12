@@ -6,6 +6,7 @@ import {
   DeleteButton,
   PaletteButton,
   TagButton,
+  ChecklistButton,
 } from "@components/notes/ButtonsBar/Buttons";
 
 const ButtonsBar = ({ isVisible, children }) => {
@@ -24,5 +25,6 @@ ButtonsBar.ArchiveButton = ArchiveButton;
 ButtonsBar.DeleteButton = DeleteButton;
 ButtonsBar.PaletteButton = PaletteButton;
 ButtonsBar.TagButton = TagButton;
+ButtonsBar.ChecklistButton = ChecklistButton;
 
 export default ButtonsBar;

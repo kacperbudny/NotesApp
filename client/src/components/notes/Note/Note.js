@@ -10,6 +10,9 @@ import { useDrag, useDrop } from "react-dnd";
 import DRAG_TYPES from "@utils/constants/dragTypes";
 import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
+import NOTE_TYPES from "@utils/constants/noteTypes";
+import NoteChecklist from "@components/notes/NoteChecklist";
+import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -52,7 +55,7 @@ const Note = ({ note }) => {
   const [{ isDragging }, drag] = useDrag({
     type: DRAG_TYPES.note,
     item: () => {
-      return note;
+      return { ...note, width: hoverRef.current.offsetWidth };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -94,12 +97,19 @@ const Note = ({ note }) => {
     updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
   };
 
+  const handleChecklistClick = () => {
+    const newNote = swapChecklistMode(note);
+    updateNote(newNote);
+  };
+
+  const handleCheckboxClick = (checklistItem) => {
+    const updatedNote = updateChecklistItem(note, checklistItem);
+    updateNote(updatedNote);
+  };
+
   const activeNote = noteToEdit || noteToDelete;
-
   const isActiveNote = activeNote && activeNote._id === note._id;
-
   const areButtonsVisible = isHovered || areFloatingBoxesOpen;
-
   const isHidden = isActiveNote || isDragging;
 
   return (
@@ -116,10 +126,19 @@ const Note = ({ note }) => {
           note={note}
           onClick={handlePin}
         />
-        {note.name || note.content ? (
+        {note.name || note.content || note.checklistItems.length ? (
           <div>
             <h3>{note.name}</h3>
-            <p>{note.content}</p>
+
+            {note.type === NOTE_TYPES.text ? (
+              <p>{note.content}</p>
+            ) : (
+              <NoteChecklist
+                checklistItems={note.checklistItems}
+                onCheckboxClick={handleCheckboxClick}
+              />
+            )}
+
             <TagsBar tags={note.tags} onRemoveTag={handleRemoveTag} />
           </div>
         ) : (
@@ -141,6 +160,7 @@ const Note = ({ note }) => {
           onRemoveTag={handleRemoveTag}
           tags={note.tags}
         />
+        <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
       </ButtonsBar>
     </div>
   );
@@ -156,3 +176,39 @@ Note.propTypes = {
 };
 
 export default Note;
+
+export const DragPreviewNote = ({ note }) => {
+  return (
+    <div
+      className={`${styles.note}`}
+      style={{
+        background: `${note.color}`,
+        width: `${note.width}px`,
+      }}
+    >
+      <div className={styles.noteContent}>
+        {note.name || note.content || note.checklistItems.length ? (
+          <div>
+            <h3>{note.name}</h3>
+
+            {note.type === NOTE_TYPES.text ? (
+              <p>{note.content}</p>
+            ) : (
+              <NoteChecklist
+                checklistItems={note.checklistItems}
+                onCheckboxClick={() => {}}
+              />
+            )}
+
+            <TagsBar tags={note.tags} onRemoveTag={() => {}} />
+          </div>
+        ) : (
+          <p className={styles.emptyNote}>Empty note</p>
+        )}
+      </div>
+      <ButtonsBar isVisible={false}>
+        <ButtonsBar.ArchiveButton onArchive={() => {}} />
+      </ButtonsBar>
+    </div>
+  );
+};
