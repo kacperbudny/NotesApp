@@ -13,6 +13,7 @@ import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import NoteChecklist from "@components/notes/NoteChecklist";
 import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
+import useMobileWidth from "@hooks/useMobileWidth";
 
 const Note = ({ note }) => {
   const [isColorPaletteOpen, setIsColorPaletteOpen] = useState(false);
@@ -27,6 +28,7 @@ const Note = ({ note }) => {
     openDeletingModal,
   } = useNotesContext();
   const path = usePath();
+  const isMobileWidth = useMobileWidth();
 
   const areFloatingBoxesOpen = isColorPaletteOpen || isTaggingBoxOpen;
 
@@ -145,23 +147,25 @@ const Note = ({ note }) => {
           <p className={styles.emptyNote}>Empty note</p>
         )}
       </div>
-      <ButtonsBar isVisible={areButtonsVisible}>
-        <ButtonsBar.ArchiveButton onArchive={handleArchive} />
-        <ButtonsBar.DeleteButton onDelete={handleDelete} />
-        <ButtonsBar.PaletteButton
-          isColorPaletteOpen={isColorPaletteOpen}
-          setIsColorPaletteOpen={setIsColorPaletteOpen}
-          onChangeColor={handleChangeColor}
-        />
-        <ButtonsBar.TagButton
-          isTaggingBoxOpen={isTaggingBoxOpen}
-          setIsTaggingBoxOpen={setIsTaggingBoxOpen}
-          onAddTag={handleAddTag}
-          onRemoveTag={handleRemoveTag}
-          tags={note.tags}
-        />
-        <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
-      </ButtonsBar>
+      {!isMobileWidth && (
+        <ButtonsBar isVisible={areButtonsVisible}>
+          <ButtonsBar.ArchiveButton onArchive={handleArchive} />
+          <ButtonsBar.DeleteButton onDelete={handleDelete} />
+          <ButtonsBar.PaletteButton
+            isColorPaletteOpen={isColorPaletteOpen}
+            setIsColorPaletteOpen={setIsColorPaletteOpen}
+            onChangeColor={handleChangeColor}
+          />
+          <ButtonsBar.TagButton
+            isTaggingBoxOpen={isTaggingBoxOpen}
+            setIsTaggingBoxOpen={setIsTaggingBoxOpen}
+            onAddTag={handleAddTag}
+            onRemoveTag={handleRemoveTag}
+            tags={note.tags}
+          />
+          <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
+        </ButtonsBar>
+      )}
     </div>
   );
 };

@@ -21,6 +21,10 @@
 .appName {
   @include mixins.headerFont;
   font-weight: 500;
+
+  @include mixins.mobile {
+    display: none;
+  }
 }
 
 .groupContainer {
@@ -33,4 +37,10 @@
 
 .groupContainer strong {
   font-weight: 500;
+}
+
+.greeting {
+  @include mixins.mobile {
+    display: none;
+  }
 }

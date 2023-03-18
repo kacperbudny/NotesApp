@@ -143,6 +143,7 @@ const EditNoteModal = () => {
           background: note.color,
         },
       }}
+      preventScroll={true}
     >
       <form>
         <input
