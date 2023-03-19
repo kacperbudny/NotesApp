@@ -12,6 +12,6 @@
   width: 350px;
 
   @include mixins.mobile {
-    max-width: 50%;
+    max-width: 40%;
   }
 }
