@@ -36,8 +36,6 @@ function useMobileWidth() {
     };
   }, []);
 
-  console.log(matches);
-
   return matches;
 }
 

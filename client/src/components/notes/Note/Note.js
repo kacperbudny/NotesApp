@@ -111,7 +111,7 @@ const Note = ({ note }) => {
 
   const activeNote = noteToEdit || noteToDelete;
   const isActiveNote = activeNote && activeNote._id === note._id;
-  const areButtonsVisible = isHovered || areFloatingBoxesOpen;
+  const areButtonsVisible = isHovered || areFloatingBoxesOpen || isMobileWidth;
   const isHidden = isActiveNote || isDragging;
 
   return (
@@ -147,25 +147,23 @@ const Note = ({ note }) => {
           <p className={styles.emptyNote}>Empty note</p>
         )}
       </div>
-      {!isMobileWidth && (
-        <ButtonsBar isVisible={areButtonsVisible}>
-          <ButtonsBar.ArchiveButton onArchive={handleArchive} />
-          <ButtonsBar.DeleteButton onDelete={handleDelete} />
-          <ButtonsBar.PaletteButton
-            isColorPaletteOpen={isColorPaletteOpen}
-            setIsColorPaletteOpen={setIsColorPaletteOpen}
-            onChangeColor={handleChangeColor}
-          />
-          <ButtonsBar.TagButton
-            isTaggingBoxOpen={isTaggingBoxOpen}
-            setIsTaggingBoxOpen={setIsTaggingBoxOpen}
-            onAddTag={handleAddTag}
-            onRemoveTag={handleRemoveTag}
-            tags={note.tags}
-          />
-          <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
-        </ButtonsBar>
-      )}
+      <ButtonsBar isVisible={areButtonsVisible}>
+        <ButtonsBar.ArchiveButton onArchive={handleArchive} />
+        <ButtonsBar.DeleteButton onDelete={handleDelete} />
+        <ButtonsBar.PaletteButton
+          isColorPaletteOpen={isColorPaletteOpen}
+          setIsColorPaletteOpen={setIsColorPaletteOpen}
+          onChangeColor={handleChangeColor}
+        />
+        <ButtonsBar.TagButton
+          isTaggingBoxOpen={isTaggingBoxOpen}
+          setIsTaggingBoxOpen={setIsTaggingBoxOpen}
+          onAddTag={handleAddTag}
+          onRemoveTag={handleRemoveTag}
+          tags={note.tags}
+        />
+        <ButtonsBar.ChecklistButton onChecklist={handleChecklistClick} />
+      </ButtonsBar>
     </div>
   );
 };
