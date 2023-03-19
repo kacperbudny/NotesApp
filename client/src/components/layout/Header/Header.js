@@ -63,7 +63,7 @@ const Header = () => {
       <SearchBar />
       <div className={styles.groupContainer}>
         {user && (
-          <p>
+          <p className={styles.greeting}>
             Hello, <strong>{user.email}</strong>!
           </p>
         )}

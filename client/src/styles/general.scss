@@ -81,17 +81,17 @@ a:visited {
 
 ::-webkit-scrollbar {
   width: 10px;
-  outline: 1px solid variables.$scrollbar-grey;
 }
 
 ::-webkit-scrollbar-track {
-  background: variables.$plain-white;
+  background: rgba(0, 0, 0, 0);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: variables.$scrollbar-grey;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.7) inset;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: variables.$scrollbar-hover;
+  background: rgba(0, 0, 0, 0.3);
 }

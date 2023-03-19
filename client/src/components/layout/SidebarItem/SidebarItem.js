@@ -10,7 +10,7 @@ const SidebarItem = ({ isActive = false, icon, children }) => {
   return (
     <div className={`${styles.link} ${isActive && styles.activeLink}`}>
       <FontAwesomeIcon icon={icon} size="lg" className={styles.icon} />
-      {isSidebarOpen && <span>{children}</span>}
+      {isSidebarOpen && <span className={styles.label}>{children}</span>}
     </div>
   );
 };

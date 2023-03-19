@@ -53,21 +53,23 @@ const TaggingBox = ({ setIsOpen, noteTags, onAddTag, onRemoveTag }) => {
     <FloatingBox onOutsideClick={handleClose}>
       <div>
         <div className={styles.container}>
-          <h4 className={styles.header}>Tag note</h4>
-          <div className={styles.inputWithIconContainer}>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Enter a tag"
-              value={inputValue}
-              onChange={handleChangeInput}
-              onKeyDown={handleKeyDown}
-            />
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              size="xs"
-              className={styles.searchIcon}
-            />
+          <div className={styles.topPart}>
+            <h4 className={styles.header}>Tag note</h4>
+            <div className={styles.inputWithIconContainer}>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Enter a tag"
+                value={inputValue}
+                onChange={handleChangeInput}
+                onKeyDown={handleKeyDown}
+              />
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                size="xs"
+                className={styles.searchIcon}
+              />
+            </div>
           </div>
           <ul className={styles.tagsList}>
             {filteredTags.map((tag) => (

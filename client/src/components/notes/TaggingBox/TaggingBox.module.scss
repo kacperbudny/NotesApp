@@ -2,7 +2,11 @@
 @use "../../../styles/mixins.scss";
 
 .container {
-  padding: 10px;
+  padding-bottom: 8px;
+}
+
+.topPart {
+  padding: 8px 8px 4px 8px;
 }
 
 .header {

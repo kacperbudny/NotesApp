@@ -6,6 +6,10 @@
   display: flex;
   justify-content: center;
   margin: 30px;
+
+  @include mixins.mobile {
+    margin-inline: 0px;
+  }
 }
 
 .form {
@@ -19,6 +23,10 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @include mixins.mobile {
+    width: 100%;
+  }
 }
 
 .textInput {

@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
   transition: background 0.2s, box-shadow 0.2s;
+
+  @include mixins.mobile {
+    width: 100%;
+    margin-inline: 8px;
+  }
 }
 
 .focused {
