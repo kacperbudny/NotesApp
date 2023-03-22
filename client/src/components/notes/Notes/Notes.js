@@ -20,7 +20,10 @@ const filterNotes = (path, payload) => {
         return (
           note.name.includes(payload.searchQuery) ||
           note.content.includes(payload.searchQuery) ||
-          note.tags.some((tag) => tag.includes(payload.searchQuery))
+          note.tags.some((tag) => tag.includes(payload.searchQuery)) ||
+          note.checklistItems.some((item) =>
+            item.content.includes(payload.searchQuery)
+          )
         );
       default:
         return true;

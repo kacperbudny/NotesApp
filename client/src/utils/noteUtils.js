@@ -102,3 +102,11 @@ export const reorderChecklistItems = (note, sourceItemId, targetItemId) => {
     checklistItems: newChecklistItems,
   };
 };
+
+export const removeTag = (note, tag) => {
+  return { ...note, tags: note.tags.filter((t) => t !== tag) };
+};
+
+export const addTag = (note, tag) => {
+  return { ...note, tags: [...note.tags, tag] };
+};

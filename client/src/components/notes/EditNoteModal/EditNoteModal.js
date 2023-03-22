@@ -66,7 +66,7 @@ const EditNoteModal = () => {
   };
 
   const handleDelete = () => {
-    openDeletingModal(noteToEdit);
+    openDeletingModal(noteToEdit._id);
   };
 
   const handleArchive = () => {

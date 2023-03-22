@@ -2,7 +2,7 @@
 @use "../../../styles/variables";
 
 .link {
-  @include mixins.headerFont;
+  @include mixins.secondaryFont;
   font-weight: 600;
   color: variables.$off-black;
   display: flex;

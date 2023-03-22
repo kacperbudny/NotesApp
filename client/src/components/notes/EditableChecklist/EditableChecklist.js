@@ -191,12 +191,14 @@ const ChecklistItem = forwardRef(
           >
             <FontAwesomeIcon icon={faGripVertical} />
           </div>
-          <Checkbox
-            name={item.id}
-            isChecked={item.isChecked}
-            onCheck={handleCheck}
-            onUncheck={handleUncheck}
-          />
+          <div>
+            <Checkbox
+              name={item.id}
+              isChecked={item.isChecked}
+              onCheck={handleCheck}
+              onUncheck={handleUncheck}
+            />
+          </div>
           <input
             className={`${styles.input} ${
               item.isChecked ? styles.crossed : ""
