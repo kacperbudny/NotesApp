@@ -1,4 +1,5 @@
 import COLORS from "@utils/constants/colors";
+import NOTE_TYPES from "@utils/constants/noteTypes";
 import {
   addChecklistItem,
   addTag,
@@ -92,5 +93,5 @@ export const initialValues = {
   color: COLORS.white,
   pinned: false,
   tags: [],
-  type: "TEXT",
+  type: NOTE_TYPES.text,
 };
