@@ -55,14 +55,20 @@ const Checklist = ({
   return (
     <ul className={styles.list}>
       {items.slice(0, maxLength).map((item) => (
-        <li key={item.id} className={styles.listItem}>
-          <Checkbox
-            name={item.id}
-            isChecked={item.isChecked}
-            onCheck={() => onCheck(item)}
-            onUncheck={() => onUncheck(item)}
-          />
-          <span className={variant === "checked" ? styles.crossed : ""}>
+        <li key={item._id} className={styles.listItem}>
+          <div>
+            <Checkbox
+              name={item._id}
+              isChecked={item.isChecked}
+              onCheck={() => onCheck(item)}
+              onUncheck={() => onUncheck(item)}
+            />
+          </div>
+          <span
+            className={`${styles.content} ${
+              variant === "checked" ? styles.crossed : ""
+            }`}
+          >
             {item.content}
           </span>
         </li>

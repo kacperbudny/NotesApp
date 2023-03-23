@@ -38,7 +38,7 @@
 }
 
 .title {
-  @include mixins.headerFont;
+  @include mixins.secondaryFont;
   @extend .textInput;
   font-weight: 600;
   padding-top: 16px;

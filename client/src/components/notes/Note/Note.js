@@ -12,7 +12,12 @@ import usePath from "@hooks/usePath";
 import FRONTEND_ROUTES from "@utils/constants/frontendRoutes";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import NoteChecklist from "@components/notes/NoteChecklist";
-import { swapChecklistMode, updateChecklistItem } from "@utils/noteUtils";
+import {
+  addTag,
+  removeTag,
+  swapChecklistMode,
+  updateChecklistItem,
+} from "@utils/noteUtils";
 import useMobileWidth from "@hooks/useMobileWidth";
 
 const Note = ({ note }) => {
@@ -76,7 +81,7 @@ const Note = ({ note }) => {
   };
 
   const handleDelete = () => {
-    openDeletingModal(note);
+    openDeletingModal(note._id);
   };
 
   const handleArchive = () => {
@@ -92,11 +97,11 @@ const Note = ({ note }) => {
   };
 
   const handleAddTag = (tag) => {
-    updateNote({ ...note, tags: [...note.tags, tag] });
+    updateNote(addTag(note, tag));
   };
 
   const handleRemoveTag = (tag) => {
-    updateNote({ ...note, tags: note.tags.filter((t) => t !== tag) });
+    updateNote(removeTag(note, tag));
   };
 
   const handleChecklistClick = () => {

@@ -1,7 +1,10 @@
 import COLORS from "@utils/constants/colors";
+import NOTE_TYPES from "@utils/constants/noteTypes";
 import {
   addChecklistItem,
+  addTag,
   removeChecklistItem,
+  removeTag,
   reorderChecklistItems,
   swapChecklistMode,
   updateChecklistItem,
@@ -54,16 +57,10 @@ export const noteReducer = (state, action) => {
       };
     }
     case actionTypes.ADD_TAG: {
-      return {
-        ...state,
-        tags: [...state.tags, action.payload],
-      };
+      return addTag(state, action.payload);
     }
     case actionTypes.REMOVE_TAG: {
-      return {
-        ...state,
-        tags: state.tags.filter((tag) => tag !== action.payload),
-      };
+      return removeTag(state, action.payload);
     }
     case actionTypes.SWAP_MODE: {
       return swapChecklistMode(state);
@@ -96,5 +93,5 @@ export const initialValues = {
   color: COLORS.white,
   pinned: false,
   tags: [],
-  type: "TEXT",
+  type: NOTE_TYPES.text,
 };

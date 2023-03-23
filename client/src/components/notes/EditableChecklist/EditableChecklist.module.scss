@@ -51,6 +51,7 @@
 .input {
   @extend .baseInput;
   width: 100%;
+  outline: none;
 }
 
 .previewInput {
@@ -66,7 +67,7 @@
 
 .newItemInput {
   @extend .input;
-  @include mixins.headerFont;
+  @include mixins.secondaryFont;
   font-size: 0.8rem;
   font-weight: bold;
   margin-block: 4px;

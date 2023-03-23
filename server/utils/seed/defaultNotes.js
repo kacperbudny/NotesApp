@@ -13,8 +13,7 @@ const getDefaultNotes = (userId) => {
     {
       type: "TEXT",
       name: "Another note",
-      content:
-        "Hey, look, I've just made another one. And I'm going to make it somewhat long to see what happens.",
+      content: "Hey, look, I've just made another one.",
       displayOrder: 2,
       color: "white",
       user: userId,
@@ -22,9 +21,13 @@ const getDefaultNotes = (userId) => {
       pinned: false,
     },
     {
-      type: "TEXT",
+      type: "CHECKLIST",
       name: "Shopping list",
-      content: "Milk, bread, smiley faces",
+      checklistItems: [
+        { isChecked: false, content: "Milk" },
+        { isChecked: false, content: "Bread" },
+        { isChecked: false, content: "Smiley faces" },
+      ],
       displayOrder: 3,
       color: "white",
       user: userId,
@@ -40,6 +43,18 @@ const getDefaultNotes = (userId) => {
       user: userId,
       archived: false,
       pinned: false,
+      tags: ["New tag"],
+    },
+    {
+      type: "TEXT",
+      name: "Ah, the classic",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nibh turpis, dictum bibendum est venenatis, feugiat venenatis ante. Nam pretium tempus ipsum, vitae varius turpis blandit ut. Fusce tincidunt bibendum vestibulum. Etiam eu elementum justo. Nulla eu finibus enim. Suspendisse sit amet elit imperdiet turpis tincidunt fermentum. Donec non leo ac dui eleifend placerat eget sed tellus. Pellentesque non finibus lacus. Maecenas nec tellus enim. Sed ornare ultricies eros et malesuada. Nullam et iaculis massa, eget vulputate dui. Pellentesque aliquam magna ligula, ac laoreet ex cursus id. Etiam ac est nec erat sodales dapibus eu eu nisi.",
+      displayOrder: 5,
+      color: "#99CCFF",
+      user: userId,
+      archived: false,
+      pinned: true,
     },
   ];
 };

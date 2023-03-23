@@ -14,6 +14,7 @@ router.post(
     body("name").trim(),
     body("content").trim(),
     body("displayOrder").isNumeric(),
+    body("type").isIn(["TEXT", "CHECKLIST"]),
     body("tags.*")
       .trim()
       .isLength({ min: 1, max: 20 })
@@ -28,6 +29,7 @@ router.patch(
     body("name").trim(),
     body("content").trim(),
     body("displayOrder").isNumeric(),
+    body("type").isIn(["TEXT", "CHECKLIST"]),
     body("tags.*")
       .trim()
       .isLength({ min: 1, max: 20 })

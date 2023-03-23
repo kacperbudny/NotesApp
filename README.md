@@ -1,6 +1,6 @@
 # NotesApp
 
-NotesApp is a Google Keep clone that is still under development. It is supposed to be a bit more advanced take on a classic "NotesApp".
+NotesApp is a Google Keep clone built using MERN stack. It is supposed to be a bit more advanced take on a classic "NotesApp".
 
 ## Features
 
@@ -8,13 +8,21 @@ NotesApp is a Google Keep clone that is still under development. It is supposed 
 - [x] Basic CRUD operations on back-end
 - [x] Changing colors of the notes
 - [x] Toast notifications
-- [x] Authentication
+- [x] Authentication with token refreshing
 - [x] Archiving notes
 - [x] Pinning notes
 - [x] Adding tags to the notes & filtering by them
 - [x] Search functionality
 - [x] Changing order via drag & drop
 - [x] Checklists inside notes
+- [x] Masonry layout for notes
+- [x] A somewhat responsive layout, of course
+
+## Screenshots
+
+![Main desktop view](screenshots/screenshot1.png)
+![Editing note modal](screenshots/screenshot2.png)
+![Mobile view + adding note](screenshots/screenshot3.png)
 
 ## Setup
 
@@ -71,6 +79,7 @@ Password: testing
   - PropTypes
   - CSS Modules
 - SCSS
+- react-dnd
 
 ### Back-end
 

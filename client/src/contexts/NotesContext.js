@@ -165,8 +165,8 @@ export function NotesProvider({ children }) {
     setNoteToEdit(null);
   };
 
-  const openDeletingModal = (note) => {
-    setNoteToDelete(note);
+  const openDeletingModal = (_id) => {
+    setNoteToDelete(notes.find((note) => note._id === _id));
   };
 
   const closeDeletingModal = () => {

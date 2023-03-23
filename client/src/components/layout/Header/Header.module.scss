@@ -19,7 +19,7 @@
 }
 
 .appName {
-  @include mixins.headerFont;
+  @include mixins.secondaryFont;
   font-weight: 500;
 
   @include mixins.mobile {

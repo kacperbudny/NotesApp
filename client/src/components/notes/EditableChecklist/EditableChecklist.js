@@ -9,6 +9,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import useHover from "@hooks/useHover";
 import { useDrag, useDrop } from "react-dnd";
 import DRAG_TYPES from "@utils/constants/dragTypes";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 const EditableChecklist = ({
   noteColor,
@@ -68,7 +69,7 @@ const EditableChecklist = ({
       <ul className={styles.list}>
         {uncheckedItems.map((item) => (
           <ChecklistItem
-            key={item.id}
+            key={item._id}
             noteColor={noteColor}
             item={item}
             onUpdate={onChecklistItemUpdate}
@@ -93,7 +94,7 @@ const EditableChecklist = ({
       <ul className={styles.list}>
         {checkedItems.map((item) => (
           <ChecklistItem
-            key={item.id}
+            key={item._id}
             noteColor={noteColor}
             item={item}
             onUpdate={onChecklistItemUpdate}
@@ -136,7 +137,7 @@ const ChecklistItem = forwardRef(
     };
 
     const handleRemove = () => {
-      onRemove(item.id);
+      onRemove(item._id);
     };
 
     const [, drop] = useDrop({
@@ -150,8 +151,8 @@ const ChecklistItem = forwardRef(
           return;
         }
 
-        const dragIndex = dragItem.id;
-        const hoverIndex = item.id;
+        const dragIndex = dragItem._id;
+        const hoverIndex = item._id;
 
         if (dragIndex === hoverIndex) {
           return;
@@ -191,13 +192,15 @@ const ChecklistItem = forwardRef(
           >
             <FontAwesomeIcon icon={faGripVertical} />
           </div>
-          <Checkbox
-            name={item.id}
-            isChecked={item.isChecked}
-            onCheck={handleCheck}
-            onUncheck={handleUncheck}
-          />
-          <input
+          <div>
+            <Checkbox
+              name={item._id}
+              isChecked={item.isChecked}
+              onCheck={handleCheck}
+              onUncheck={handleUncheck}
+            />
+          </div>
+          <ReactTextareaAutosize
             className={`${styles.input} ${
               item.isChecked ? styles.crossed : ""
             }`}
@@ -205,7 +208,7 @@ const ChecklistItem = forwardRef(
             onChange={handleChange}
             ref={(element) => {
               if (ref) {
-                ref.current[item.id] = element;
+                ref.current[item._id] = element;
               }
             }}
           />
@@ -241,12 +244,12 @@ export const DragPreviewChecklistItem = ({ item }) => {
         <FontAwesomeIcon icon={faGripVertical} />
       </div>
       <Checkbox
-        name={item.id}
+        name={item._id}
         isChecked={item.isChecked}
         onCheck={() => {}}
         onUncheck={() => {}}
       />
-      <input
+      <ReactTextareaAutosize
         className={`${styles.input}`}
         value={item.content}
         onChange={() => {}}

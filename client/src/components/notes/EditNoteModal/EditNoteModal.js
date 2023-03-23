@@ -9,6 +9,7 @@ import { actionTypes, initialValues, noteReducer } from "reducers/noteReducer";
 import TagsBar from "@components/notes/TagsBar";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import EditableChecklist from "@components/notes/EditableChecklist";
+import { ObjectId } from "bson";
 
 const EditNoteModal = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -66,7 +67,7 @@ const EditNoteModal = () => {
   };
 
   const handleDelete = () => {
-    openDeletingModal(noteToEdit);
+    openDeletingModal(noteToEdit._id);
   };
 
   const handleArchive = () => {
@@ -106,12 +107,12 @@ const EditNoteModal = () => {
   };
 
   const handleAddNewChecklistItem = (newChecklistItemContent) => {
-    const id = crypto.randomUUID();
+    const _id = ObjectId().toString();
     dispatchNote({
       type: actionTypes.ADD_CHECKLIST_ITEM,
-      payload: { content: newChecklistItemContent, id },
+      payload: { content: newChecklistItemContent, _id },
     });
-    return id;
+    return _id;
   };
 
   const handleRemoveChecklistItem = (itemIdToRemove) => {
