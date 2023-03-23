@@ -18,6 +18,12 @@ NotesApp is a Google Keep clone built using MERN stack. It is supposed to be a b
 - [x] Masonry layout for notes
 - [x] A somewhat responsive layout, of course
 
+## Screenshots
+
+![Main desktop view](screenshots/screenshot1.png)
+![Editing note modal](screenshots/screenshot2.png)
+![Mobile view + adding note](screenshots/screenshot3.png)
+
 ## Setup
 
 First you need to install packages:
