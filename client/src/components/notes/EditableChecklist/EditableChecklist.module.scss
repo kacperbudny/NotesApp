@@ -51,6 +51,7 @@
 .input {
   @extend .baseInput;
   width: 100%;
+  outline: none;
 }
 
 .previewInput {

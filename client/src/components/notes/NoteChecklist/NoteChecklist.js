@@ -64,7 +64,11 @@ const Checklist = ({
               onUncheck={() => onUncheck(item)}
             />
           </div>
-          <span className={variant === "checked" ? styles.crossed : ""}>
+          <span
+            className={`${styles.content} ${
+              variant === "checked" ? styles.crossed : ""
+            }`}
+          >
             {item.content}
           </span>
         </li>

@@ -9,6 +9,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import useHover from "@hooks/useHover";
 import { useDrag, useDrop } from "react-dnd";
 import DRAG_TYPES from "@utils/constants/dragTypes";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 const EditableChecklist = ({
   noteColor,
@@ -199,7 +200,7 @@ const ChecklistItem = forwardRef(
               onUncheck={handleUncheck}
             />
           </div>
-          <input
+          <ReactTextareaAutosize
             className={`${styles.input} ${
               item.isChecked ? styles.crossed : ""
             }`}
@@ -248,7 +249,7 @@ export const DragPreviewChecklistItem = ({ item }) => {
         onCheck={() => {}}
         onUncheck={() => {}}
       />
-      <input
+      <ReactTextareaAutosize
         className={`${styles.input}`}
         value={item.content}
         onChange={() => {}}
