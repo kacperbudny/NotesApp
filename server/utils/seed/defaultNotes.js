@@ -1,5 +1,3 @@
-const crypto = require("crypto");
-
 const getDefaultNotes = (userId) => {
   return [
     {
@@ -26,9 +24,9 @@ const getDefaultNotes = (userId) => {
       type: "CHECKLIST",
       name: "Shopping list",
       checklistItems: [
-        { isChecked: false, content: "Milk", id: crypto.randomUUID() },
-        { isChecked: false, content: "Bread", id: crypto.randomUUID() },
-        { isChecked: false, content: "Smiley faces", id: crypto.randomUUID() },
+        { isChecked: false, content: "Milk" },
+        { isChecked: false, content: "Bread" },
+        { isChecked: false, content: "Smiley faces" },
       ],
       displayOrder: 3,
       color: "white",

@@ -1,4 +1,5 @@
 import NOTE_TYPES from "@constants/noteTypes";
+import { ObjectID } from "bson";
 
 export const swapChecklistMode = (note) => {
   switch (note.type) {
@@ -19,7 +20,7 @@ const convertToChecklist = (note) => {
     ? note.content.split(/\r?\n/).map((line) => ({
         isChecked: false,
         content: line,
-        id: crypto.randomUUID(),
+        _id: ObjectID().toString(),
       }))
     : [];
 
@@ -49,7 +50,7 @@ const convertToText = (note) => {
 export const updateChecklistItem = (note, updatedChecklistItem) => {
   const newChecklistItems = [...note.checklistItems];
   const itemToEditIndex = newChecklistItems.findIndex(
-    (item) => item.id === updatedChecklistItem.id
+    (item) => item._id === updatedChecklistItem._id
   );
   newChecklistItems[itemToEditIndex] = updatedChecklistItem;
 
@@ -76,7 +77,7 @@ export const removeChecklistItem = (note, itemIdToRemove) => {
   return {
     ...note,
     checklistItems: note.checklistItems.filter(
-      (item) => item.id !== itemIdToRemove
+      (item) => item._id !== itemIdToRemove
     ),
   };
 };
@@ -85,10 +86,10 @@ export const reorderChecklistItems = (note, sourceItemId, targetItemId) => {
   const newChecklistItems = [...note.checklistItems];
 
   const sourceItemIndex = newChecklistItems.findIndex(
-    (item) => item.id === sourceItemId
+    (item) => item._id === sourceItemId
   );
   const targetItemIndex = newChecklistItems.findIndex(
-    (item) => item.id === targetItemId
+    (item) => item._id === targetItemId
   );
 
   newChecklistItems.splice(

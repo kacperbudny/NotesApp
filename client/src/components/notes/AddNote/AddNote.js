@@ -13,6 +13,7 @@ import EditableChecklist from "@components/notes/EditableChecklist";
 import NOTE_TYPES from "@utils/constants/noteTypes";
 import IconButton from "@components/common/IconButton/IconButton";
 import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
+import { ObjectId } from "bson";
 
 const AddNote = () => {
   const [note, dispatchNote] = useReducer(noteReducer, initialValues);
@@ -128,12 +129,12 @@ const AddNote = () => {
   };
 
   const handleAddNewChecklistItem = (newChecklistItemContent) => {
-    const id = crypto.randomUUID();
+    const _id = ObjectId().toString();
     dispatchNote({
       type: actionTypes.ADD_CHECKLIST_ITEM,
-      payload: { content: newChecklistItemContent, id },
+      payload: { content: newChecklistItemContent, _id },
     });
-    return id;
+    return _id;
   };
 
   const handleRemoveChecklistItem = (itemIdToRemove) => {
